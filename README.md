@@ -20,7 +20,9 @@ npm run dev
 ```
 
 **3. Open localhost:3000 in your browser**
+```bash
 (http://localhost:3000)
+```
 
 ## Features
 - **Multi-page Navigation**
