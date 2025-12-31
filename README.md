@@ -9,17 +9,18 @@ Stylistically, it pays homage to the 2000 film,American Psycho, and its infamous
 
 ## Installation
 
-1. Install dependencies:
+**1. Install dependencies:**
 ```bash
 npm install
 ```
 
-2. Run the development server:
+**2. Run the development server:**
 ```bash
 npm run dev
 ```
 
-3. Open (http://localhost:3000) in your browser
+**3. Open localhost:3000 in your browser**
+(http://localhost:3000)
 
 ## Features
 - **Multi-page Navigation**
@@ -30,4 +31,4 @@ npm run dev
 ## 🔧 Technologies
 - **Next.js 14** 
 - **Tailwind CSS**
-- **Google Fonts** - Inter, Cormorant Garamond, JetBrains Mono
+- **Google Fonts**
