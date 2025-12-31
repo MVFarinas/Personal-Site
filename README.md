@@ -13,6 +13,9 @@ Stylistically, it pays homage to the 2000 film, American Psycho, and its infamou
 ```bash
 npm install
 ```
+```bash
+npm install next@latest react@latest react-dom@latest
+```
 
 **2. Run the development server:**
 ```bash
