@@ -1,7 +1,7 @@
 # Mark Farinas Portfolio
 This minimalist portfolio showcases me- my experiences, projects, passions, and more. 
 
-Stylistically, it pays homage to the 2000 film,American Psycho, and its infamous business card scene. 
+Stylistically, it pays homage to the 2000 film, American Psycho, and its infamous business card scene. 
 
 ## Prerequisites
 - Node.js
