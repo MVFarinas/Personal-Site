@@ -174,10 +174,10 @@ const PortfolioWebsite = () => {
                 </div>
                 <div className="text-right">
                   <div className="text-black text-[11px] tracking-[0.35em] font-semibold">
-                    FARINAS & FARINAS
+                    MACEWAN UNIVERSITY
                   </div>
                   <div className="text-black/80 text-[9px] tracking-[0.25em] font-normal mt-0.5">
-                    COMPUTATIONAL BIOLOGY
+                    & UALBERTA ALUMNI
                   </div>
                 </div>
               </div>
@@ -185,7 +185,7 @@ const PortfolioWebsite = () => {
               {/* Center - Name */}
               <div className="text-center mb-16">
                 <h1 className="text-black text-3xl tracking-[0.35em] font-normal mb-2 uppercase">
-                  MARK FARINAS
+                  Mark Farinas
                 </h1>
                 <div className="text-black/90 text-[13px] tracking-[0.4em] font-medium uppercase">
                   Software Developer
@@ -195,7 +195,7 @@ const PortfolioWebsite = () => {
               {/* Bottom Section - Address/Info */}
               <div className="text-center">
                 <div className="text-black/85 text-[11px] tracking-[0.3em] font-normal uppercase leading-relaxed">
-                  MacEwan University Edmonton, AB T5J 4S2
+                  Edmonton, Alberta, Canada
                   <br />
                   <span className="tracking-[0.2em]">farinas@ualberta.ca</span> · <span className="tracking-[0.15em] lowercase">github.com/MVFarinas</span>
                 </div>
@@ -274,13 +274,13 @@ const PortfolioWebsite = () => {
               </h3>
               <div className="space-y-4">
                 <p className="text-black/85 text-sm leading-relaxed font-light">
-                  I'm Mark Farinas, a Computer Science student at MacEwan University with a unique perspective 
-                  shaped by my Bachelor's degree in Immunology from the University of Alberta. This dual expertise 
-                  allows me to approach problems with both computational rigor and biological insight.
+                  I’m Mark Farinas, a Computer Science student at MacEwan University with a background in Immunology from the University of Alberta. 
+                  Before moving into software, I worked with complex biological systems, data, and research pipelines to tackle real-world health challenges.
+                  These experiences have shaped my analytical thinking and problem-solving skills, which I now apply to software development.
                 </p>
                 <p className="text-black/85 text-sm leading-relaxed font-light">
-                  My journey from studying T-cell proliferation and conducting PCR research to building AI-powered 
-                  applications represents more than a career pivot—it's a synthesis of two powerful fields.
+                  From studying T-cells and antibodies to working on COVID-19 research to building software projects, my path hasn't been linear.
+                  However, it has always been deeply technical. I'm interested in building systems that sit at the intersection of science, data, and software.
                 </p>
               </div>
             </div>
@@ -299,7 +299,7 @@ const PortfolioWebsite = () => {
                     <p className="text-black/60 text-xs tracking-wider mt-1">MacEwan University • 2024 - Present</p>
                     <p className="text-black/70 text-xs mt-1">GPA: 3.6/4.0</p>
                     <p className="text-black/75 text-xs mt-3 leading-relaxed">
-                      Data Structures, Algorithms, Human-Computer Interaction, Python Programming
+                      Data Structures, Algorithms, Human-Computer Interaction, Python Programming, C Programming & Unix
                     </p>
                   </div>
                 </div>
@@ -850,7 +850,7 @@ const PortfolioWebsite = () => {
             <div>
               <div className="text-black text-[10px] tracking-[0.3em] uppercase mb-2">Location</div>
               <p className="text-black/80 text-sm tracking-wider">
-                Edmonton, AB T5J 4S2
+                Edmonton, AB
               </p>
             </div>
           </div>
