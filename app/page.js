@@ -888,7 +888,7 @@ const PortfolioWebsite = () => {
           </a>
           
           <a 
-            href="https://www.figma.com/@markfarinas"
+            href="https://www.figma.com/slides/S5br8BaBty7Y82T4lC4IcK/Final-Presentation?t=Q5ZIsA7D9Q57VnXd-1"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#fffef9] border border-black/10 p-4 text-center hover:bg-black/5 transition-all group"
