@@ -327,7 +327,7 @@ const PortfolioWebsite = () => {
                 <div>
                   <h4 className="text-black text-xs tracking-[0.2em] font-medium uppercase mb-3">Health & Fitness</h4>
                   <p className="text-black/75 text-xs leading-relaxed">
-                    Passionate about holistic health. Currently working at Popeye's Supplements, 
+                    Passionate about holistic health. Currently working at Popeye&apos;s Supplements, 
                     helping others achieve their fitness goals.
                   </p>
                 </div>
@@ -821,7 +821,7 @@ const PortfolioWebsite = () => {
         <div className="text-center mb-16">
           <h2 className="text-black text-[11px] tracking-[0.5em] font-normal uppercase mb-4">Contact</h2>
           <div className="w-16 h-px bg-black/20 mx-auto"></div>
-          <p className="text-black/60 text-xs tracking-wider mt-4">Let's connect</p>
+          <p className="text-black/60 text-xs tracking-wider mt-4">Let&apos;s connect</p>
         </div>
 
         {/* Contact Business Card Style */}
