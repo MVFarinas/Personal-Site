@@ -274,13 +274,13 @@ const PortfolioWebsite = () => {
               </h3>
               <div className="space-y-4">
                 <p className="text-black/85 text-sm leading-relaxed font-light">
-                  I’m Mark Farinas, a Computer Science student at MacEwan University with a background in Immunology from the University of Alberta. 
+                  My name is Mark Farinas, a Computer Science student at MacEwan University with a background in Immunology from the University of Alberta. 
                   Before moving into software, I worked with complex biological systems, data, and research pipelines to tackle real-world health challenges.
                   These experiences have shaped my analytical thinking and problem-solving skills, which I now apply to software development.
                 </p>
                 <p className="text-black/85 text-sm leading-relaxed font-light">
-                  From studying T-cells and antibodies to working on COVID-19 research to building software projects, my path hasn't been linear.
-                  However, it has always been deeply technical. I'm interested in building systems that sit at the intersection of science, data, and software.
+                  From studying T-cells and antibodies to working on COVID-19 research to building software projects, my path has been anything but linear.
+                  However, it has always been deeply technical. I am interested in building systems that sit at the intersection of science, data, and software.
                 </p>
               </div>
             </div>
@@ -901,7 +901,7 @@ const PortfolioWebsite = () => {
         {/* Bottom Text */}
         <div className="text-center mt-12">
           <p className="text-black/50 text-[10px] tracking-[0.2em] uppercase">
-            Open to opportunities in software development & bioinformatics
+            Open to opportunities in software development and interdisciplinary projects
           </p>
         </div>
       </div>
