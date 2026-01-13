@@ -1,0 +1,159 @@
+import { Github, Linkedin, Mail } from 'lucide-react';
+import SectionHeader from '@/components/ui/SectionHeader';
+import Card from '@/components/ui/Card';
+
+export default function AboutPage() {
+  return (
+    <div className="min-h-screen bg-[#f6f5f1] pt-24 pb-16">
+      <div className="max-w-6xl mx-auto px-6">
+        <SectionHeader title="About" />
+
+        <div className="grid lg:grid-cols-3 gap-12">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Introduction Card */}
+            <Card className="p-10">
+              <h3 className="text-black text-[13px] tracking-[0.3em] font-medium uppercase mb-6">
+                The Interdisciplinary Journey
+              </h3>
+              <div className="space-y-4">
+                <p className="text-black/85 text-sm leading-relaxed font-light">
+                  My name is Mark Farinas, a Computer Science student at MacEwan University with a background in Immunology from the University of Alberta. 
+                  Before moving into software, I worked with complex biological systems, data, and research pipelines to tackle real-world health challenges.
+                  These experiences have shaped my analytical thinking and problem-solving skills, which I now apply to software development.
+                </p>
+                <p className="text-black/85 text-sm leading-relaxed font-light">
+                  From studying T-cells and antibodies to working on COVID-19 research to building software projects, my path has been anything but linear.
+                  However, it has always been deeply technical. I am interested in building systems that sit at the intersection of science, data, and software.
+                </p>
+              </div>
+            </Card>
+
+            {/* Education Timeline */}
+            <Card className="p-10">
+              <h3 className="text-black text-[13px] tracking-[0.3em] font-medium uppercase mb-8">
+                Educational Path
+              </h3>
+              
+              <div className="space-y-8">
+                <div className="relative pl-6 border-l border-black/10">
+                  <div className="absolute -left-1.5 top-0 w-3 h-3 bg-black/80 rounded-full"></div>
+                  <div>
+                    <h4 className="text-black text-sm font-medium tracking-wider">BSc Computer Science</h4>
+                    <p className="text-black/60 text-xs tracking-wider mt-1">MacEwan University • 2024 - Present</p>
+                    <p className="text-black/70 text-xs mt-1">GPA: 3.6/4.0</p>
+                    <p className="text-black/75 text-xs mt-3 leading-relaxed">
+                      Data Structures, Algorithms, Human-Computer Interaction, Python Programming
+                    </p>
+                  </div>
+                </div>
+
+                <div className="relative pl-6 border-l border-black/10">
+                  <div className="absolute -left-1.5 top-0 w-3 h-3 bg-black/60 rounded-full"></div>
+                  <div>
+                    <h4 className="text-black text-sm font-medium tracking-wider">BSc Immunology & Infection</h4>
+                    <p className="text-black/60 text-xs tracking-wider mt-1">University of Alberta • 2016 - 2021</p>
+                    <p className="text-black/75 text-xs mt-3 leading-relaxed">
+                      Molecular Biology, Cell Cultures, Flow Cytometry, Research Methods
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Personal Interests */}
+            <Card className="p-10">
+              <h3 className="text-black text-[13px] tracking-[0.3em] font-medium uppercase mb-6">
+                Beyond the Code
+              </h3>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="text-black text-xs tracking-[0.2em] font-medium uppercase mb-3">Health & Fitness</h4>
+                  <p className="text-black/75 text-xs leading-relaxed">
+                    I have developed a strong passion for fitness and nutrition. I prioritize strength training,
+                    balanced nutrition, and overall wellness in my daily life as I believe a healthy body supports a sharp mind. 
+                    I also induldge in playing sports such as volleyball, badminton, basketball, and pickleball. 
+                    
+                    I enjoy learning and growing in the areas of fitness and nutrition which I apply to my current part-time work 
+                    at Popeye&apos;s Supplements where I provide goal-based solutions to help others achieve their fitness dreams.
+                  </p>
+                </div>
+                
+                <div>
+                  <h4 className="text-black text-xs tracking-[0.2em] font-medium uppercase mb-3">Scientific Innovation</h4>
+                  <p className="text-black/75 text-xs leading-relaxed">
+                    Asides from tech and fitness, I enjoy reading a variety of books ranging from mystery to science fiction to self-improvement.
+                    I am also a cinephile who loves exploring different film genres and directorial styles.  
+                  </p>
+                </div>
+              </div>
+            </Card>
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Skills Card */}
+            <Card className="p-8">
+              <h3 className="text-black text-[11px] tracking-[0.3em] font-medium uppercase mb-6">
+                Technical Stack
+              </h3>
+              
+              <div className="space-y-5">
+                <div>
+                  <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Languages</h4>
+                  <div className="space-y-1">
+                    {['Python', 'JavaScript', 'C'].map(skill => (
+                      <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Lab Techniques</h4>
+                  <div className="space-y-1">
+                    {['PCR', 'Flow Cytometry', 'ELISA', 'Cell Culture'].map(skill => (
+                      <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div>
+                  <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Tools</h4>
+                  <div className="space-y-1">
+                    {['Git', 'React', 'Figma', 'FlowJo'].map(skill => (
+                      <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Card>
+
+            {/* Contact Card */}
+            <Card className="p-8">
+              <h3 className="text-black text-[11px] tracking-[0.3em] font-medium uppercase mb-6">Connect</h3>
+              
+              <div className="space-y-3">
+                <a href="https://github.com/MVFarinas" target="_blank" rel="noopener noreferrer" 
+                   className="flex items-center gap-3 text-black/70 hover:text-black transition-colors group">
+                  <Github className="w-4 h-4" />
+                  <span className="text-xs tracking-wider">GitHub</span>
+                </a>
+                <a href="https://linkedin.com/in/MarkVincentFarinas" target="_blank" rel="noopener noreferrer"
+                   className="flex items-center gap-3 text-black/70 hover:text-black transition-colors group">
+                  <Linkedin className="w-4 h-4" />
+                  <span className="text-xs tracking-wider">LinkedIn</span>
+                </a>
+                <a href="mailto:farinas@ualberta.ca"
+                   className="flex items-center gap-3 text-black/70 hover:text-black transition-colors group">
+                  <Mail className="w-4 h-4" />
+                  <span className="text-xs tracking-wider">Email</span>
+                </a>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
