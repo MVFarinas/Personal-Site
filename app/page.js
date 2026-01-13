@@ -327,10 +327,11 @@ const PortfolioWebsite = () => {
                 <div>
                   <h4 className="text-black text-xs tracking-[0.2em] font-medium uppercase mb-3">Health & Fitness</h4>
                   <p className="text-black/75 text-xs leading-relaxed">
-                    In recent years, I have developed a strong passion for fitness and nutrition. I prioritize strength training,
+                    I have developed a strong passion for fitness and nutrition. I prioritize strength training,
                     balanced nutrition, and overall wellness in my daily life as I believe a healthy body supports a sharp mind. 
-                    I also induldge in learning new sports such as volleyball, badminton, basketball, and pickleball. I am committed 
-                    to keep learning and growing in these areas of fitness and nutrition which I apply to my current part-time work 
+                    I also induldge in playing sports such as volleyball, badminton, basketball, and pickleball. 
+                    
+                    I enjoy learning and growing in the areas of fitness and nutrition which I apply to my current part-time work 
                     at Popeye&apos;s Supplements where I provide goal-based solutions to help others achieve their fitness dreams.
                   </p>
                 </div>
@@ -338,7 +339,8 @@ const PortfolioWebsite = () => {
                 <div>
                   <h4 className="text-black text-xs tracking-[0.2em] font-medium uppercase mb-3">Other Hobbies</h4>
                   <p className="text-black/75 text-xs leading-relaxed">
-                    From 
+                    Asides from tech and fitness, I enjoy reading a variety of books ranging from mystery to science fiction to self-improvement.
+                    I am also a cinephile who loves exploring different film genres and directorial styles.  
                   </p>
                 </div>
               </div>
