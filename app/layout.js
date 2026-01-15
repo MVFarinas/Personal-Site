@@ -1,4 +1,4 @@
-import { Inter, Cormorant_Garmond} from 'next/font/google';
+import { Inter, Cormorant_Garamond} from 'next/font/google';
 import Navigation from '@/components/layout/Navigation';
 import './globals.css'
 
