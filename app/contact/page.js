@@ -72,7 +72,7 @@ export default function ContactPage() {
           </a>
           
           <a 
-            href="https://www.figma.com/@markfarinas"
+            href="https://www.figma.com/slides/S5br8BaBty7Y82T4lC4IcK/Final-Presentation?node-id=1-42&t=EdNg44sRf9QBvKs5-1"
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#fffef9] border border-black/10 p-4 text-center hover:bg-black/5 transition-all group"
