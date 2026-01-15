@@ -1,0 +1,9 @@
+// When seeing @components, it refers to the components folder in the root directory.
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
