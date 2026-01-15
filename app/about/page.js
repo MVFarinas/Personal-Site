@@ -73,7 +73,7 @@ export default function AboutPage() {
                   <p className="text-black/75 text-xs leading-relaxed">
                     I have developed a strong passion for fitness and nutrition. I prioritize strength training,
                     balanced nutrition, and overall wellness in my daily life as I believe a healthy body supports a sharp mind. 
-                    I also induldge in playing sports such as volleyball, badminton, basketball, and pickleball. 
+                    I also indulge in playing sports such as volleyball, badminton, basketball, and pickleball. 
                     
                     I enjoy learning and growing in the areas of fitness and nutrition which I apply to my current part-time work 
                     at Popeye&apos;s Supplements where I provide goal-based solutions to help others achieve their fitness dreams.
