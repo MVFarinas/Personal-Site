@@ -6,7 +6,7 @@ const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',});
 
-const cormorant = Cormorant_Garmond({
+const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
   weight: ['300', '400', '500'],
   variable: '--font-cormorant',
