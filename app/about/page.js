@@ -81,7 +81,7 @@ export default function AboutPage() {
                 </div>
                 
                 <div>
-                  <h4 className="text-black text-xs tracking-[0.2em] font-medium uppercase mb-3">Scientific Innovation</h4>
+                  <h4 className="text-black text-xs tracking-[0.2em] font-medium uppercase mb-3">Other Hobbies</h4>
                   <p className="text-black/75 text-xs leading-relaxed">
                     Asides from tech and fitness, I enjoy reading a variety of books ranging from mystery to science fiction to self-improvement.
                     I am also a cinephile who loves exploring different film genres and directorial styles.  
