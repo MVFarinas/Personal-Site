@@ -84,10 +84,10 @@ export default function HomePage() {
               </div>
               <div className="text-right">
                 <div className="text-black text-[11px] tracking-[0.35em] font-semibold">
-                  MacEwan University
+                  MACEWAN UNIVERSITY
                 </div>
                 <div className="text-black/80 text-[9px] tracking-[0.25em] font-normal mt-0.5">
-                  & UAlberta Alumni
+                  & UALBERTA ALUMNI
                 </div>
               </div>
             </div>
