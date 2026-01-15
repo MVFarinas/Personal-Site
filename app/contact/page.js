@@ -63,7 +63,7 @@ export default function ContactPage() {
           </a>
           
           <a 
-            href="/Mark_CV_2025.pdf"
+            href="/Mark_CV_2026.pdf"
             download
             className="bg-[#fffef9] border border-black/10 p-4 text-center hover:bg-black/5 transition-all group"
           >
