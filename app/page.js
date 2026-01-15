@@ -84,10 +84,10 @@ export default function HomePage() {
               </div>
               <div className="text-right">
                 <div className="text-black text-[11px] tracking-[0.35em] font-semibold">
-                  FARINAS & FARINAS
+                  MacEwan University
                 </div>
                 <div className="text-black/80 text-[9px] tracking-[0.25em] font-normal mt-0.5">
-                  COMPUTATIONAL BIOLOGY
+                  & UAlberta Alumni
                 </div>
               </div>
             </div>
@@ -105,7 +105,7 @@ export default function HomePage() {
             {/* Bottom Section - Address/Info */}
             <div className="text-center">
               <div className="text-black/85 text-[11px] tracking-[0.3em] font-normal uppercase leading-relaxed">
-                MacEwan University Edmonton, AB T5J 4S2
+                Edmonton, Alberta, Canada
                 <br />
                 <span className="tracking-[0.2em]">farinas@ualberta.ca</span> · <span className="tracking-[0.15em] lowercase">github.com/MVFarinas</span>
               </div>
