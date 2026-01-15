@@ -137,7 +137,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Navigation Buttons - Minimalist Style */}
+      {/* Navigation Buttons - Minimalist Style 
       <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
         <div className="flex gap-6">
           <Link 
@@ -155,6 +155,7 @@ export default function HomePage() {
           </Link>
         </div>
       </div>
+      */}
 
       {/* Subtle Scroll Indicator */}
       <div className="absolute bottom-3 right-6 animate-pulse">
