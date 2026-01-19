@@ -74,7 +74,6 @@ export default function AboutPage() {
                     I have developed a strong passion for fitness and nutrition. I prioritize strength training,
                     balanced nutrition, and overall wellness in my daily life as I believe a healthy body supports a sharp mind. 
                     I also indulge in playing sports such as volleyball, badminton, basketball, and pickleball. 
-                    I enjoy learning and growing in the areas of fitness and nutrition which I apply to my own lifestyle.
                   </p>
                 </div>
                 
