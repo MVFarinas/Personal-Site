@@ -106,24 +106,26 @@ export default function AboutPage() {
                     ))}
                   </div>
                 </div>
+
+                <div>
+                  <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Tools</h4>
+                  <div className="space-y-1">
+                    {['Git', 'React', 'Next.js', 'Figma', ].map(skill => (
+                      <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
+                    ))}
+                  </div>
+                </div>
                 
                 <div>
                   <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Lab Techniques</h4>
                   <div className="space-y-1">
-                    {['PCR', 'Flow Cytometry', 'ELISA', 'Cell Culture'].map(skill => (
+                    {['PCR', 'Flow Cytometry', 'ELISA', 'Cell Culture', 'FlowJo'].map(skill => (
                       <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
                     ))}
                   </div>
                 </div>
                 
-                <div>
-                  <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Tools</h4>
-                  <div className="space-y-1">
-                    {['Git', 'React', 'Figma', 'FlowJo'].map(skill => (
-                      <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
-                    ))}
-                  </div>
-                </div>
+              
               </div>
             </Card>
 
