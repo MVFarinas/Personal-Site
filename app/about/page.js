@@ -43,7 +43,7 @@ export default function AboutPage() {
                     <p className="text-black/60 text-xs tracking-wider mt-1">MacEwan University • 2024 - Present</p>
                     <p className="text-black/70 text-xs mt-1">GPA: 3.6/4.0</p>
                     <p className="text-black/75 text-xs mt-3 leading-relaxed">
-                      Data Structures, Algorithms, Human-Computer Interaction, Python Programming
+                      Data Structures & Algorithms, Human-Computer Interaction, Python Programming, C Programming & UNIX, Software Engineering
                     </p>
                   </div>
                 </div>
@@ -54,7 +54,7 @@ export default function AboutPage() {
                     <h4 className="text-black text-sm font-medium tracking-wider">BSc Immunology & Infection</h4>
                     <p className="text-black/60 text-xs tracking-wider mt-1">University of Alberta • 2016 - 2021</p>
                     <p className="text-black/75 text-xs mt-3 leading-relaxed">
-                      Molecular Biology, Cell Cultures, Flow Cytometry, Research Methods
+                      Molecular Biology, Virology, Cell Cultures, Flow Cytometry, Research Methods
                     </p>
                   </div>
                 </div>
