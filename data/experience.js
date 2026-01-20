@@ -26,7 +26,7 @@ export const experiences = [
 ];
 
 export const technicalSkills = {
-  programming: ['Python', 'JavaScript', 'C', 'React', 'Git/GitHub'],
+  programming: ['Python', 'JavaScript', 'C', 'React', 'Next.js', 'Git/GitHub'],
   laboratory: ['Digital PCR', 'Flow Cytometry', 'ELISA', 'Cell Culture'],
   soft: ['Problem Solving', 'Team Collaboration', 'Communication', 'Adaptability']
 };
