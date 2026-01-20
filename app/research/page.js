@@ -10,7 +10,7 @@ export default function ResearchPage() {
       <div className="max-w-6xl mx-auto px-6">
         <SectionHeader 
           title="Research Experience" 
-          subtitle="Contributing to scientific advancement" 
+          subtitle="Contributions towards scientific knowledge and innovation." 
         />
 
         {/* Research Timeline */}
