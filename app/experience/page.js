@@ -8,7 +8,10 @@ export default function ExperiencePage() {
   return (
     <div className="min-h-screen bg-[#f6f5f1] pt-24 pb-16">
       <div className="max-w-6xl mx-auto px-6">
-        <SectionHeader title="Professional Experience" />
+        <SectionHeader 
+        title="Professional Experience" 
+        subtitle="Work history and technical skills overview."
+        />
 
         {/* Experience Cards */}
         <div className="grid gap-6">
