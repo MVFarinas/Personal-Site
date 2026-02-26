@@ -14,7 +14,7 @@ export default function ContactPage() {
             <div>
               <div className="text-black text-[10px] tracking-[0.3em] uppercase mb-2">Email</div>
               <a 
-                href="mailto:farinas@ualberta.ca"
+                href="mailto:farinasm@mymacewan.ca"
                 className="text-black/80 text-sm tracking-wider hover:text-black transition-colors"
               >
                 farinas@ualberta.ca
