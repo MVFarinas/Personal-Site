@@ -43,16 +43,34 @@ export default function ExperiencePage() {
             Technical Expertise
           </h3>
           
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Card className="p-6">
-              <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">Programming</h4>
+              <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">Languages</h4>
               <div className="space-y-1">
-                {technicalSkills.programming.map(skill => (
+                {technicalSkills.languages.map(skill => (
                   <div key={skill} className="text-black/70 text-xs">{skill}</div>
                 ))}
               </div>
             </Card>
-            
+
+            <Card className="p-6">
+              <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">Frameworks</h4>
+              <div className="space-y-1">
+                {technicalSkills.frameworks.map(skill => (
+                  <div key={skill} className="text-black/70 text-xs">{skill}</div>
+                ))}
+              </div>
+            </Card>
+
+            <Card className="p-6">
+              <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">Tools & Platforms</h4>
+              <div className="space-y-1">
+                {technicalSkills.tools.map(skill => (
+                  <div key={skill} className="text-black/70 text-xs">{skill}</div>
+                ))}
+              </div>
+            </Card>
+
             <Card className="p-6">
               <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">Laboratory</h4>
               <div className="space-y-1">
@@ -61,7 +79,7 @@ export default function ExperiencePage() {
                 ))}
               </div>
             </Card>
-            
+
             <Card className="p-6">
               <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">Soft Skills</h4>
               <div className="space-y-1">

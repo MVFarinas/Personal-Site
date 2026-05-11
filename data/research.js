@@ -38,6 +38,13 @@ export const researchExperiences = [
 
 export const publications = [
   {
+    title: 'Unjamming Deferrals: Supporting Students Through JAMN Bot, a Mobile RAG-Grounded Policy Assistant',
+    authors: 'Farinas, M., Garcia, A., Reyes, M., Nueva, J., Qureshi, N., Elsaadany, M., Shams, S.',
+    venue: 'IEEE SmartEdu 2026',
+    year: '2026',
+    status: 'Under Review'
+  },
+  {
     title: 'Current Methods and Future Research in the Diagnosis of Alzheimers Disease',
     authors: 'Jhajj, G., Farinas, M.',
     journal: 'CUSJ',

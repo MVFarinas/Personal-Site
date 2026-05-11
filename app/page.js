@@ -107,7 +107,7 @@ export default function HomePage() {
               <div className="text-black/85 text-[11px] tracking-[0.3em] font-normal uppercase leading-relaxed">
                 Edmonton, Alberta, Canada
                 <br />
-                <span className="tracking-[0.2em]">farinas@ualberta.ca</span> · <span className="tracking-[0.15em] lowercase">github.com/MVFarinas</span>
+                <span className="tracking-[0.2em]">farinasm@mymacewan.ca</span> · <span className="tracking-[0.15em] lowercase">github.com/MVFarinas</span>
               </div>
             </div>
 

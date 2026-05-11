@@ -26,8 +26,9 @@ export default function AboutPage() {
                   These experiences have shaped my analytical thinking and problem-solving skills, which I now apply to software development.
                 </p>
                 <p className="text-black/85 text-sm leading-relaxed font-light">
-                  From studying T-cells and antibodies to working on COVID-19 research to building software projects, my path has been anything but linear.
-                  However, it has always been deeply technical. I am interested in building systems that sit at the intersection of science, data, and software.
+                  From studying T-cells and antibodies to working on COVID-19 research, my path has been anything but linear &mdash; but always deeply technical.
+                  Today I focus on full-stack and Android development, with a particular interest in AI/LLM systems grounded in real-world data &mdash; most recently
+                  Schedulater, an award-winning university exam-deferral platform with a RAG-grounded policy assistant.
                 </p>
               </div>
             </Card>
@@ -48,6 +49,14 @@ export default function AboutPage() {
                     <p className="text-black/75 text-xs mt-3 leading-relaxed">
                       Data Structures & Algorithms, Human-Computer Interaction, Python Programming, C Programming & UNIX, Software Engineering
                     </p>
+                    <div className="mt-4 space-y-1.5">
+                      <p className="text-black/75 text-xs leading-relaxed">
+                        <span className="font-medium">Award (Apr 2026):</span> 1st Place &mdash; CMPT 395 Software Engineering Competition (IEEE-Sponsored), with Schedulater
+                      </p>
+                      <p className="text-black/75 text-xs leading-relaxed">
+                        <span className="font-medium">Publication (May 2026):</span> Co-authored paper submitted to IEEE SmartEdu 2026
+                      </p>
+                    </div>
                   </div>
                 </div>
 
@@ -103,7 +112,7 @@ export default function AboutPage() {
                 <div>
                   <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Languages</h4>
                   <div className="space-y-1">
-                    {['Python', 'JavaScript', 'C'].map(skill => (
+                    {['Python', 'Kotlin', 'JavaScript', 'C', 'SQL', 'HTML/CSS'].map(skill => (
                       <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
                     ))}
                   </div>
@@ -112,7 +121,7 @@ export default function AboutPage() {
                 <div>
                   <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Tools</h4>
                   <div className="space-y-1">
-                    {['Git', 'React', 'Next.js', 'Figma', ].map(skill => (
+                    {['Git', 'Ktor', 'Jetpack Compose', 'Next.js', 'React', 'Docker', 'Firebase', 'Ollama', 'Figma'].map(skill => (
                       <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
                     ))}
                   </div>
@@ -146,7 +155,7 @@ export default function AboutPage() {
                   <Linkedin className="w-4 h-4" />
                   <span className="text-xs tracking-wider">LinkedIn</span>
                 </a>
-                <a href="mailto:farinas@ualberta.ca"
+                <a href="mailto:farinasm@mymacewan.ca"
                    className="flex items-center gap-3 text-black/70 hover:text-black transition-colors group">
                   <Mail className="w-4 h-4" />
                   <span className="text-xs tracking-wider">Email</span>

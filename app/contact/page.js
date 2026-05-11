@@ -1,4 +1,4 @@
-import { Github, Linkedin, Download, Layers } from 'lucide-react';
+import { Github, Linkedin, Download, Layers, Twitter } from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Card from '@/components/ui/Card';
 
@@ -13,11 +13,11 @@ export default function ContactPage() {
           <div className="text-center space-y-6">
             <div>
               <div className="text-black text-[10px] tracking-[0.3em] uppercase mb-2">Email</div>
-              <a 
+              <a
                 href="mailto:farinasm@mymacewan.ca"
                 className="text-black/80 text-sm tracking-wider hover:text-black transition-colors"
               >
-                farinas@ualberta.ca
+                farinasm@mymacewan.ca
               </a>
             </div>
             
@@ -41,8 +41,8 @@ export default function ContactPage() {
         </Card>
 
         {/* Social Links - Minimalist Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <a 
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+          <a
             href="https://github.com/MVFarinas"
             target="_blank"
             rel="noopener noreferrer"
@@ -51,8 +51,8 @@ export default function ContactPage() {
             <Github className="w-5 h-5 text-black/60 group-hover:text-black mx-auto mb-2" />
             <span className="text-[10px] text-black/60 tracking-wider uppercase">GitHub</span>
           </a>
-          
-          <a 
+
+          <a
             href="https://linkedin.com/in/MarkVincentFarinas"
             target="_blank"
             rel="noopener noreferrer"
@@ -61,8 +61,18 @@ export default function ContactPage() {
             <Linkedin className="w-5 h-5 text-black/60 group-hover:text-black mx-auto mb-2" />
             <span className="text-[10px] text-black/60 tracking-wider uppercase">LinkedIn</span>
           </a>
-          
-          <a 
+
+          <a
+            href="https://x.com/MVAFCode"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#fffef9] border border-black/10 p-4 text-center hover:bg-black/5 transition-all group"
+          >
+            <Twitter className="w-5 h-5 text-black/60 group-hover:text-black mx-auto mb-2" />
+            <span className="text-[10px] text-black/60 tracking-wider uppercase">Twitter/X</span>
+          </a>
+
+          <a
             href="/Mark_CV_2026.pdf"
             download
             className="bg-[#fffef9] border border-black/10 p-4 text-center hover:bg-black/5 transition-all group"
@@ -70,8 +80,8 @@ export default function ContactPage() {
             <Download className="w-5 h-5 text-black/60 group-hover:text-black mx-auto mb-2" />
             <span className="text-[10px] text-black/60 tracking-wider uppercase">Resume</span>
           </a>
-          
-          <a 
+
+          <a
             href="https://www.figma.com/slides/S5br8BaBty7Y82T4lC4IcK/Final-Presentation?node-id=1-42&t=EdNg44sRf9QBvKs5-1"
             target="_blank"
             rel="noopener noreferrer"
