@@ -3,7 +3,7 @@ export const experiences = [
     title: 'Database Administrator Intern',
     company: 'Alberta Federation of Rural Water Coops',
     location: 'Edmonton, AB',
-    period: 'May 2026 - August 2026',
+    period: 'May 2026 - Present',
     responsibilities: [
       'Migrating a legacy Microsoft Access database for Alberta rural water co-operatives to a fully functional web-based database',
       'Administrating the Water Federation website and automating standard workplace procedures including form development',

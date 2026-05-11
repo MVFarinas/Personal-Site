@@ -1,4 +1,4 @@
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Card from '@/components/ui/Card';
 
@@ -26,8 +26,8 @@ export default function AboutPage() {
                   These experiences have shaped my analytical thinking and problem-solving skills, which I now apply to software development.
                 </p>
                 <p className="text-black/85 text-sm leading-relaxed font-light">
-                  From studying T-cells and antibodies to working on COVID-19 research, my path has been anything but linear &mdash; but always deeply technical.
-                  Today I focus on full-stack and Android development, with a particular interest in AI/LLM systems grounded in real-world data &mdash; most recently
+                  From studying T-cells and antibodies to working on COVID-19 research, my path has been anything but linear; but always deeply technical.
+                  Today I focus on full-stack and Android development, with a particular interest in AI/LLM systems grounded in real-world data; most recently
                   Schedulater, an award-winning university exam-deferral platform with a RAG-grounded policy assistant.
                 </p>
               </div>
@@ -85,7 +85,7 @@ export default function AboutPage() {
                   <p className="text-black/75 text-xs leading-relaxed">
                     I have developed a strong passion for fitness and nutrition. I prioritize strength training,
                     balanced nutrition, and overall wellness in my daily life as I believe a healthy body supports a sharp mind. 
-                    I also indulge in playing sports such as volleyball, badminton, basketball, and pickleball. 
+                    I also indulge in playing sports such as volleyball, badminton, and basketball. 
                   </p>
                 </div>
                 
@@ -154,6 +154,11 @@ export default function AboutPage() {
                    className="flex items-center gap-3 text-black/70 hover:text-black transition-colors group">
                   <Linkedin className="w-4 h-4" />
                   <span className="text-xs tracking-wider">LinkedIn</span>
+                </a>
+                <a href="https://x.com/MVAFCode" target="_blank" rel="noopener noreferrer"
+                   className="flex items-center gap-3 text-black/70 hover:text-black transition-colors group">
+                  <Twitter className="w-4 h-4" />
+                  <span className="text-xs tracking-wider">Twitter/X</span>
                 </a>
                 <a href="mailto:farinasm@mymacewan.ca"
                    className="flex items-center gap-3 text-black/70 hover:text-black transition-colors group">
