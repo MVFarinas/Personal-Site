@@ -5,11 +5,12 @@ export const experiences = [
     location: 'Edmonton, AB',
     period: 'May 2026 - Present',
     responsibilities: [
-      'Migrating a legacy Microsoft Access database for Alberta rural water co-operatives to a fully functional web-based database',
+      'Migrating a legacy Microsoft Access database for Alberta rural water co-operatives to PostgreSQL/NocoDB, using a slice-by-slice, fidelity-tested methodology',
+      'Building a normalized Access/VBA application with role-based access control and approval workflows to replace flat Excel timecard tracking',
       'Administrating the Water Federation website and automating standard workplace procedures including form development',
       'Coordinating with stakeholders across rural Alberta water systems on data structure, access requirements, and rollout'
     ],
-    skills: ['Python', 'SQL', 'HTML/CSS', 'JavaScript', 'MS Access', 'Web Development']
+    skills: ['Python', 'SQL', 'PostgreSQL', 'VBA', 'Docker', 'HTML/CSS', 'JavaScript', 'MS Access', 'Web Development']
   },
   {
     title: 'Sales Associate',
@@ -38,9 +39,9 @@ export const experiences = [
 ];
 
 export const technicalSkills = {
-  languages: ['Python', 'Kotlin', 'JavaScript', 'C', 'SQL', 'HTML/CSS', 'LaTeX'],
+  languages: ['Python', 'Kotlin', 'JavaScript', 'C', 'SQL', 'PostgreSQL', 'VBA', 'HTML/CSS', 'LaTeX'],
   frameworks: ['Jetpack Compose', 'Ktor', 'JetBrains Exposed', 'Next.js', 'React', 'Tailwind CSS', 'Retrofit'],
-  tools: ['Git/GitHub', 'Docker', 'Railway', 'Firebase', 'Ollama', 'OpenAI API', 'Figma'],
+  tools: ['Git/GitHub', 'Docker', 'Railway', 'Firebase', 'Ollama', 'OpenAI API', 'NocoDB', 'Figma'],
   laboratory: ['Digital PCR', 'Flow Cytometry', 'ELISA', 'Cell Culture'],
   soft: ['Problem Solving', 'Team Collaboration', 'Communication', 'Adaptability']
 };

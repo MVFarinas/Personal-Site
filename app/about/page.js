@@ -30,6 +30,11 @@ export default function AboutPage() {
                   Today I focus on full-stack and Android development, with a particular interest in AI/LLM systems grounded in real-world data; most recently
                   Schedulater, an award-winning university exam-deferral platform with a RAG-grounded policy assistant.
                 </p>
+                <p className="text-black/85 text-sm leading-relaxed font-light">
+                  Currently, I&apos;m also working as a Database Administrator Intern with the Alberta Federation of Rural Water Co-ops, migrating a legacy
+                  Microsoft Access database to PostgreSQL/NocoDB and building a normalized Access/VBA application with role-based access control;
+                  rounding out my full-stack interests with hands-on database design and data migration experience.
+                </p>
               </div>
             </Card>
 
@@ -112,7 +117,7 @@ export default function AboutPage() {
                 <div>
                   <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Languages</h4>
                   <div className="space-y-1">
-                    {['Python', 'Kotlin', 'JavaScript', 'C', 'SQL', 'HTML/CSS'].map(skill => (
+                    {['Python', 'Kotlin', 'JavaScript', 'C', 'SQL', 'PostgreSQL', 'VBA', 'HTML/CSS'].map(skill => (
                       <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
                     ))}
                   </div>
@@ -121,7 +126,7 @@ export default function AboutPage() {
                 <div>
                   <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Tools</h4>
                   <div className="space-y-1">
-                    {['Git', 'Ktor', 'Jetpack Compose', 'Next.js', 'React', 'Docker', 'Firebase', 'Ollama', 'Figma'].map(skill => (
+                    {['Git', 'Ktor', 'Jetpack Compose', 'Next.js', 'React', 'Docker', 'Firebase', 'Ollama', 'NocoDB', 'Figma'].map(skill => (
                       <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
                     ))}
                   </div>

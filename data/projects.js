@@ -24,21 +24,21 @@ export const projects = [
   },
   {
     title: 'VocabMaxxing',
-    description: 'Android vocabulary app combining a Kotlin/Ktor backend with an OpenAI-powered semantic scoring service and a custom algorithmic scoring engine.',
+    description: 'Android vocabulary app combining a Kotlin/Ktor backend with a Groq-powered semantic scoring service and a custom algorithmic scoring engine.',
     tech: [
       'Kotlin',
       'Jetpack Compose',
       'Ktor',
       'JetBrains Exposed',
-      'SQLite',
-      'OpenAI GPT-4o-mini',
+      'PostgreSQL',
+      'Groq (Llama 3.3 70B)',
       'Firebase Authentication',
       'Docker',
       'Railway'
     ],
     github: 'https://github.com/MVFarinas/VocabMaxxing',
     features: [
-      'Hybrid scoring: GPT-4o-mini semantic rubric + custom algorithmic engine (stemming, structural complexity, vocabulary diversity, grammar)',
+      'Hybrid scoring: Groq Llama 3.3 70B semantic rubric + custom algorithmic engine (stemming, structural complexity, vocabulary diversity, grammar)',
       'Hardened system prompts against prompt-injection, language, and content-policy attacks',
       'Gamification mechanics: streaks, XP, and a coin shop',
       'Microphone capture and daily practice flow on the Android client'
@@ -75,6 +75,39 @@ export const projects = [
       'Automatic transcription of phone menu audio',
       'Parsing of verbalized numbers and instructions',
       'Clean, formatted output for easy navigation'
+    ]
+  },
+  {
+    title: 'COSL301 Trip Planner',
+    description: 'Course startup project (COSL 301) building a trip itinerary planner that sequences day-by-day plans, optimizes routes to minimize travel time, and surfaces AI-ranked restaurants, activities, and events anchored to lodging on a map.',
+    wip: true,
+    tech: [
+      'Flutter',
+      'Supabase',
+      'PostgreSQL',
+      'PostGIS',
+      'Groq (Llama 70B)',
+      'OpenStreetMap / Overpass API',
+      'TypeScript',
+      'Vercel'
+    ],
+    features: [
+      'Pivoted from an original flight-booking concept to itinerary planning based on user interviews and pain-point validation',
+      'Route optimization to minimize day-to-day travel time',
+      'AI-ranked recommendations for restaurants, activities, and events anchored to lodging',
+      'Geo queries powered by PostGIS over a static Edmonton dataset'
+    ]
+  },
+  {
+    title: '2D Roguelike',
+    description: 'Top-down 2D roguelike shooter built with a small team under the GitHub org NullPointer-Studios.',
+    wip: true,
+    tech: ['Godot 4.6', 'GDScript', 'Jolt Physics'],
+    github: 'https://github.com/NullPointer-Studios/2d-roguelike',
+    features: [
+      'CharacterBody2D-based projectile system with travel and collision handling',
+      'Three firing modes: single, burst, and shotgun',
+      'Procedural terrain generation experiment using noise-based map generation'
     ]
   }
 ];
