@@ -2,6 +2,7 @@ import SectionHeader from '@/components/ui/SectionHeader';
 import Card from '@/components/ui/Card';
 import BulletList from '@/components/ui/BulletList';
 import TechTags from '@/components/ui/TechTags';
+import Reveal from '@/components/ui/Reveal';
 import { experiences, technicalSkills } from '@/data/experience';
 
 export default function ExperiencePage() {
@@ -15,8 +16,9 @@ export default function ExperiencePage() {
 
         {/* Experience Cards */}
         <div className="grid gap-6">
-          {experiences.map((exp) => (
-            <Card key={exp.company} className="p-8">
+          {experiences.map((exp, i) => (
+            <Reveal key={exp.company} delay={i * 0.05}>
+            <Card className="p-8">
               <div className="mb-4">
                 <h3 className="text-black text-sm tracking-[0.15em] font-medium uppercase">{exp.title}</h3>
                 <div className="flex gap-4 mt-2 text-black/60 text-xs">
@@ -34,6 +36,7 @@ export default function ExperiencePage() {
               
               <TechTags tags={exp.skills} />
             </Card>
+            </Reveal>
           ))}
         </div>
 
@@ -43,6 +46,7 @@ export default function ExperiencePage() {
             Technical Expertise
           </h3>
           
+          <Reveal>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             <Card className="p-6">
               <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">Languages</h4>
@@ -89,6 +93,7 @@ export default function ExperiencePage() {
               </div>
             </Card>
           </div>
+          </Reveal>
         </div>
       </div>
     </div>

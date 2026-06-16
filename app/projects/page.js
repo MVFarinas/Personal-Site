@@ -3,6 +3,7 @@ import SectionHeader from '@/components/ui/SectionHeader';
 import Card from '@/components/ui/Card';
 import BulletList from '@/components/ui/BulletList';
 import TechTags from '@/components/ui/TechTags';
+import Reveal from '@/components/ui/Reveal';
 import { projects } from '@/data/projects';
 
 export default function ProjectsPage() {
@@ -16,8 +17,9 @@ export default function ProjectsPage() {
 
         {/* Projects Grid */}
         <div className="grid gap-6">
-          {projects.map((project) => (
-            <Card key={project.title} className="p-8" hover>
+          {projects.map((project, i) => (
+            <Reveal key={project.title} delay={i * 0.05}>
+            <Card className="p-8" hover>
               <div className="flex items-start justify-between mb-4">
                 <div>
                   <h3 className="text-black text-sm tracking-[0.2em] font-medium uppercase flex items-center gap-3">
@@ -56,6 +58,7 @@ export default function ProjectsPage() {
                 <TechTags tags={project.tech} />
               </div>
             </Card>
+            </Reveal>
           ))}
         </div>
       </div>

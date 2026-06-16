@@ -1,6 +1,8 @@
+import Image from 'next/image';
 import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Card from '@/components/ui/Card';
+import Reveal from '@/components/ui/Reveal';
 
 export default function AboutPage() {
   return (
@@ -15,6 +17,7 @@ export default function AboutPage() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-8">
             {/* Introduction Card */}
+            <Reveal>
             <Card className="p-10">
               <h3 className="text-black text-[13px] tracking-[0.3em] font-medium uppercase mb-6">
                 The Interdisciplinary Journey
@@ -37,8 +40,10 @@ export default function AboutPage() {
                 </p>
               </div>
             </Card>
+            </Reveal>
 
             {/* Education Timeline */}
+            <Reveal>
             <Card className="p-10">
               <h3 className="text-black text-[13px] tracking-[0.3em] font-medium uppercase mb-8">
                 Educational Path
@@ -77,8 +82,10 @@ export default function AboutPage() {
                 </div>
               </div>
             </Card>
+            </Reveal>
 
             {/* Personal Interests */}
+            <Reveal>
             <Card className="p-10">
               <h3 className="text-black text-[13px] tracking-[0.3em] font-medium uppercase mb-6">
                 Beyond the Code
@@ -103,11 +110,34 @@ export default function AboutPage() {
                 </div>
               </div>
             </Card>
+            </Reveal>
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
+            {/* Portrait */}
+            <Reveal>
+            <Card className="p-3">
+              <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#f6f5f1]">
+                <Image
+                  src="/edited.png"
+                  alt="Mark Farinas"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 360px"
+                  className="object-cover object-top"
+                  priority
+                />
+              </div>
+              <div className="text-center mt-3 mb-1">
+                <p className="text-black/50 text-[10px] tracking-[0.3em] uppercase">
+                  Mark Farinas
+                </p>
+              </div>
+            </Card>
+            </Reveal>
+
             {/* Skills Card */}
+            <Reveal>
             <Card className="p-8">
               <h3 className="text-black text-[11px] tracking-[0.3em] font-medium uppercase mb-6">
                 Technical Stack
@@ -144,8 +174,10 @@ export default function AboutPage() {
               
               </div>
             </Card>
+            </Reveal>
 
             {/* Contact Card */}
+            <Reveal delay={0.05}>
             <Card className="p-8">
               <h3 className="text-black text-[11px] tracking-[0.3em] font-medium uppercase mb-6">Connect</h3>
               
@@ -172,6 +204,7 @@ export default function AboutPage() {
                 </a>
               </div>
             </Card>
+            </Reveal>
           </div>
         </div>
       </div>

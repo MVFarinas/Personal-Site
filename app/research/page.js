@@ -2,6 +2,7 @@ import SectionHeader from '@/components/ui/SectionHeader';
 import Card from '@/components/ui/Card';
 import BulletList from '@/components/ui/BulletList';
 import TechTags from '@/components/ui/TechTags';
+import Reveal from '@/components/ui/Reveal';
 import { researchExperiences, publications } from '@/data/research';
 
 export default function ResearchPage() {
@@ -20,8 +21,9 @@ export default function ResearchPage() {
           </h3>
           
           <div className="space-y-6">
-            {researchExperiences.map((experience) => (
-              <Card key={experience.lab} className="p-8">
+            {researchExperiences.map((experience, i) => (
+              <Reveal key={experience.lab} delay={i * 0.05}>
+              <Card className="p-8">
                 <div>
                   <h4 className="text-black text-sm tracking-[0.15em] font-medium uppercase">
                     {experience.lab}
@@ -42,6 +44,7 @@ export default function ResearchPage() {
                   </div>
                 </div>
               </Card>
+              </Reveal>
             ))}
           </div>
         </div>
@@ -53,8 +56,9 @@ export default function ResearchPage() {
           </h3>
           
           <div className="grid gap-4">
-            {publications.map((pub) => (
-              <Card key={pub.title} className="p-6">
+            {publications.map((pub, i) => (
+              <Reveal key={pub.title} delay={i * 0.05}>
+              <Card className="p-6">
                 <h4 className="text-black text-xs leading-relaxed mb-2">{pub.title}</h4>
                 <p className="text-black/60 text-xs">{pub.authors}</p>
                 <div className="flex items-center gap-3 text-[10px] text-black/50 mt-2">
@@ -75,6 +79,7 @@ export default function ResearchPage() {
                   )}
                 </div>
               </Card>
+              </Reveal>
             ))}
           </div>
         </div>
