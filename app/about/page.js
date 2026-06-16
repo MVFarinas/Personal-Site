@@ -3,6 +3,7 @@ import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Card from '@/components/ui/Card';
 import Reveal from '@/components/ui/Reveal';
+import ScrollText from '@/components/ui/ScrollText';
 
 export default function AboutPage() {
   return (
@@ -23,11 +24,9 @@ export default function AboutPage() {
                 The Interdisciplinary Journey
               </h3>
               <div className="space-y-4">
-                <p className="text-black/85 text-sm leading-relaxed font-light">
-                  My name is Mark Farinas, a Computer Science student at MacEwan University with a background in Immunology from the University of Alberta. 
-                  Before moving into software, I worked with complex biological systems, data, and research pipelines to tackle real-world health challenges.
-                  These experiences have shaped my analytical thinking and problem-solving skills, which I now apply to software development.
-                </p>
+                <ScrollText className="text-sm leading-relaxed font-light">
+                  My name is Mark Farinas, a Computer Science student at MacEwan University with a background in Immunology from the University of Alberta. Before moving into software, I worked with complex biological systems, data, and research pipelines to tackle real-world health challenges. These experiences have shaped my analytical thinking and problem-solving skills, which I now apply to software development.
+                </ScrollText>
                 <p className="text-black/85 text-sm leading-relaxed font-light">
                   From studying T-cells and antibodies to working on COVID-19 research, my path has been anything but linear; but always deeply technical.
                   Today I focus on full-stack and Android development, with a particular interest in AI/LLM systems grounded in real-world data; most recently

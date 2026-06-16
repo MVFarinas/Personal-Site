@@ -33,6 +33,40 @@
   }
 }
 
+/* Scroll-driven word-by-word text highlight (ScrollText.jsx) */
+.scroll-text__word {
+  /* Readable default for browsers without scroll-driven animation support */
+  color: hsl(0 0% 0% / 0.85);
+}
+
+@supports (animation-timeline: view()) {
+  .scroll-text {
+    view-timeline-name: --scroll-text;
+    view-timeline-axis: block;
+  }
+
+  .scroll-text__word {
+    color: hsl(0 0% 0% / 0.18);
+    animation: text-brighten linear both;
+    animation-timeline: --scroll-text;
+    animation-range: cover calc(var(--i) / var(--total) * 100%)
+                     cover calc((var(--i) + 3) / var(--total) * 100%);
+  }
+
+  @keyframes text-brighten {
+    to {
+      color: hsl(0 0% 0% / 0.9);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-text__word {
+    animation: none;
+    color: hsl(0 0% 0% / 0.85);
+  }
+}
+
 /* Custom Scrollbar - Refined */
 ::-webkit-scrollbar {
   width: 8px;
