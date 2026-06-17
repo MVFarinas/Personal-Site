@@ -33,6 +33,87 @@
   }
 }
 
+/* Springy "blooming" CTA pill (CtaPill.jsx) — monochrome re-skin of jh3y's pen */
+.cta-pill {
+  --elastic: linear(
+    0, 0.4789 7.06%, 0.7612 12.38%, 0.8693 15.13%, 0.9538 17.95%,
+    1.0165 20.89%, 1.059 24.04%, 1.0782 26.06%, 1.0865 28.18%,
+    1.0825 32.18%, 1.0531 38.78%, 1.0162 45.05%, 1.0006 49.93%,
+    0.9908 55.36%, 0.9924 65.13%, 1.0013 84.95%, 1
+  );
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 100px;
+  background: hsl(0 0% 8%);
+  color: hsl(40 33% 97%);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  text-decoration: none;
+  isolation: isolate;
+  transition: transform 0.5s var(--elastic), background 0.3s ease;
+}
+
+.cta-pill:is(:hover, :focus-visible) {
+  transform: scale(1.05);
+  background: hsl(0 0% 0%);
+}
+
+.cta-pill__bloom {
+  position: absolute;
+  inset: 0;
+  border-radius: 100px;
+  background: hsl(0 0% 8%);
+  z-index: -1;
+}
+
+.cta-pill__icon {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: hsl(40 33% 97%);
+  color: hsl(0 0% 8%);
+  transition: transform 0.5s var(--elastic);
+}
+
+.cta-pill:is(:hover, :focus-visible) .cta-pill__icon {
+  transform: translateX(2px) rotate(45deg) scale(1.05);
+}
+
+@supports (animation-timeline: view()) {
+  .cta-pill {
+    animation: cta-bloom both var(--elastic);
+    animation-timeline: view();
+    animation-range: entry 10% cover 35%;
+  }
+
+  @keyframes cta-bloom {
+    from {
+      transform: scale(0.6);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cta-pill {
+    animation: none;
+    transition: background 0.3s ease;
+  }
+  .cta-pill:is(:hover, :focus-visible) {
+    transform: none;
+  }
+}
+
 /* Custom Scrollbar - Refined */
 ::-webkit-scrollbar {
   width: 8px;

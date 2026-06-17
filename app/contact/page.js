@@ -1,12 +1,18 @@
-import { Github, Linkedin, Download, Layers, Twitter } from 'lucide-react';
+import { Github, Linkedin, Download, Layers, Twitter, Mail } from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Card from '@/components/ui/Card';
+import CtaPill from '@/components/ui/CtaPill';
 
 export default function ContactPage() {
   return (
     <div className="min-h-screen bg-[#f6f5f1] pt-24 pb-16 flex items-center">
       <div className="max-w-4xl mx-auto px-6 w-full">
         <SectionHeader title="Contact" subtitle="Let's connect" />
+
+        {/* Primary CTA */}
+        <div className="flex justify-center mb-10">
+          <CtaPill href="mailto:farinasm@mymacewan.ca" label="Get in touch" Icon={Mail} />
+        </div>
 
         {/* Contact Business Card Style */}
         <Card className="p-12 mb-8">
