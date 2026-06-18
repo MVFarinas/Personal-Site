@@ -10,9 +10,10 @@ export default function ProjectsPage() {
   return (
     <div className="min-h-screen bg-[#f6f5f1] pt-24 pb-16">
       <div className="max-w-6xl mx-auto px-6">
-        <SectionHeader 
-          title="Projects" 
-          subtitle="Building cool things that resolve real-world problems." 
+        <SectionHeader
+          title="Projects"
+          subtitle="Building cool things that resolve real-world problems."
+          gradient
         />
 
         {/* Projects Grid */}

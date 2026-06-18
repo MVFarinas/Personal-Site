@@ -8,9 +8,10 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-[#f6f5f1] pt-24 pb-16">
       <div className="max-w-6xl mx-auto px-6">
-        <SectionHeader 
-        title="About" 
-        subtitle="Learn more about my journey, skills, and interests." 
+        <SectionHeader
+        title="About"
+        subtitle="Learn more about my journey, skills, and interests."
+        gradient
         />
 
         <div className="grid lg:grid-cols-3 gap-12">

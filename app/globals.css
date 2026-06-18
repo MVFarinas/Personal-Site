@@ -33,6 +33,43 @@
   }
 }
 
+/* Scroll-driven gradient headline (SectionHeader gradient prop) */
+.section-header--gradient {
+  background: linear-gradient(
+    90deg,
+    hsl(0 0% 5%),
+    hsl(0 0% 40%) 40%,
+    hsl(0 0% 15%) 65%,
+    hsl(0 0% 5%)
+  );
+  background-size: 300% 100%;
+  background-position: 0% 0%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+@supports (animation-timeline: view()) {
+  .section-header--gradient {
+    animation: gradient-shift both linear;
+    animation-timeline: view();
+    animation-range: entry 0% cover 60%;
+  }
+
+  @keyframes gradient-shift {
+    from { background-position: 0% 0%; }
+    to   { background-position: 100% 0%; }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .section-header--gradient {
+    animation: none;
+    background-position: 50% 0%;
+  }
+}
+
 /* Custom Scrollbar - Refined */
 ::-webkit-scrollbar {
   width: 8px;
