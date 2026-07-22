@@ -119,7 +119,7 @@ export default function AboutPage() {
             <Card className="p-3">
               <div className="relative w-full aspect-[3/4] overflow-hidden bg-[#f6f5f1]">
                 <Image
-                  src="/edited.png"
+                  src="/portrait.webp"
                   alt="Mark Farinas"
                   fill
                   sizes="(max-width: 1024px) 100vw, 360px"
