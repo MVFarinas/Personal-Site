@@ -148,7 +148,7 @@ export default function AboutPage() {
                 <div>
                   <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Languages</h4>
                   <div className="space-y-1">
-                    {['Python', 'Kotlin', 'Dart', 'SQL', 'JavaScript', 'HTML/CSS', 'GDScript', 'VBA'].map(skill => (
+                    {['Python', 'Kotlin', 'Dart', 'SQL', 'JavaScript', 'HTML/CSS', 'GDScript', 'C', 'VBA'].map(skill => (
                       <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
                     ))}
                   </div>
@@ -157,7 +157,7 @@ export default function AboutPage() {
                 <div>
                   <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Frameworks & Data</h4>
                   <div className="space-y-1">
-                    {['Jetpack Compose', 'Flutter', 'Ktor', 'Next.js', 'React', 'PostgreSQL', 'PostGIS', 'Supabase', 'Docker'].map(skill => (
+                    {['Jetpack Compose', 'Flutter', 'Ktor', 'Next.js', 'React', 'FastAPI', 'PostgreSQL', 'PostGIS', 'Supabase', 'Docker'].map(skill => (
                       <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
                     ))}
                   </div>
@@ -166,7 +166,7 @@ export default function AboutPage() {
                 <div>
                   <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">AI & Cloud</h4>
                   <div className="space-y-1">
-                    {['Ollama', 'Groq', 'RAG pipelines', 'Whisper AI', 'Cloudflare', 'Vercel', 'Railway', 'Firebase'].map(skill => (
+                    {['Ollama', 'Groq', 'RAG pipelines', 'Whisper AI', 'Cloudflare', 'Vercel', 'Railway', 'Firebase', 'GitHub Actions'].map(skill => (
                       <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
                     ))}
                   </div>

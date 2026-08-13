@@ -94,9 +94,9 @@ export default function ExperiencePage() {
             </Card>
 
             <Card className="p-6">
-              <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">Tools & Platforms</h4>
+              <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">Quality & Tools</h4>
               <div className="space-y-1">
-                {technicalSkills.tools.map(skill => (
+                {technicalSkills.quality.map(skill => (
                   <div key={skill} className="text-black/70 text-xs">{skill}</div>
                 ))}
               </div>

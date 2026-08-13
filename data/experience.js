@@ -51,12 +51,12 @@ export const experiences = [
 ];
 
 export const technicalSkills = {
-  languages: ['Python', 'Kotlin', 'Dart', 'SQL', 'JavaScript', 'HTML/CSS', 'GDScript', 'VBA'],
-  frameworks: ['Jetpack Compose', 'Flutter', 'Ktor', 'JetBrains Exposed', 'Next.js', 'React', 'Retrofit'],
+  languages: ['Python', 'Kotlin', 'Dart', 'SQL', 'JavaScript', 'HTML/CSS', 'GDScript', 'C', 'VBA'],
+  frameworks: ['Jetpack Compose', 'Flutter', 'Ktor', 'JetBrains Exposed', 'Next.js', 'React', 'FastAPI', 'Retrofit'],
   databases: ['PostgreSQL', 'PostGIS', 'SQLite', 'Supabase', 'Microsoft Access', 'NocoDB', 'Docker'],
-  ai: ['Ollama', 'Groq', 'RAG pipelines', 'Whisper AI', 'LLM evaluation', 'Agent-trajectory analysis'],
-  cloud: ['Cloudflare (Workers, DNS, Email Routing)', 'Vercel', 'Railway', 'Firebase', 'DNS/TLS administration'],
-  tools: ['Git', 'Figma', 'Supabase Edge Functions'],
+  ai: ['Ollama', 'Groq', 'RAG pipelines', 'Vector embeddings', 'Whisper AI', 'LLM evaluation', 'Agent-trajectory analysis', 'Inter-rater agreement (Cohen’s κ, Krippendorff’s α)'],
+  cloud: ['Cloudflare (Workers, DNS, Email Routing)', 'Vercel', 'Railway.io', 'Firebase', 'GitHub Actions', 'DNS/TLS administration'],
+  quality: ['pytest', 'mypy --strict', 'CI test matrices', 'Git', 'Figma'],
   laboratory: ['Digital PCR', 'Flow Cytometry', 'ELISA', 'Cell Culture'],
   soft: ['Problem Solving', 'Team Collaboration', 'Communication', 'Adaptability']
 };
