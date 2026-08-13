@@ -6,7 +6,7 @@ import { ArrowUpRight } from 'lucide-react';
  *
  * The pill blooms in on scroll via a native CSS scroll-driven animation
  * (animation-timeline: view()) with elastic `linear()` easing, and springs
- * on hover. Pure CSS — see globals.css `.cta-pill`. Degrades to a static,
+ * on hover. Pure CSS - see globals.css `.cta-pill`. Degrades to a static,
  * fully-usable button without scroll-timeline support or with reduced
  * motion. Server component (just an anchor).
  */

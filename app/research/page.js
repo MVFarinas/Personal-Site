@@ -14,47 +14,12 @@ export default function ResearchPage() {
           subtitle="Contributions towards scientific knowledge and innovation." 
         />
 
-        {/* Research Timeline */}
-        <div className="mb-12">
-          <h3 className="text-black text-[13px] tracking-[0.3em] font-medium uppercase mb-8">
-            Laboratory Experience
-          </h3>
-          
-          <div className="space-y-6">
-            {researchExperiences.map((experience, i) => (
-              <Reveal key={experience.lab} delay={i * 0.05}>
-              <Card className="p-8">
-                <div>
-                  <h4 className="text-black text-sm tracking-[0.15em] font-medium uppercase">
-                    {experience.lab}
-                  </h4>
-                  <div className="flex gap-4 mt-2 text-black/60 text-xs">
-                    <span>{experience.institution}</span>
-                    <span>·</span>
-                    <span>{experience.period}</span>
-                  </div>
-                  <p className="text-black/80 text-xs mt-3 tracking-wider">{experience.focus}</p>
-                  
-                  <div className="mt-6">
-                    <BulletList items={experience.responsibilities} label="Contributions" />
-                  </div>
-                  
-                  <div className="mt-6">
-                    <TechTags tags={experience.techniques} />
-                  </div>
-                </div>
-              </Card>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-
         {/* Publications Section */}
-        <div>
+        <div className="mb-12">
           <h3 className="text-black text-[13px] tracking-[0.3em] font-medium uppercase mb-8">
             Publications & Presentations
           </h3>
-          
+
           <div className="grid gap-4">
             {publications.map((pub, i) => (
               <Reveal key={pub.title} delay={i * 0.05}>
@@ -77,6 +42,41 @@ export default function ResearchPage() {
                       <span>{pub.location}</span>
                     </>
                   )}
+                </div>
+              </Card>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+
+        {/* Research Timeline */}
+        <div>
+          <h3 className="text-black text-[13px] tracking-[0.3em] font-medium uppercase mb-8">
+            Laboratory Experience
+          </h3>
+
+          <div className="space-y-6">
+            {researchExperiences.map((experience, i) => (
+              <Reveal key={experience.lab} delay={i * 0.05}>
+              <Card className="p-8">
+                <div>
+                  <h4 className="text-black text-sm tracking-[0.15em] font-medium uppercase">
+                    {experience.lab}
+                  </h4>
+                  <div className="flex gap-4 mt-2 text-black/60 text-xs">
+                    <span>{experience.institution}</span>
+                    <span>·</span>
+                    <span>{experience.period}</span>
+                  </div>
+                  <p className="text-black/80 text-xs mt-3 tracking-wider">{experience.focus}</p>
+
+                  <div className="mt-6">
+                    <BulletList items={experience.responsibilities} label="Contributions" />
+                  </div>
+
+                  <div className="mt-6">
+                    <TechTags tags={experience.techniques} />
+                  </div>
                 </div>
               </Card>
               </Reveal>

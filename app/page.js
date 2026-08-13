@@ -7,9 +7,9 @@ import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion
 
 const insideLinks = [
   { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/research', label: 'Research' },
   { href: '/experience', label: 'Experience' },
+  { href: '/research', label: 'Research' },
+  { href: '/projects', label: 'Projects' },
   { href: '/contact', label: 'Contact' },
 ];
 
@@ -122,7 +122,7 @@ function CardFront() {
   );
 }
 
-/* The "inside" of the card — the site index revealed by the flip. */
+/* The "inside" of the card - the site index revealed by the flip. */
 function CardInside() {
   return (
     <div className="relative bg-[#fffef9] border border-gray-300/30 p-16 h-full flex flex-col justify-center">
@@ -183,8 +183,12 @@ export default function HomePage() {
     offset: ['start start', 'end end'],
   });
 
-  const rotateX = useTransform(scrollYProgress, [0, 0.55], [0, 180]);
-  const insideOpacity = useTransform(scrollYProgress, [0.45, 0.7], [0, 1]);
+  // One card, two solid faces (CardFront / CardInside) mounted back-to-back on a
+  // single rotating element. backfaceVisibility hides whichever face points away,
+  // so the front shows from 0-90deg and the back from 90-180deg, each fully opaque
+  // and equally bright. The flip completes by 80% of the track, then the fully
+  // revealed back rests pinned through the bottom of the scroll.
+  const rotateX = useTransform(scrollYProgress, [0, 0.8], [0, 180]);
   const hintOpacity = useTransform(scrollYProgress, [0, 0.1], [1, 0]);
 
   // Reduced-motion / no-JS-friendly fallback: a static stacked layout.
@@ -209,7 +213,7 @@ export default function HomePage() {
       <Background />
 
       {/* Tall scroll track gives the flip room to scrub. */}
-      <div ref={ref} className="relative h-[260vh]">
+      <div ref={ref} className="relative h-[220vh]">
         {/* Pinned stage */}
         <div className="sticky top-0 h-screen flex items-center justify-center px-6 overflow-hidden">
           <div className="relative w-full max-w-3xl" style={{ perspective: 1600 }}>
@@ -217,18 +221,17 @@ export default function HomePage() {
               className="relative w-full"
               style={{ rotateX, transformStyle: 'preserve-3d' }}
             >
-              {/* Front face — defines the card height */}
+              {/* Front face - defines the card height */}
               <div style={{ backfaceVisibility: 'hidden' }}>
                 <CardFront />
               </div>
 
-              {/* Back face — the inside, pre-rotated so it reads correctly */}
+              {/* Back face - the inside, pre-rotated so it reads correctly */}
               <motion.div
                 className="absolute inset-0"
                 style={{
                   transform: 'rotateX(180deg)',
                   backfaceVisibility: 'hidden',
-                  opacity: insideOpacity,
                 }}
               >
                 <CardInside />
@@ -241,7 +244,7 @@ export default function HomePage() {
               className="absolute -bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
             >
               <p className="text-black/50 text-[10px] tracking-[0.3em] uppercase font-light">
-                Scroll to open
+                Scroll to Flip
               </p>
               <ChevronDown className="w-3 h-3 text-black/30 animate-pulse" />
             </motion.div>

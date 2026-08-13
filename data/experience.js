@@ -5,7 +5,7 @@ export const experiences = [
     location: 'Remote',
     period: 'August 2026 - Present',
     responsibilities: [
-      'Evaluate model-generated code and multi-step agent trajectories against structured rubrics — instruction adherence, correctness, edge-case handling, security, and completeness — producing written justifications used as training signal for LLM development',
+      'Evaluate model-generated code and multi-step agent trajectories against structured rubrics (instruction adherence, correctness, edge-case handling, security, and completeness), producing written justifications used as training signal for LLM development',
       'Debug and review AI-generated code across Python, JavaScript, Java, Go, and SQL; assess tool selection, step ordering, and error recovery in agent execution traces',
       'Selected through a multi-stage technical assessment (timed screening, annotation take-home, and interview) from a posting pool of over 1,000 applicants'
     ],
@@ -25,18 +25,6 @@ export const experiences = [
     skills: ['Python', 'SQL', 'PostgreSQL', 'VBA', 'Docker', 'NocoDB', 'MS Access', 'ETL']
   },
   {
-    title: 'Sales Associate',
-    company: "Popeye's Supplements",
-    location: 'Edmonton, AB',
-    period: 'July 2022 - Present',
-    responsibilities: [
-      'Advise clients on supplements supporting athletic performance',
-      'Conduct in-store demos and community engagement',
-      'Educate the public on science-backed health solutions'
-    ],
-    skills: ['Customer Service', 'Health Education', 'Sales']
-  },
-  {
     title: 'Lab Specialist',
     company: 'Alberta Precision Labs',
     location: 'Edmonton, AB',
@@ -47,6 +35,18 @@ export const experiences = [
       'Analyzed data using AbsoluteQ and Microsoft Office'
     ],
     skills: ['Digital PCR', 'RT-PCR', 'RNA Extraction', 'Data Analysis']
+  },
+  {
+    title: 'Sales Associate',
+    company: "Popeye's Supplements",
+    location: 'Edmonton, AB',
+    period: 'July 2022 - May 2026',
+    responsibilities: [
+      'Advise clients on supplements supporting athletic performance',
+      'Conduct in-store demos and community engagement',
+      'Educate the public on science-backed health solutions'
+    ],
+    skills: ['Customer Service', 'Health Education', 'Sales']
   }
 ];
 

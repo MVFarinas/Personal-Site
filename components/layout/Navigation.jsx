@@ -8,9 +8,9 @@ import { Menu, X } from 'lucide-react';
 const navItems = [
   { href: '/', label: 'home' },
   { href: '/about', label: 'about' },
-  { href: '/projects', label: 'projects' },
-  { href: '/research', label: 'research' },
   { href: '/experience', label: 'experience' },
+  { href: '/research', label: 'research' },
+  { href: '/projects', label: 'projects' },
   { href: '/blog', label: 'blog' },
   { href: '/contact', label: 'contact' },
 ];

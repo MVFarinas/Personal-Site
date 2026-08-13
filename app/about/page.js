@@ -3,7 +3,6 @@ import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Card from '@/components/ui/Card';
 import Reveal from '@/components/ui/Reveal';
-import ScrollText from '@/components/ui/ScrollText';
 
 export default function AboutPage() {
   return (
@@ -24,9 +23,9 @@ export default function AboutPage() {
                 The Interdisciplinary Journey
               </h3>
               <div className="space-y-4">
-                <ScrollText className="text-sm leading-relaxed font-light">
+                <p className="text-black/85 text-sm leading-relaxed font-light">
                   My name is Mark Farinas, a Computer Science student at MacEwan University with a background in Immunology from the University of Alberta. Before moving into software, I worked with complex biological systems, data, and research pipelines to tackle real-world health challenges. These experiences have shaped my analytical thinking and problem-solving skills, which I now apply to software development.
-                </ScrollText>
+                </p>
                 <p className="text-black/85 text-sm leading-relaxed font-light">
                   From studying T-cells and antibodies to working on COVID-19 research, my path has been anything but linear; but always deeply technical.
                   Today I focus on full-stack, mobile, and AI/LLM systems grounded in real-world data; most recently Schedulater, an award-winning
@@ -62,7 +61,7 @@ export default function AboutPage() {
                     </p>
                     <div className="mt-4 space-y-1.5">
                       <p className="text-black/75 text-xs leading-relaxed">
-                        <span className="font-medium">Award (Apr 2026):</span> 1st Place &mdash; CMPT 395 Software Engineering Competition (IEEE-Sponsored), with Schedulater
+                        <span className="font-medium">Award (Apr 2026):</span> 1st Place - CMPT 395 Software Engineering Competition (IEEE-Sponsored), with Schedulater
                       </p>
                       <p className="text-black/75 text-xs leading-relaxed">
                         <span className="font-medium">Publication (Accepted Jul 2026):</span> Co-authored paper accepted to IEEE SmartEdu 2026
@@ -134,6 +133,26 @@ export default function AboutPage() {
                   Mark Farinas
                 </p>
               </div>
+
+              {/* Social links - horizontal row beneath the name */}
+              <div className="flex items-center justify-center gap-6 mt-4 mb-2">
+                <a href="https://github.com/MVFarinas" target="_blank" rel="noopener noreferrer"
+                   aria-label="GitHub" className="text-black/50 hover:text-black transition-colors">
+                  <Github className="w-4 h-4" />
+                </a>
+                <a href="https://linkedin.com/in/MarkVincentFarinas" target="_blank" rel="noopener noreferrer"
+                   aria-label="LinkedIn" className="text-black/50 hover:text-black transition-colors">
+                  <Linkedin className="w-4 h-4" />
+                </a>
+                <a href="https://x.com/MVAFCode" target="_blank" rel="noopener noreferrer"
+                   aria-label="Twitter/X" className="text-black/50 hover:text-black transition-colors">
+                  <Twitter className="w-4 h-4" />
+                </a>
+                <a href="mailto:farinasm@mymacewan.ca"
+                   aria-label="Email" className="text-black/50 hover:text-black transition-colors">
+                  <Mail className="w-4 h-4" />
+                </a>
+              </div>
             </Card>
             </Reveal>
 
@@ -182,36 +201,6 @@ export default function AboutPage() {
                 </div>
                 
               
-              </div>
-            </Card>
-            </Reveal>
-
-            {/* Contact Card */}
-            <Reveal delay={0.05}>
-            <Card className="p-8">
-              <h3 className="text-black text-[11px] tracking-[0.3em] font-medium uppercase mb-6">Connect</h3>
-              
-              <div className="space-y-3">
-                <a href="https://github.com/MVFarinas" target="_blank" rel="noopener noreferrer" 
-                   className="flex items-center gap-3 text-black/70 hover:text-black transition-colors group">
-                  <Github className="w-4 h-4" />
-                  <span className="text-xs tracking-wider">GitHub</span>
-                </a>
-                <a href="https://linkedin.com/in/MarkVincentFarinas" target="_blank" rel="noopener noreferrer"
-                   className="flex items-center gap-3 text-black/70 hover:text-black transition-colors group">
-                  <Linkedin className="w-4 h-4" />
-                  <span className="text-xs tracking-wider">LinkedIn</span>
-                </a>
-                <a href="https://x.com/MVAFCode" target="_blank" rel="noopener noreferrer"
-                   className="flex items-center gap-3 text-black/70 hover:text-black transition-colors group">
-                  <Twitter className="w-4 h-4" />
-                  <span className="text-xs tracking-wider">Twitter/X</span>
-                </a>
-                <a href="mailto:farinasm@mymacewan.ca"
-                   className="flex items-center gap-3 text-black/70 hover:text-black transition-colors group">
-                  <Mail className="w-4 h-4" />
-                  <span className="text-xs tracking-wider">Email</span>
-                </a>
               </div>
             </Card>
             </Reveal>

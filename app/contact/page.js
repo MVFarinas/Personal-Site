@@ -1,4 +1,4 @@
-import { Github, Linkedin, Download, Layers, Twitter, Mail } from 'lucide-react';
+import { Github, Linkedin, Download, Twitter, Mail } from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Card from '@/components/ui/Card';
 import CtaPill from '@/components/ui/CtaPill';
@@ -47,7 +47,7 @@ export default function ContactPage() {
         </Card>
 
         {/* Social Links - Minimalist Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           <a
             href="https://github.com/MVFarinas"
             target="_blank"
@@ -85,16 +85,6 @@ export default function ContactPage() {
           >
             <Download className="w-5 h-5 text-black/60 group-hover:text-black mx-auto mb-2" />
             <span className="text-[10px] text-black/60 tracking-wider uppercase">Resume</span>
-          </a>
-
-          <a
-            href="https://www.figma.com/slides/S5br8BaBty7Y82T4lC4IcK/Final-Presentation?node-id=1-42&t=EdNg44sRf9QBvKs5-1"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-[#fffef9] border border-black/10 p-4 text-center hover:bg-black/5 transition-all group"
-          >
-            <Layers className="w-5 h-5 text-black/60 group-hover:text-black mx-auto mb-2" />
-            <span className="text-[10px] text-black/60 tracking-wider uppercase">Figma</span>
           </a>
         </div>
 
