@@ -101,7 +101,7 @@ export default function ContactPage() {
         {/* Bottom Text */}
         <div className="text-center mt-12">
           <p className="text-black/50 text-[10px] tracking-[0.2em] uppercase">
-            Open to opportunities in software development & bioinformatics
+            Open to opportunities in software development & AI systems
           </p>
         </div>
       </div>

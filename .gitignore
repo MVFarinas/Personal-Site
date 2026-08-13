@@ -38,3 +38,6 @@ next-env.d.ts
 #MacOS
 .DS_Store
 ._*
+
+# Claude Code
+.claude/

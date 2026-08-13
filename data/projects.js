@@ -1,7 +1,7 @@
 export const projects = [
   {
     title: 'Schedulater',
-    description: 'Full-stack mobile exam-deferral platform for university workflows. Won 1st Place at the IEEE-sponsored CMPT 395 Software Engineering Competition (April 2026). A research paper on its RAG-grounded policy assistant has been submitted to IEEE SmartEdu 2026.',
+    description: 'Full-stack mobile exam-deferral platform for university workflows. Won 1st Place at the IEEE-sponsored CMPT 395 Software Engineering Competition (April 2026). A research paper on its RAG-grounded policy assistant has been accepted to IEEE SmartEdu 2026.',
     tech: [
       'Kotlin',
       'Jetpack Compose',
@@ -56,46 +56,64 @@ export const projects = [
   },
   {
     title: 'Calorie Tracker & Planner',
-    description: 'Comprehensive CLI application for nutrition tracking with custom data structures and optimization algorithms.',
-    tech: ['Python', 'SciPy', 'Custom Data Structures', 'JSON/CSV'],
+    description: 'Python CLI application that reverse-engineers maintenance calories from tracked intake and weight data, models metabolic adaptation over a goal window, and solves for target intake with SciPy bounded optimization.',
+    tech: ['Python', 'SciPy', 'pytest', 'Custom Data Structures', 'JSON/CSV'],
     github: 'https://github.com/MVFarinas/Calorie-Tracker-and-Planner',
     features: [
-      'SciPy non-linear optimization for maintenance-calorie estimation',
-      'Personalized nutrition plans with algebraic and curve-fitted goal recommendations',
+      'Reverse-engineers maintenance calories from tracked intake and weight data',
+      'Models metabolic adaptation over a goal window and solves for target intake with SciPy bounded optimization',
       'Moving-average weight-trend analysis',
-      'Custom linked list implementation and JSON/CSV persistence'
+      'Custom linked list implementation and JSON/CSV persistence, validated by a 24-test pytest suite'
     ]
   },
   {
     title: 'Phone Menu Transcriber',
-    description: 'AI-powered tool that converts automated phone prompts into structured, readable menu options using Whisper AI.',
-    tech: ['Python', 'Whisper AI', 'Audio Processing'],
-    github: 'https://github.com/MVFarinas/Simple-Audio-to-Display',
+    description: 'Packaged Python transcription service that pairs Whisper speech-to-text with a locally-hosted Qwen 3 8B (Ollama) extractor to turn automated phone prompts into structured, readable menu options.',
+    tech: ['Python', 'Whisper AI', 'Ollama (Qwen 3 8B)', 'Pydantic', 'FastAPI', 'mypy'],
+    github: 'https://github.com/MVFarinas/Phone-Menu-Transcriber',
     features: [
-      'Automatic transcription of phone menu audio',
-      'Parsing of verbalized numbers and instructions',
-      'Clean, formatted output for easy navigation'
+      'Whisper speech-to-text feeding a locally-hosted Qwen 3 8B extractor behind a pluggable interface',
+      'Schema-constrained JSON output via Pydantic, exposed as both a CLI and a FastAPI service',
+      'mypy --strict typing and a 4-version CI matrix'
     ]
   },
   {
-    title: 'COSL301 Trip Planner',
-    description: 'Course startup project (COSL 301) building a trip itinerary planner that sequences day-by-day plans, optimizes routes to minimize travel time, and surfaces AI-ranked restaurants, activities, and events anchored to lodging on a map.',
-    wip: true,
+    title: 'iMapped',
+    description: 'Cross-platform trip-itinerary planner that sequences day-by-day plans, optimizes routes to minimize travel time, and surfaces AI-ranked restaurants, activities, and events anchored to lodging on a map. Built as a 5-person venture team in MacEwan\'s technology-entrepreneurship course (COSL 301) and shipped to web and native Android from one codebase.',
+    liveUrl: 'https://app.imapped.ca',
     tech: [
       'Flutter',
-      'Supabase',
-      'PostgreSQL',
-      'PostGIS',
+      'Dart',
+      'Supabase (Postgres, PostGIS, Edge Functions)',
       'Groq (Llama 70B)',
       'OpenStreetMap / Overpass API',
-      'TypeScript',
       'Vercel'
     ],
+    github: 'https://github.com/MVFarinas',
     features: [
-      'Pivoted from an original flight-booking concept to itinerary planning based on user interviews and pain-point validation',
-      'Route optimization to minimize day-to-day travel time',
-      'AI-ranked recommendations for restaurants, activities, and events anchored to lodging',
-      'Geo queries powered by PostGIS over a static Edmonton dataset'
+      'Shipped to web and native Android from one Flutter/Dart codebase (88 Dart source files across 210 commits, 172 tests green)',
+      'Client-side route optimizer in Dart — haversine distance with nearest-neighbour construction and 2-opt improvement — to sequence day-by-day plans and minimize total travel time',
+      'Recommendation re-ranker on Groq (Llama 70B) as a Supabase Edge Function, caching ranked results to control response latency and API cost',
+      'Integrated with Supabase (Postgres + PostGIS, PKCE auth, Edge Functions) behind repository interfaces, so seed-backed fakes could be swapped for live implementations without touching UI code',
+      'Pivoted from an original flight-booking concept to itinerary planning based on two rounds of user testing and pain-point validation'
+    ]
+  },
+  {
+    title: 'Client Storefront Rebuild & Delivery',
+    description: 'Rebuilt and relaunched a local retailer\'s storefront site overnight after a multi-day outage had severed its primary customer-facing channel — delivered at $0/month recurring cost with a full DNS, TLS, and email cutover.',
+    tech: [
+      'Cloudflare (Workers, DNS, Email Routing)',
+      'GoDaddy',
+      'DNS / DNSSEC',
+      'TLS',
+      'SPF/DKIM/DMARC',
+      'Static Site (no build step)'
+    ],
+    features: [
+      'Kept the revenue-generating online store up with zero downtime through the entire nameserver cutover: enumerated the legacy cPanel zone, verified DNSSEC state beforehand, and preserved the third-party e-commerce subdomain untouched',
+      'Rebuilt the site from scratch after the only surviving artifact proved to be an unusable dev-mode SPA capture; delivered a dependency-free static site with no build step',
+      'Configured TLS, Cloudflare Email Routing, and SPF/DKIM/DMARC (p=reject) so customer enquiries reach the business and its domain cannot be spoofed; added a fails-closed 18+ age gate and the privacy/terms pages the previous site never implemented',
+      'Structured the handover around client ownership — client-owned domain and admin access, a portable static-file deliverable, and a written runbook — so the business can change hosts or developers without losing its storefront again'
     ]
   },
   {

@@ -1,4 +1,4 @@
-import { Github } from 'lucide-react';
+import { Github, ExternalLink } from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
 import Card from '@/components/ui/Card';
 import BulletList from '@/components/ui/BulletList';
@@ -35,16 +35,30 @@ export default function ProjectsPage() {
                   </p>
                 </div>
                 
-                {project.github && (
-                  <a 
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-black/50 hover:text-black transition-colors"
-                  >
-                    <Github className="w-4 h-4" />
-                  </a>
-                )}
+                <div className="flex items-center gap-3 shrink-0">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-black/50 hover:text-black transition-colors"
+                      aria-label={`${project.title} live site`}
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  )}
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-black/50 hover:text-black transition-colors"
+                      aria-label={`${project.title} GitHub`}
+                    >
+                      <Github className="w-4 h-4" />
+                    </a>
+                  )}
+                </div>
               </div>
 
               {project.features && (

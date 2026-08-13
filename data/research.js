@@ -42,7 +42,7 @@ export const publications = [
     authors: 'Farinas, M., Garcia, A., Reyes, M., Nueva, J., Qureshi, N., Elsaadany, M., Shams, S.',
     venue: 'IEEE SmartEdu 2026',
     year: '2026',
-    status: 'Under Review'
+    status: 'Accepted'
   },
   {
     title: 'Current Methods and Future Research in the Diagnosis of Alzheimers Disease',

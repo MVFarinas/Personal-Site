@@ -67,6 +67,33 @@ export default function ExperiencePage() {
             </Card>
 
             <Card className="p-6">
+              <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">Databases & Infrastructure</h4>
+              <div className="space-y-1">
+                {technicalSkills.databases.map(skill => (
+                  <div key={skill} className="text-black/70 text-xs">{skill}</div>
+                ))}
+              </div>
+            </Card>
+
+            <Card className="p-6">
+              <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">AI / ML</h4>
+              <div className="space-y-1">
+                {technicalSkills.ai.map(skill => (
+                  <div key={skill} className="text-black/70 text-xs">{skill}</div>
+                ))}
+              </div>
+            </Card>
+
+            <Card className="p-6">
+              <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">Cloud & DevOps</h4>
+              <div className="space-y-1">
+                {technicalSkills.cloud.map(skill => (
+                  <div key={skill} className="text-black/70 text-xs">{skill}</div>
+                ))}
+              </div>
+            </Card>
+
+            <Card className="p-6">
               <h4 className="text-black/80 text-[10px] tracking-[0.2em] uppercase mb-4">Tools & Platforms</h4>
               <div className="space-y-1">
                 {technicalSkills.tools.map(skill => (

@@ -29,13 +29,15 @@ export default function AboutPage() {
                 </ScrollText>
                 <p className="text-black/85 text-sm leading-relaxed font-light">
                   From studying T-cells and antibodies to working on COVID-19 research, my path has been anything but linear; but always deeply technical.
-                  Today I focus on full-stack and Android development, with a particular interest in AI/LLM systems grounded in real-world data; most recently
-                  Schedulater, an award-winning university exam-deferral platform with a RAG-grounded policy assistant.
+                  Today I focus on full-stack, mobile, and AI/LLM systems grounded in real-world data; most recently Schedulater, an award-winning
+                  university exam-deferral platform with a RAG-grounded policy assistant, and iMapped, a Flutter trip-itinerary planner shipped to web and
+                  Android and live at app.imapped.ca.
                 </p>
                 <p className="text-black/85 text-sm leading-relaxed font-light">
-                  Currently, I&apos;m also working as a Database Administrator Intern with the Alberta Federation of Rural Water Co-ops, migrating a legacy
-                  Microsoft Access database to PostgreSQL/NocoDB and building a normalized Access/VBA application with role-based access control;
-                  rounding out my full-stack interests with hands-on database design and data migration experience.
+                  Currently, I&apos;m a Data Annotation Specialist for Software Engineering at Cohere, evaluating model-generated code and agent trajectories
+                  as training signal for LLM development, and a Database Administrator Intern with the Alberta Federation of Rural Water Co-ops, where I built
+                  a fidelity-tested Python ETL pipeline migrating a legacy Access database to a containerized PostgreSQL/NocoDB stack. I&apos;ve also delivered
+                  client web infrastructure end-to-end; rebuilding and relaunching a retailer&apos;s storefront across a full DNS, TLS, and email cutover.
                 </p>
               </div>
             </Card>
@@ -53,17 +55,17 @@ export default function AboutPage() {
                   <div className="absolute -left-1.5 top-0 w-3 h-3 bg-black/80 rounded-full"></div>
                   <div>
                     <h4 className="text-black text-sm font-medium tracking-wider">BSc Computer Science</h4>
-                    <p className="text-black/60 text-xs tracking-wider mt-1">MacEwan University • 2024 - Present</p>
+                    <p className="text-black/60 text-xs tracking-wider mt-1">MacEwan University • 2024 - Expected 2028</p>
                     <p className="text-black/70 text-xs mt-1">GPA: 3.6/4.0</p>
                     <p className="text-black/75 text-xs mt-3 leading-relaxed">
-                      Data Structures & Algorithms, Human-Computer Interaction, Python Programming, C Programming & UNIX, Software Engineering
+                      Data Structures & Algorithms, Human-Computer Interaction, Python Programming, C Programming & UNIX, Linear Algebra, Software Engineering
                     </p>
                     <div className="mt-4 space-y-1.5">
                       <p className="text-black/75 text-xs leading-relaxed">
                         <span className="font-medium">Award (Apr 2026):</span> 1st Place &mdash; CMPT 395 Software Engineering Competition (IEEE-Sponsored), with Schedulater
                       </p>
                       <p className="text-black/75 text-xs leading-relaxed">
-                        <span className="font-medium">Publication (May 2026):</span> Co-authored paper submitted to IEEE SmartEdu 2026
+                        <span className="font-medium">Publication (Accepted Jul 2026):</span> Co-authored paper accepted to IEEE SmartEdu 2026
                       </p>
                     </div>
                   </div>
@@ -146,21 +148,30 @@ export default function AboutPage() {
                 <div>
                   <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Languages</h4>
                   <div className="space-y-1">
-                    {['Python', 'Kotlin', 'JavaScript', 'C', 'SQL', 'PostgreSQL', 'VBA', 'HTML/CSS'].map(skill => (
+                    {['Python', 'Kotlin', 'Dart', 'SQL', 'JavaScript', 'HTML/CSS', 'GDScript', 'VBA'].map(skill => (
                       <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
                     ))}
                   </div>
                 </div>
 
                 <div>
-                  <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Tools</h4>
+                  <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Frameworks & Data</h4>
                   <div className="space-y-1">
-                    {['Git', 'Ktor', 'Jetpack Compose', 'Next.js', 'React', 'Docker', 'Firebase', 'Ollama', 'NocoDB', 'Figma'].map(skill => (
+                    {['Jetpack Compose', 'Flutter', 'Ktor', 'Next.js', 'React', 'PostgreSQL', 'PostGIS', 'Supabase', 'Docker'].map(skill => (
                       <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
                     ))}
                   </div>
                 </div>
-                
+
+                <div>
+                  <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">AI & Cloud</h4>
+                  <div className="space-y-1">
+                    {['Ollama', 'Groq', 'RAG pipelines', 'Whisper AI', 'Cloudflare', 'Vercel', 'Railway', 'Firebase'].map(skill => (
+                      <div key={skill} className="text-black/85 text-xs font-light">{skill}</div>
+                    ))}
+                  </div>
+                </div>
+
                 <div>
                   <h4 className="text-black/70 text-[10px] tracking-[0.2em] uppercase mb-3">Lab Techniques</h4>
                   <div className="space-y-1">

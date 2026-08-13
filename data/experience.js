@@ -1,16 +1,28 @@
 export const experiences = [
   {
+    title: 'Data Annotation Specialist, Software Engineering',
+    company: 'Cohere (Independent Contractor)',
+    location: 'Remote',
+    period: 'August 2026 - Present',
+    responsibilities: [
+      'Evaluate model-generated code and multi-step agent trajectories against structured rubrics — instruction adherence, correctness, edge-case handling, security, and completeness — producing written justifications used as training signal for LLM development',
+      'Debug and review AI-generated code across Python, JavaScript, Java, Go, and SQL; assess tool selection, step ordering, and error recovery in agent execution traces',
+      'Selected through a multi-stage technical assessment (timed screening, annotation take-home, and interview) from a posting pool of over 1,000 applicants'
+    ],
+    skills: ['LLM Evaluation', 'Agent Trajectory Analysis', 'Python', 'JavaScript', 'Java', 'Go', 'SQL', 'Code Review']
+  },
+  {
     title: 'Database Administrator Intern',
     company: 'Alberta Federation of Rural Water Coops',
     location: 'Edmonton, AB',
     period: 'May 2026 - Present',
     responsibilities: [
-      'Migrating a legacy Microsoft Access database for Alberta rural water co-operatives to PostgreSQL/NocoDB, using a slice-by-slice, fidelity-tested methodology',
-      'Building a normalized Access/VBA application with role-based access control and approval workflows to replace flat Excel timecard tracking',
-      'Administrating the Water Federation website and automating standard workplace procedures including form development',
-      'Coordinating with stakeholders across rural Alberta water systems on data structure, access requirements, and rollout'
+      'Architected a re-runnable Python ETL pipeline (pyodbc to psycopg) migrating a legacy Microsoft Access database to a containerized PostgreSQL + NocoDB stack, validated by a 125-test fidelity suite',
+      'Designed and built TimeEntrySystem, a role-based Access/VBA timesheet application with a three-stage approval workflow and a three-layer audit/integrity model for anti-fraud assurance',
+      'Administrating the Water Federation website and automating standard workplace procedures, including form development and recurring administrative workflows',
+      'Coordinating with stakeholders across rural Alberta water systems on data structure, access requirements, and migration rollout'
     ],
-    skills: ['Python', 'SQL', 'PostgreSQL', 'VBA', 'Docker', 'HTML/CSS', 'JavaScript', 'MS Access', 'Web Development']
+    skills: ['Python', 'SQL', 'PostgreSQL', 'VBA', 'Docker', 'NocoDB', 'MS Access', 'ETL']
   },
   {
     title: 'Sales Associate',
@@ -39,9 +51,12 @@ export const experiences = [
 ];
 
 export const technicalSkills = {
-  languages: ['Python', 'Kotlin', 'JavaScript', 'C', 'SQL', 'PostgreSQL', 'VBA', 'HTML/CSS', 'LaTeX'],
-  frameworks: ['Jetpack Compose', 'Ktor', 'JetBrains Exposed', 'Next.js', 'React', 'Tailwind CSS', 'Retrofit'],
-  tools: ['Git/GitHub', 'Docker', 'Railway', 'Firebase', 'Ollama', 'OpenAI API', 'NocoDB', 'Figma'],
+  languages: ['Python', 'Kotlin', 'Dart', 'SQL', 'JavaScript', 'HTML/CSS', 'GDScript', 'VBA'],
+  frameworks: ['Jetpack Compose', 'Flutter', 'Ktor', 'JetBrains Exposed', 'Next.js', 'React', 'Retrofit'],
+  databases: ['PostgreSQL', 'PostGIS', 'SQLite', 'Supabase', 'Microsoft Access', 'NocoDB', 'Docker'],
+  ai: ['Ollama', 'Groq', 'RAG pipelines', 'Whisper AI', 'LLM evaluation', 'Agent-trajectory analysis'],
+  cloud: ['Cloudflare (Workers, DNS, Email Routing)', 'Vercel', 'Railway', 'Firebase', 'DNS/TLS administration'],
+  tools: ['Git', 'Figma', 'Supabase Edge Functions'],
   laboratory: ['Digital PCR', 'Flow Cytometry', 'ELISA', 'Cell Culture'],
   soft: ['Problem Solving', 'Team Collaboration', 'Communication', 'Adaptability']
 };
