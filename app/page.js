@@ -56,7 +56,7 @@ function Background() {
 /* The visible face of the business card. */
 function CardFront() {
   return (
-    <div className="relative bg-[#fffef9] border border-gray-300/30 p-16">
+    <div className="biz-card" style={{ justifyContent: 'space-between' }}>
       {/* Subtle embossed texture overlay */}
       <div className="absolute inset-0 pointer-events-none">
         <div
@@ -71,33 +71,33 @@ function CardFront() {
       </div>
 
       {/* Top Section - Phone Number */}
-      <div className="flex justify-between items-start mb-16">
-        <div className="text-black text-[13px] tracking-[0.25em] font-normal">
+      <div className="flex justify-between items-start">
+        <div className="biz-phone text-black tracking-[0.25em] font-normal">
           780.802.0708
         </div>
         <div className="text-right">
-          <div className="text-black text-[11px] tracking-[0.35em] font-semibold">
+          <div className="biz-univ text-black tracking-[0.35em] font-semibold">
             MACEWAN UNIVERSITY
           </div>
-          <div className="text-black/80 text-[9px] tracking-[0.25em] font-normal mt-0.5">
+          <div className="biz-alumni text-black/80 tracking-[0.25em] font-normal mt-0.5">
             & UALBERTA ALUMNI
           </div>
         </div>
       </div>
 
       {/* Center - Name */}
-      <div className="text-center mb-16">
-        <h1 className="text-black text-3xl tracking-[0.35em] font-normal mb-2 uppercase">
+      <div className="text-center">
+        <h1 className="biz-name text-black tracking-[0.35em] font-normal mb-2 uppercase">
           MARK FARINAS
         </h1>
-        <div className="text-black/90 text-[13px] tracking-[0.4em] font-medium uppercase">
+        <div className="biz-role text-black/90 tracking-[0.4em] font-medium uppercase">
           Software Developer
         </div>
       </div>
 
       {/* Bottom Section - Address/Info */}
       <div className="text-center">
-        <div className="text-black/85 text-[11px] tracking-[0.3em] font-normal uppercase leading-relaxed">
+        <div className="biz-addr text-black/85 tracking-[0.3em] font-normal uppercase leading-relaxed">
           Edmonton, Alberta, Canada
           <br />
           <span className="tracking-[0.2em]">farinasm@mymacewan.ca</span> ·{' '}
@@ -125,7 +125,7 @@ function CardFront() {
 /* The "inside" of the card - the site index revealed by the flip. */
 function CardInside() {
   return (
-    <div className="relative bg-[#fffef9] border border-gray-300/30 p-16 h-full flex flex-col justify-center">
+    <div className="biz-card" style={{ justifyContent: 'center' }}>
       {/* Subtle embossed texture overlay */}
       <div className="absolute inset-0 pointer-events-none">
         <div
@@ -139,18 +139,21 @@ function CardInside() {
         ></div>
       </div>
 
-      <div className="text-center mb-10">
-        <div className="text-black/40 text-[10px] tracking-[0.4em] uppercase font-light">
+      <div className="text-center" style={{ marginBottom: 'clamp(1rem, 4cqw, 2.5rem)' }}>
+        <div className="biz-step text-black/40 tracking-[0.4em] uppercase font-light">
           ↳ Step Inside
         </div>
       </div>
 
-      <nav className="flex flex-col items-center gap-5">
+      <nav
+        className="flex flex-col items-center"
+        style={{ gap: 'clamp(0.5rem, 2.5cqw, 1.25rem)' }}
+      >
         {insideLinks.map((item) => (
           <Link
             key={item.href}
             href={item.href}
-            className="text-black/70 text-[13px] tracking-[0.4em] uppercase font-normal hover:text-black hover:tracking-[0.5em] transition-all duration-300"
+            className="biz-link text-black/70 tracking-[0.4em] uppercase font-normal hover:text-black hover:tracking-[0.5em] transition-all duration-300"
           >
             {item.label}
           </Link>
@@ -197,10 +200,10 @@ export default function HomePage() {
       <div className="min-h-screen relative overflow-hidden">
         <Background />
         <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-24 gap-10">
-          <div className="max-w-3xl w-full">
+          <div style={{ width: 'min(90vw, 140vh, 64rem)' }}>
             <CardFront />
           </div>
-          <div className="max-w-3xl w-full">
+          <div style={{ width: 'min(90vw, 140vh, 64rem)' }}>
             <CardInside />
           </div>
         </div>
@@ -216,7 +219,10 @@ export default function HomePage() {
       <div ref={ref} className="relative h-[220vh]">
         {/* Pinned stage */}
         <div className="sticky top-0 h-screen flex items-center justify-center px-6 overflow-hidden">
-          <div className="relative w-full max-w-3xl" style={{ perspective: 1600 }}>
+          <div
+            className="relative"
+            style={{ perspective: 1600, width: 'min(90vw, 140vh, 64rem)' }}
+          >
             <motion.div
               className="relative w-full"
               style={{ rotateX, transformStyle: 'preserve-3d' }}

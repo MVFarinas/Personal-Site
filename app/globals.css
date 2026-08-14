@@ -162,3 +162,29 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
+
+/* Homepage business card - true 3.5x2in (7:4) ratio, fluid via container queries.
+   Every interior size is expressed in cqw (1% of the card's own width) so the
+   card and its content scale together at any screen size, with rem fallbacks
+   for browsers without container-query support. */
+.biz-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 7 / 4;
+  container-type: inline-size;
+  display: flex;
+  flex-direction: column;
+  background: #fffef9;
+  border: 1px solid rgb(209 213 219 / 0.3);
+  padding: 2rem;
+  padding: clamp(1.1rem, 6cqw, 3.75rem);
+}
+
+.biz-phone  { font-size: 0.8rem;  font-size: clamp(0.6rem, 2cqw, 1.05rem); }
+.biz-univ   { font-size: 0.7rem;  font-size: clamp(0.55rem, 1.85cqw, 0.95rem); }
+.biz-alumni { font-size: 0.55rem; font-size: clamp(0.45rem, 1.5cqw, 0.78rem); }
+.biz-name   { font-size: 1.75rem; font-size: clamp(1.1rem, 5cqw, 2.9rem); }
+.biz-role   { font-size: 0.8rem;  font-size: clamp(0.6rem, 2cqw, 1.05rem); }
+.biz-addr   { font-size: 0.7rem;  font-size: clamp(0.55rem, 1.8cqw, 0.92rem); }
+.biz-step   { font-size: 0.62rem; font-size: clamp(0.5rem, 1.6cqw, 0.82rem); }
+.biz-link   { font-size: 0.85rem; font-size: clamp(0.7rem, 2.2cqw, 1.1rem); }
