@@ -12,15 +12,28 @@ export const experiences = [
     skills: ['LLM Evaluation', 'Agent Trajectory Analysis', 'Python', 'JavaScript', 'Java', 'Go', 'SQL', 'Code Review']
   },
   {
+    title: 'Junior Database Developer',
+    company: 'Alberta Federation of Rural Water Coops',
+    location: 'Edmonton, AB',
+    period: 'September 2026 - Present',
+    responsibilities: [
+      'Retained on a fixed September-December 2026 term following the summer internship, promoted from Database Administrator Intern to Junior Database Developer',
+      "Own the conversion of the organization's legacy Microsoft Access database into a fully functional web-based system through cutover, user training, and handover",
+      'Administrate the Water Federation website and automate standard workplace procedures, including form development and recurring administrative workflows'
+    ],
+    skills: ['Python', 'SQL', 'PostgreSQL', 'Docker', 'NocoDB', 'MS Access', 'ETL']
+  },
+  {
     title: 'Database Administrator Intern',
     company: 'Alberta Federation of Rural Water Coops',
     location: 'Edmonton, AB',
-    period: 'May 2026 - Present',
+    period: 'May 2026 - August 2026',
     responsibilities: [
       'Architected a re-runnable Python ETL pipeline (pyodbc to psycopg) migrating a legacy Microsoft Access database to a containerized PostgreSQL + NocoDB stack, validated by a 125-test fidelity suite',
       'Designed and built TimeEntrySystem, a role-based Access/VBA timesheet application with a three-stage approval workflow and a three-layer audit/integrity model for anti-fraud assurance',
-      'Administrating the Water Federation website and automating standard workplace procedures, including form development and recurring administrative workflows',
-      'Coordinating with stakeholders across rural Alberta water systems on data structure, access requirements, and migration rollout'
+      'Built InsuranceRenewalSystem, an Access/VBA renewal workflow matching five insurance coverages by organization ID and generating 85 per-organization verification documents',
+      'Administered the Water Federation website and automated standard workplace procedures, including form development and recurring administrative workflows',
+      'Coordinated with stakeholders across rural Alberta water systems on data structure, access requirements, and migration rollout'
     ],
     skills: ['Python', 'SQL', 'PostgreSQL', 'VBA', 'Docker', 'NocoDB', 'MS Access', 'ETL']
   },

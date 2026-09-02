@@ -34,7 +34,7 @@ export default function AboutPage() {
                 </p>
                 <p className="text-black/85 text-sm leading-relaxed font-light">
                   Currently, I&apos;m a Data Annotation Specialist for Software Engineering at Cohere, evaluating model-generated code and agent trajectories
-                  as training signal for LLM development, and a Database Administrator Intern with the Alberta Federation of Rural Water Co-ops, where I built
+                  as training signal for LLM development, and a Junior Database Developer with the Alberta Federation of Rural Water Co-ops, where I built
                   a fidelity-tested Python ETL pipeline migrating a legacy Access database to a containerized PostgreSQL/NocoDB stack. I&apos;ve also delivered
                   client web infrastructure end-to-end; rebuilding and relaunching a retailer&apos;s storefront across a full DNS, TLS, and email cutover.
                 </p>
