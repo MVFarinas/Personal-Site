@@ -11,24 +11,18 @@ export const RING = {
   spineRadius: 2.4,
 };
 
-export const HOLDER = {
-  baseRadius: 2.6,
-  baseThickness: 0.12,
-  ridgeInner: 0.9,
-  ridgeOuter: 2.55,
-  ridgeWidth: 0.03,
-  ridgeHeight: 0.08,
-  hubRadius: 0.6,
-  postRadius: 0.05,
-  postRingRadius: 2.5,
-  postCount: 4,
-  lidRadius: 2.7,
-  lidThickness: 0.1,
-  lidBottom: 1.1,
+// The books float just above the ground; hairline circles and a soft ring of shadow mark the circle.
+export const GROUND = {
+  y: -0.08,
+  lineRadius: 2.62,
+  innerLineRadius: 1.5,
+  shadowInner: 1.45,
+  shadowOuter: 2.85,
+  // Outer extent of everything drawn on the ground, used to frame the overview.
+  footprintRadius: 2.85,
 };
 
 export const COLORS = {
-  wood: '#6b4226',
   paper: '#f3efe6',
   background: '#f6f5f1',
 };
@@ -38,7 +32,7 @@ export const CAMERA = {
   keyframes: [
     { p: 0, position: [0, 17, 0.01], target: [0, 0.5, 0] },
     { p: 0.5, position: [0, 5.5, 11.8], target: [0, 0.6, 0] },
-    { p: 1, position: [0, 1.0, 5.6], target: [0, 0.3, 0.5] },
+    { p: 1, position: [0, 1.2, 5.6], target: [0, 0.24, 0.5] },
   ],
   progressDamping: 16,
 };

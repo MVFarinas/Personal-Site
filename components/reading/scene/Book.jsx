@@ -37,7 +37,7 @@ const _parentQuat = new Quaternion();
 const wrapAngle = (a) => MathUtils.euclideanModulo(a + Math.PI, TAU) - Math.PI;
 
 // While presented (or flying back) the book is drawn after everything else and ignores depth, so the
-// lid, posts and neighbouring books can't cut into it. A convex, back-face-culled box never overlaps
+// neighbouring books can't cut into it. A convex, back-face-culled box never overlaps
 // itself, so skipping the depth test is safe for the book's own faces.
 function setElevated(mesh, materials, elevated) {
   mesh.renderOrder = elevated ? 1000 : 0;

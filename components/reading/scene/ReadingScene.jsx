@@ -1,22 +1,10 @@
 'use client';
 
-import { useMemo } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { CAMERA, HOLDER } from '../constants';
+import { CAMERA } from '../constants';
 import BookRing from './BookRing';
 import CameraRig from './CameraRig';
-import { getShadowTexture } from './wood';
-
-function GroundShadow() {
-  const texture = useMemo(getShadowTexture, []);
-  const size = HOLDER.baseRadius * 2.7;
-  return (
-    <mesh rotation-x={-Math.PI / 2} position-y={-HOLDER.baseThickness - 0.002} renderOrder={-1}>
-      <planeGeometry args={[size, size]} />
-      <meshBasicMaterial map={texture} transparent depthWrite={false} />
-    </mesh>
-  );
-}
+import GroundRing from './GroundRing';
 
 export default function ReadingScene({ items, store, onSelect, onArrive, frozen = false }) {
   return (
@@ -28,11 +16,11 @@ export default function ReadingScene({ items, store, onSelect, onArrive, frozen 
       camera={{ fov: CAMERA.fov, position: CAMERA.keyframes[0].position, near: 0.1, far: 100 }}
       flat
     >
-      <hemisphereLight args={['#fff8ee', '#8a7560', 1.6]} />
+      <hemisphereLight args={['#fffaf2', '#a39c90', 1.6]} />
       <directionalLight position={[4, 9, 7]} intensity={2.2} />
       <directionalLight position={[-6, 3, -4]} intensity={0.5} />
       <CameraRig store={store} />
-      <GroundShadow />
+      <GroundRing />
       <BookRing items={items} store={store} onSelect={onSelect} onArrive={onArrive} />
     </Canvas>
   );

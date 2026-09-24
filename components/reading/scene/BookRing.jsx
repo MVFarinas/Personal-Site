@@ -6,7 +6,6 @@ import { DoubleSide, Vector3 } from 'three';
 import { BOOK, RING } from '../constants';
 import { isNearFinalView } from '../store';
 import { stepRing } from '../ringMotion';
-import CdHolder from './CdHolder';
 import Book from './Book';
 
 const COLLIDER_RADIUS = RING.spineRadius + 0.05;
@@ -65,7 +64,6 @@ export default function BookRing({ items, store, onSelect, onArrive }) {
 
   return (
     <group ref={groupRef}>
-      <CdHolder slotCount={items.length} />
       {items.map((item, index) => (
         <Book
           key={item.id}
