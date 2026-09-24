@@ -8,10 +8,12 @@ import { isNearFinalView, slotAngle } from '../store';
 import { bookThickness, getBookMaterials } from './textures';
 
 const HOVER_DAMPING = INTERACTION.hover.damping;
+const RETURN_DAMPING = 12;
 const TAU = Math.PI * 2;
-const PULL_TOLERANCE = 0.02;
-const ARRIVE_TOLERANCE = 0.005;
 const SETTLED_TOLERANCE = 0.02;
+
+const easeOutCubic = (t) => 1 - (1 - t) ** 3;
+const easeInOutCubic = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
 
 const geometries = new Map();
 function getGeometry(thickness) {
@@ -81,6 +83,9 @@ export default function Book({ item, index, slotCount, store, onSelect, onArrive
   const arrived = useRef(false);
   const targetPos = useRef(new Vector3());
   const targetQuat = useRef(new Quaternion());
+  const fromPos = useRef(new Vector3());
+  const fromQuat = useRef(new Quaternion());
+  const phaseStart = useRef(0);
   const elevated = useRef(false);
 
   const thickness = bookThickness(item);
@@ -114,7 +119,6 @@ export default function Book({ item, index, slotCount, store, onSelect, onArrive
     const pos = targetPos.current;
     const quat = targetQuat.current;
     const selected = store.selectedId === item.id;
-    let damping = HOVER_DAMPING;
 
     if (!selected) {
       phase.current = null;
@@ -129,41 +133,50 @@ export default function Book({ item, index, slotCount, store, onSelect, onArrive
         pos.set(0, 0, 0);
         quat.copy(IDENTITY);
       }
+      const k = 1 - Math.exp(-(elevated.current ? RETURN_DAMPING : HOVER_DAMPING) * dt);
+      anim.position.lerp(pos, k);
+      anim.quaternion.slerp(quat, k);
     } else {
-      damping = INTERACTION.select.damping;
-      if (phase.current === null) phase.current = 'pull';
-
-      if (phase.current === 'pull') {
-        pos.set(0, 0, INTERACTION.select.pullOut * BOOK.depth);
-        quat.copy(IDENTITY);
-        if (anim.position.distanceTo(pos) < PULL_TOLERANCE && anim.quaternion.angleTo(quat) < PULL_TOLERANCE) {
-          phase.current = 'fly';
-        }
+      // Fixed-duration eased tweens (not exponential damping) so opening has no slow settling tail.
+      const now = state.clock.elapsedTime;
+      const { pullOut, pullSeconds, flySeconds } = INTERACTION.select;
+      if (phase.current === null) {
+        phase.current = 'pull';
+        phaseStart.current = now;
+        fromPos.current.copy(anim.position);
+        fromQuat.current.copy(anim.quaternion);
       }
 
-      if (phase.current === 'fly') {
+      if (phase.current === 'pull') {
+        pos.set(0, 0, pullOut * BOOK.depth);
+        quat.copy(IDENTITY);
+        const u = Math.min((now - phaseStart.current) / pullSeconds, 1);
+        const e = easeOutCubic(u);
+        anim.position.lerpVectors(fromPos.current, pos, e);
+        anim.quaternion.slerpQuaternions(fromQuat.current, quat, e);
+        if (u >= 1) {
+          phase.current = 'fly';
+          phaseStart.current = now;
+          fromPos.current.copy(pos);
+          fromQuat.current.copy(quat);
+        }
+      } else {
+        // The target is recomputed every frame because the ring is still turning the book to the front.
         presentationPose(state.camera, state.size, store.coverRect, thickness, _worldPos, _worldQuat);
         const parent = anim.parent;
         parent.updateWorldMatrix(true, false);
         pos.copy(parent.worldToLocal(_worldPos));
         parent.getWorldQuaternion(_parentQuat);
         quat.copy(_parentQuat.invert().multiply(_worldQuat));
+        const u = Math.min((now - phaseStart.current) / flySeconds, 1);
+        const e = easeInOutCubic(u);
+        anim.position.lerpVectors(fromPos.current, pos, e);
+        anim.quaternion.slerpQuaternions(fromQuat.current, quat, e);
+        if (u >= 1 && !arrived.current) {
+          arrived.current = true;
+          onArrive?.(item.id);
+        }
       }
-    }
-
-    const k = 1 - Math.exp(-damping * dt);
-    anim.position.lerp(pos, k);
-    anim.quaternion.slerp(quat, k);
-
-    if (
-      selected &&
-      phase.current === 'fly' &&
-      !arrived.current &&
-      anim.position.distanceTo(pos) < ARRIVE_TOLERANCE &&
-      anim.quaternion.angleTo(quat) < ARRIVE_TOLERANCE
-    ) {
-      arrived.current = true;
-      onArrive?.(item.id);
     }
 
     const mesh = meshRef.current;

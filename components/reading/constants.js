@@ -40,25 +40,26 @@ export const CAMERA = {
     { p: 0.5, position: [0, 5.5, 11.8], target: [0, 0.6, 0] },
     { p: 1, position: [0, 1.0, 5.6], target: [0, 0.3, 0.5] },
   ],
-  progressDamping: 10,
+  progressDamping: 16,
 };
 
 // Negative angular velocity moves the front of the ring (+z, facing the camera) to the left.
 export const MOTION = {
   autoSpeed: -(2 * Math.PI) / 60,
-  friction: 2.5,
-  wheelGain: 0.004,
+  friction: 7,
+  flingFriction: 3,
+  wheelGain: 0.02,
   maxSpeed: 4 * Math.PI,
   resumeDelayMs: 1500,
   gestureGapMs: 150,
   flingSampleMs: 100,
-  snapStiffness: 8,
+  snapStiffness: 12,
 };
 
 export const INTERACTION = {
   finalViewProgress: 0.999,
   nearFinalProgress: 0.9,
   clickMaxDeltaPx: 6,
-  hover: { pullOut: 0.45, lift: 0.09, turn: -0.61, minTurn: -1.3, maxTurn: 0, damping: 10 },
-  select: { pullOut: 0.9, damping: 6 },
+  hover: { pullOut: 0.45, lift: 0.09, turn: -0.61, minTurn: -1.3, maxTurn: 0, damping: 20 },
+  select: { pullOut: 0.9, pullSeconds: 0.18, flySeconds: 0.45 },
 };

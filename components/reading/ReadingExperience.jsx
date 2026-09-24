@@ -88,7 +88,7 @@ function CarouselStage({ items, store, stageRef, onSelect, onArrive, sceneReady,
   };
 
   return (
-    <section ref={sectionRef} className="relative" style={{ height: '300svh' }}>
+    <section ref={sectionRef} className="relative" style={{ height: '250svh' }}>
       <div className="sticky top-0 h-[100svh] w-full overflow-hidden">
         <div
           ref={stageRef}

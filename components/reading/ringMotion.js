@@ -64,7 +64,8 @@ export function stepRing(store, dt, now) {
     hovered || store.selectedId || store.userPaused || store.reducedMotion || recentlyTouched
       ? 0
       : MOTION.autoSpeed;
-  const friction = MOTION.friction * (store.reducedMotion ? 4 : 1);
+  // Touch flings coast longer than wheel spins, like native momentum scrolling on phones.
+  const friction = (store.coastFriction ?? MOTION.friction) * (store.reducedMotion ? 4 : 1);
 
   store.velocity = target + (store.velocity - target) * Math.exp(-friction * dt);
   store.angle += store.velocity * dt;
@@ -90,6 +91,7 @@ export function useRingInput(stageRef, store, enabled = true) {
       const scale = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
       const input = (e.deltaY + e.deltaX) * scale;
       store.velocity = clamp(store.velocity - input * MOTION.wheelGain, MOTION.maxSpeed);
+      store.coastFriction = MOTION.friction;
       store.snapTarget = null;
       store.lastInteraction = now;
     };
@@ -111,6 +113,7 @@ export function useRingInput(stageRef, store, enabled = true) {
           }
         }
         store.velocity = clamp(velocity, MOTION.maxSpeed);
+        store.coastFriction = MOTION.flingFriction;
         store.dragging = false;
         store.lastInteraction = now;
       }

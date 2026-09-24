@@ -11,6 +11,7 @@ export function createReadingStore(slotCount) {
     progressOverride: null,
     angle: 0,
     velocity: 0,
+    coastFriction: null,
     snapTarget: null,
     dragging: false,
     lastInteraction: -Infinity,
