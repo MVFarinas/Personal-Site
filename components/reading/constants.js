@@ -3,7 +3,7 @@
 export const BOOK = {
   height: 1,
   depth: 0.68,
-  defaultThickness: 0.1,
+  defaultThickness: 0.28,
   centerY: 0.5,
 };
 
@@ -38,7 +38,7 @@ export const CAMERA = {
   keyframes: [
     { p: 0, position: [0, 17, 0.01], target: [0, 0.5, 0] },
     { p: 0.5, position: [0, 5.5, 11.8], target: [0, 0.6, 0] },
-    { p: 1, position: [0, 0.95, 5.1], target: [0, 0.27, 0.5] },
+    { p: 1, position: [0, 1.0, 5.6], target: [0, 0.3, 0.5] },
   ],
   progressDamping: 10,
 };
@@ -59,6 +59,6 @@ export const INTERACTION = {
   finalViewProgress: 0.999,
   nearFinalProgress: 0.9,
   clickMaxDeltaPx: 6,
-  hover: { pullOut: 0.35, lift: 0.05, turn: -0.61, minTurn: -1.3, maxTurn: 0, damping: 10 },
+  hover: { pullOut: 0.45, lift: 0.09, turn: -0.61, minTurn: -1.3, maxTurn: 0, damping: 10 },
   select: { pullOut: 0.9, damping: 6 },
 };
