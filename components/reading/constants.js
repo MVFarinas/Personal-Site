@@ -1,0 +1,64 @@
+// Scene units: 1 unit = book height. Starting values; tune visually.
+
+export const BOOK = {
+  height: 1,
+  depth: 0.68,
+  defaultThickness: 0.1,
+  centerY: 0.5,
+};
+
+export const RING = {
+  spineRadius: 2.4,
+};
+
+export const HOLDER = {
+  baseRadius: 2.6,
+  baseThickness: 0.12,
+  ridgeInner: 0.9,
+  ridgeOuter: 2.55,
+  ridgeWidth: 0.03,
+  ridgeHeight: 0.08,
+  hubRadius: 0.6,
+  postRadius: 0.05,
+  postRingRadius: 2.5,
+  postCount: 4,
+  lidRadius: 2.7,
+  lidThickness: 0.1,
+  lidBottom: 1.1,
+};
+
+export const COLORS = {
+  wood: '#6b4226',
+  paper: '#f3efe6',
+  background: '#f6f5f1',
+};
+
+export const CAMERA = {
+  fov: 35,
+  keyframes: [
+    { p: 0, position: [0, 17, 0.01], target: [0, 0.5, 0] },
+    { p: 0.5, position: [0, 5.5, 11.8], target: [0, 0.6, 0] },
+    { p: 1, position: [0, 0.95, 5.1], target: [0, 0.27, 0.5] },
+  ],
+  progressDamping: 10,
+};
+
+// Negative angular velocity moves the front of the ring (+z, facing the camera) to the left.
+export const MOTION = {
+  autoSpeed: -(2 * Math.PI) / 60,
+  friction: 2.5,
+  wheelGain: 0.004,
+  maxSpeed: 4 * Math.PI,
+  resumeDelayMs: 1500,
+  gestureGapMs: 150,
+  flingSampleMs: 100,
+  snapStiffness: 8,
+};
+
+export const INTERACTION = {
+  finalViewProgress: 0.999,
+  nearFinalProgress: 0.9,
+  clickMaxDeltaPx: 6,
+  hover: { pullOut: 0.35, lift: 0.05, turn: -0.61, minTurn: -1.3, maxTurn: 0, damping: 10 },
+  select: { pullOut: 0.9, damping: 6 },
+};
