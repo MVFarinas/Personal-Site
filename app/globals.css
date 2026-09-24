@@ -188,3 +188,113 @@
 .biz-addr   { font-size: 0.7rem;  font-size: clamp(0.55rem, 1.8cqw, 0.92rem); }
 .biz-step   { font-size: 0.62rem; font-size: clamp(0.5rem, 1.6cqw, 0.82rem); }
 .biz-link   { font-size: 0.85rem; font-size: clamp(0.7rem, 2.2cqw, 1.1rem); }
+/* ── Reading room: library card catalogue ─────────────────────────────
+   A catalogue card is ruled stock with a red margin rule, a call number
+   in the top-left corner, and a punch hole along the bottom edge. Every
+   colour below derives from --stamp-ink, so the whole drawer can be made
+   strictly monochrome by setting it to hsl(0 0% 0% / 0.55). */
+.catalogue {
+  --stamp-ink: hsl(2 34% 38%);
+  --rule: hsl(210 25% 55% / 0.22);
+}
+
+.catalogue-card {
+  position: relative;
+  background: #fffef9;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 27px,
+    var(--rule) 27px,
+    var(--rule) 28px
+  );
+  background-position: 0 44px;
+  border: 1px solid hsl(0 0% 0% / 0.12);
+  box-shadow: 0 1px 0 hsl(0 0% 100% / 0.8) inset;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Red margin rule, the way a real card is printed */
+.catalogue-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2.75rem;
+  width: 1px;
+  background: hsl(2 44% 48% / 0.28);
+}
+
+/* Punch hole along the bottom edge */
+.catalogue-card::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 9px;
+  width: 13px;
+  height: 13px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  border: 1px solid hsl(0 0% 0% / 0.16);
+  background: #f2f0ea;
+  box-shadow: 0 1px 2px hsl(0 0% 0% / 0.12) inset;
+}
+
+.catalogue-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px hsl(0 0% 0% / 0.09);
+}
+
+/* Rubber stamp - struck slightly off-square, ink a little uneven */
+.catalogue-stamp {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border: 1.5px solid var(--stamp-ink);
+  color: var(--stamp-ink);
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  line-height: 1;
+  opacity: 0.78;
+  transform: rotate(-6deg);
+  transform-origin: center;
+}
+
+.catalogue-stamp--faded {
+  opacity: 0.42;
+  border-style: dashed;
+  transform: rotate(-3deg);
+}
+
+/* The drawer the cards sit in */
+.catalogue-drawer {
+  position: relative;
+  background: linear-gradient(180deg, #efece4 0%, #e9e5db 100%);
+  border: 1px solid hsl(0 0% 0% / 0.14);
+  box-shadow: 0 1px 0 hsl(0 0% 100% / 0.7) inset,
+              0 18px 40px -28px hsl(0 0% 0% / 0.45);
+}
+
+/* Brass-free label plate on the drawer face */
+.catalogue-plate {
+  background: #fffef9;
+  border: 1px solid hsl(0 0% 0% / 0.18);
+  box-shadow: 0 1px 2px hsl(0 0% 0% / 0.08) inset;
+}
+
+/* The drawer pull below the plate */
+.catalogue-pull {
+  width: 68px;
+  height: 9px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #d9d4c8, #bdb7a9);
+  border: 1px solid hsl(0 0% 0% / 0.18);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .catalogue-card,
+  .catalogue-card:hover {
+    transform: none;
+    transition: none;
+  }
+}
