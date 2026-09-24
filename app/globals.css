@@ -188,3 +188,148 @@
 .biz-addr   { font-size: 0.7rem;  font-size: clamp(0.55rem, 1.8cqw, 0.92rem); }
 .biz-step   { font-size: 0.62rem; font-size: clamp(0.5rem, 1.6cqw, 0.82rem); }
 .biz-link   { font-size: 0.85rem; font-size: clamp(0.7rem, 2.2cqw, 1.1rem); }
+/* ── Reading room: disc carousel ──────────────────────────────────────
+   Each entry is pressed as a disc. The sheen is a repeating conic
+   gradient laid over concentric data rings; the glare sits in a
+   separate, non-rotating layer so it reads as a reflection rather
+   than as printing on the disc. */
+.cd-stage {
+  perspective: 1400px;
+  perspective-origin: 50% 45%;
+}
+
+.cd-shell {
+  position: relative;
+  width: clamp(160px, 38vw, 260px);
+  aspect-ratio: 1;
+}
+
+.cd-disc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(
+      from 0deg,
+      hsl(0 0% 100% / 0.5) 0deg 3deg,
+      hsl(0 0% 62% / 0.28) 3deg 6deg,
+      hsl(0 0% 88% / 0.4) 6deg 9deg
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      #f4f2ec 0 16%,
+      #d8d4cb 16% 16.6%,
+      #eceae3 16.6% 30%,
+      #cdc9c0 30% 30.5%,
+      #e4e1d9 30.5% 47%,
+      #bdb9b0 47% 48%,
+      #dedad2 48% 50%
+    );
+  box-shadow:
+    0 0 0 1px hsl(0 0% 0% / 0.12),
+    0 14px 30px -14px hsl(0 0% 0% / 0.45),
+    inset 0 0 22px hsl(0 0% 0% / 0.07);
+}
+
+/* Printed label at the centre of the disc */
+.cd-disc::before {
+  content: '';
+  position: absolute;
+  inset: 31%;
+  border-radius: 50%;
+  background: #fffef9;
+  border: 1px solid hsl(0 0% 0% / 0.1);
+}
+
+/* Spindle hole */
+.cd-disc::after {
+  content: '';
+  position: absolute;
+  inset: 45%;
+  border-radius: 50%;
+  background: #f6f5f1;
+  box-shadow: 0 0 0 1px hsl(0 0% 0% / 0.16),
+              inset 0 1px 3px hsl(0 0% 0% / 0.2);
+}
+
+.cd-disc--spinning {
+  animation: cd-spin var(--cd-speed, 16s) linear infinite;
+}
+
+@keyframes cd-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Author initials, printed on the label and turning with it */
+.cd-label {
+  position: absolute;
+  inset: 31%;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  text-align: center;
+  pointer-events: none;
+}
+
+/* Fixed reflection, layered above the turning disc */
+.cd-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+  background: linear-gradient(
+    118deg,
+    hsl(0 0% 100% / 0.55) 0%,
+    hsl(0 0% 100% / 0) 34%,
+    hsl(0 0% 100% / 0) 62%,
+    hsl(0 0% 100% / 0.32) 84%,
+    hsl(0 0% 100% / 0) 100%
+  );
+  mix-blend-mode: screen;
+}
+
+/* Paper sleeve, drawn over discs that have not been opened yet */
+.cd-sleeve {
+  position: absolute;
+  inset: -3% -3% -3% -3%;
+  border-radius: 4px;
+  background: linear-gradient(160deg, #eeebe3, #e2ded4);
+  border: 1px solid hsl(0 0% 0% / 0.14);
+  box-shadow: 0 10px 24px -16px hsl(0 0% 0% / 0.5);
+}
+
+.cd-sleeve::after {
+  content: '';
+  position: absolute;
+  inset: 12%;
+  border-radius: 50%;
+  border: 1px dashed hsl(0 0% 0% / 0.16);
+}
+
+.cd-transport {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid hsl(0 0% 0% / 0.15);
+  background: #fffef9;
+  color: hsl(0 0% 0% / 0.55);
+  transition: color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.cd-transport:hover:not(:disabled) {
+  color: hsl(0 0% 0%);
+  border-color: hsl(0 0% 0% / 0.4);
+  transform: scale(1.06);
+}
+
+.cd-transport:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cd-disc--spinning { animation: none; }
+  .cd-transport:hover:not(:disabled) { transform: none; }
+}
