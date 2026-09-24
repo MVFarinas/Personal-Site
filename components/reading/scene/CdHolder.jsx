@@ -1,14 +1,21 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { BoxGeometry, CylinderGeometry, LatheGeometry, Vector2 } from 'three';
+import { useThree } from '@react-three/fiber';
+import { BoxGeometry, CylinderGeometry, EdgesGeometry, LatheGeometry, Vector2 } from 'three';
+import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js';
+import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js';
 import { HOLDER } from '../constants';
 import { slotAngle } from '../store';
-import { getWoodMaterials } from './wood';
+import { getLineworkMaterials, setLineResolution } from './linework';
 
 const TAU = Math.PI * 2;
 const SEGMENTS = 96;
+const POST_SEGMENTS = 20;
 const POST_TARGETS = [0.25, 0.75, 1.25, 1.75].map((f) => f * Math.PI);
+// Above the angle between neighbouring side facets (3.75° on discs, 18° on posts) so only real creases
+// (rims, bevels, turned rings, box edges) become strokes.
+const CREASE_DEGREES = 25;
 
 const angularDistance = (a, b) => {
   const d = (((a - b) % TAU) + TAU) % TAU;
@@ -22,6 +29,8 @@ const POST_PROFILE = [
   [0.062, 0.968], [0.062, 1], [0.001, 1],
 ];
 
+const creases = (geometry) => new LineSegmentsGeometry().fromEdgesGeometry(new EdgesGeometry(geometry, CREASE_DEGREES));
+
 function buildGeometries() {
   const {
     baseRadius, baseThickness, lidRadius, lidThickness, hubRadius,
@@ -33,7 +42,7 @@ function buildGeometries() {
   const baseBevelH = baseThickness - baseBodyH;
   const postScale = postRadius / 0.05;
 
-  return {
+  const shapes = {
     lidBody: new CylinderGeometry(lidRadius, lidRadius, lidBodyH, SEGMENTS),
     lidBevel: new CylinderGeometry(lidRadius - 0.035, lidRadius, lidBevelH, SEGMENTS),
     baseBody: new CylinderGeometry(baseRadius, baseRadius, baseBodyH, SEGMENTS),
@@ -42,19 +51,38 @@ function buildGeometries() {
     ridge: new BoxGeometry(ridgeWidth, ridgeHeight, ridgeOuter - ridgeInner),
     post: new LatheGeometry(
       POST_PROFILE.map(([r, y]) => new Vector2(r * postScale, y * lidBottom)),
-      20,
+      POST_SEGMENTS,
     ),
-    heights: { lidBodyH, lidBevelH, baseBodyH, baseBevelH },
   };
+  const edges = Object.fromEntries(Object.entries(shapes).map(([key, g]) => [key, creases(g)]));
+  return { shapes, edges, heights: { lidBodyH, lidBevelH, baseBodyH, baseBevelH } };
+}
+
+// One holder part drawn as a hidden-line drawing: a page-coloured fill that hides what's behind it,
+// crease strokes, and (for curved parts) a silhouette outline.
+function InkedPart({ geometry, edges, materials, outline = true, position, rotation }) {
+  const strokes = useMemo(() => new LineSegments2(edges, materials.line), [edges, materials.line]);
+  return (
+    <group position={position} rotation={rotation}>
+      <mesh geometry={geometry} material={materials.fill} />
+      {outline && <mesh geometry={geometry} material={materials.outline} />}
+      <primitive object={strokes} />
+    </group>
+  );
 }
 
 export default function CdHolder({ slotCount }) {
   const geometries = useMemo(buildGeometries, []);
-  const materials = useMemo(getWoodMaterials, []);
+  const materials = useMemo(getLineworkMaterials, []);
+  const size = useThree((s) => s.size);
+
+  useEffect(() => {
+    setLineResolution(size.width, size.height);
+  }, [size.width, size.height]);
 
   useEffect(
     () => () => {
-      Object.values(geometries).forEach((g) => g.dispose?.());
+      [...Object.values(geometries.shapes), ...Object.values(geometries.edges)].forEach((g) => g.dispose());
     },
     [geometries],
   );
@@ -69,46 +97,42 @@ export default function CdHolder({ slotCount }) {
     return { ridgeAngles: ridges, postAngles: [...posts] };
   }, [slotCount]);
 
+  const { shapes, edges } = geometries;
   const { lidBodyH, lidBevelH, baseBodyH, baseBevelH } = geometries.heights;
   const { lidBottom, baseThickness, ridgeInner, ridgeOuter, ridgeHeight, postRingRadius } = HOLDER;
   const ridgeMid = (ridgeInner + ridgeOuter) / 2;
-
-  const lidMaterials = useMemo(
-    () => [materials.lidRim, materials.lidTop, materials.lidUnder],
-    [materials],
-  );
-  const baseMaterials = useMemo(
-    () => [materials.baseRim, materials.baseTop, materials.baseTop],
-    [materials],
-  );
+  const part = (key, props) => <InkedPart geometry={shapes[key]} edges={edges[key]} materials={materials} {...props} />;
 
   return (
     <group>
-      <mesh geometry={geometries.baseBody} material={baseMaterials} position-y={-baseThickness + baseBodyH / 2} />
-      <mesh geometry={geometries.baseBevel} material={baseMaterials} position-y={-baseBevelH / 2} />
-      <mesh geometry={geometries.hub} material={materials.dark} position-y={0.05} />
+      {part('baseBody', { position: [0, -baseThickness + baseBodyH / 2, 0] })}
+      {part('baseBevel', { position: [0, -baseBevelH / 2, 0] })}
+      {part('hub', { position: [0, 0.05, 0] })}
 
       {ridgeAngles.map((a) => (
-        <mesh
+        <InkedPart
           key={a}
-          geometry={geometries.ridge}
-          material={materials.dark}
+          geometry={shapes.ridge}
+          edges={edges.ridge}
+          materials={materials}
+          outline={false}
           position={[Math.sin(a) * ridgeMid, ridgeHeight / 2, Math.cos(a) * ridgeMid]}
-          rotation-y={a}
+          rotation={[0, a, 0]}
         />
       ))}
 
       {postAngles.map((a) => (
-        <mesh
+        <InkedPart
           key={a}
-          geometry={geometries.post}
-          material={materials.dark}
+          geometry={shapes.post}
+          edges={edges.post}
+          materials={materials}
           position={[Math.sin(a) * postRingRadius, 0, Math.cos(a) * postRingRadius]}
         />
       ))}
 
-      <mesh geometry={geometries.lidBody} material={lidMaterials} position-y={lidBottom + lidBodyH / 2} />
-      <mesh geometry={geometries.lidBevel} material={lidMaterials} position-y={lidBottom + lidBodyH + lidBevelH / 2} />
+      {part('lidBody', { position: [0, lidBottom + lidBodyH / 2, 0] })}
+      {part('lidBevel', { position: [0, lidBottom + lidBodyH + lidBevelH / 2, 0] })}
     </group>
   );
 }

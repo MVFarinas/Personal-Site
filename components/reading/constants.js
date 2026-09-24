@@ -28,7 +28,6 @@ export const HOLDER = {
 };
 
 export const COLORS = {
-  wood: '#6b4226',
   paper: '#f3efe6',
   background: '#f6f5f1',
 };
