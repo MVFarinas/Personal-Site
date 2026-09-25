@@ -11,7 +11,6 @@ import { COLORS } from '../constants';
 // Created lazily on the client; `document` isn't available during SSR.
 let materials = null;
 let shadowTexture = null;
-let envMap = null;
 
 function mulberry32(seed) {
   return function next() {
@@ -55,26 +54,37 @@ function makeTexture(canvas, repeat = [1, 1]) {
   return texture;
 }
 
-// Reflections are assigned per material rather than via scene.environment, so the books keep
-// exactly the lighting they had and only the brass (and a faint sheen on the charcoal) pick them up.
-function getEnvMap(gl) {
-  if (!envMap) {
-    const pmrem = new PMREMGenerator(gl);
-    envMap = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
-    pmrem.dispose();
+// Reflections go on the holder materials only (not scene.environment), so the books keep exactly the
+// lighting they had. The PMREM texture belongs to one WebGL context, so it's built per renderer on
+// mount and re-pointed onto the cached materials; the materials themselves are context-independent.
+export function attachEnvironment(gl, holderMaterials) {
+  const pmrem = new PMREMGenerator(gl);
+  const envMap = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+  pmrem.dispose();
+  const list = Object.values(holderMaterials);
+  for (const material of list) {
+    material.envMap = envMap;
+    material.needsUpdate = true;
   }
-  return envMap;
+  return () => {
+    for (const material of list) {
+      if (material.envMap === envMap) {
+        material.envMap = null;
+        material.needsUpdate = true;
+      }
+    }
+    envMap.dispose();
+  };
 }
 
-export function getHolderMaterials(gl) {
+export function getHolderMaterials() {
   if (materials) return materials;
 
-  const env = getEnvMap(gl);
   const top = makeTexture(speckleCanvas(512, COLORS.charcoal, 5, 10), [3, 3]);
   const rim = makeTexture(speckleCanvas(256, COLORS.charcoal, 9, 10), [24, 0.4]);
 
   const charcoal = (options) =>
-    new MeshStandardMaterial({ roughness: 0.82, metalness: 0, envMap: env, envMapIntensity: 0.35, ...options });
+    new MeshStandardMaterial({ roughness: 0.82, metalness: 0, envMapIntensity: 0.35, ...options });
 
   materials = {
     lidTop: charcoal({ map: top, color: '#b4b0aa' }),
@@ -90,7 +100,6 @@ export function getHolderMaterials(gl) {
       color: COLORS.brass,
       metalness: 1,
       roughness: 0.3,
-      envMap: env,
       envMapIntensity: 1.25,
     }),
     // Faces straight up into the environment's bright ceiling, so it needs a satin finish to stay brass.
@@ -98,7 +107,6 @@ export function getHolderMaterials(gl) {
       color: COLORS.brass,
       metalness: 1,
       roughness: 0.55,
-      envMap: env,
       envMapIntensity: 0.6,
     }),
   };

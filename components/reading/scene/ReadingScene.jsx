@@ -28,7 +28,7 @@ export default function ReadingScene({ items, store, onSelect, onArrive, frozen 
       camera={{ fov: CAMERA.fov, position: CAMERA.keyframes[0].position, near: 0.1, far: 100 }}
       flat
     >
-      <hemisphereLight args={['#fff8ee', '#77726c', 1.6]} />
+      <hemisphereLight args={['#fff8ee', '#8a7560', 1.6]} />
       <directionalLight position={[4, 9, 7]} intensity={2.2} />
       <directionalLight position={[-6, 3, -4]} intensity={0.5} />
       <CameraRig store={store} />

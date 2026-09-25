@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useLayoutEffect, useMemo } from 'react';
 import { useThree } from '@react-three/fiber';
 import { BoxGeometry, CylinderGeometry, RingGeometry } from 'three';
 import { HOLDER } from '../constants';
 import { slotAngle } from '../store';
-import { getHolderMaterials } from './finish';
+import { attachEnvironment, getHolderMaterials } from './finish';
 
 const TAU = Math.PI * 2;
 const SEGMENTS = 128;
@@ -52,7 +52,9 @@ function buildGeometries() {
 export default function CdHolder({ slotCount }) {
   const gl = useThree((s) => s.gl);
   const geometries = useMemo(buildGeometries, []);
-  const materials = useMemo(() => getHolderMaterials(gl), [gl]);
+  const materials = useMemo(getHolderMaterials, []);
+
+  useLayoutEffect(() => attachEnvironment(gl, materials), [gl, materials]);
 
   useEffect(
     () => () => {
