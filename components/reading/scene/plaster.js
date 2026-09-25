@@ -34,7 +34,7 @@ function plasterCanvas(size, base, seed) {
     for (const dx of [-size, 0, size]) {
       for (const dy of [-size, 0, size]) {
         const g = ctx.createRadialGradient(x + dx, y + dy, 0, x + dx, y + dy, r);
-        g.addColorStop(0, `rgba(${tone},${0.012 + rand() * 0.014})`);
+        g.addColorStop(0, `rgba(${tone},${0.003 + rand() * 0.004})`);
         g.addColorStop(1, `rgba(${tone},0)`);
         ctx.fillStyle = g;
         ctx.fillRect(x + dx - r, y + dy - r, r * 2, r * 2);
