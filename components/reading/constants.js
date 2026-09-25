@@ -19,16 +19,17 @@ export const HOLDER = {
   ridgeWidth: 0.03,
   ridgeHeight: 0.08,
   hubRadius: 0.6,
-  postRadius: 0.05,
+  postRadius: 0.025,
   postRingRadius: 2.5,
   postCount: 4,
   lidRadius: 2.7,
-  lidThickness: 0.1,
+  lidThickness: 0.07,
   lidBottom: 1.1,
 };
 
 export const COLORS = {
-  wood: '#6b4226',
+  charcoal: '#2a2927',
+  brass: '#b8925a',
   paper: '#f3efe6',
   background: '#f6f5f1',
 };
