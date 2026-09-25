@@ -143,4 +143,18 @@ export const readingList = [
     thickness: 0.1167,
     notes: [],
   },
+  {
+    id: 'the-four-agreements',
+    title: 'The Four Agreements',
+    author: 'Don Miguel Ruiz',
+    kind: 'book',
+    status: null,
+    link: '',
+    spine: '/reading/the-four-agreements/spine.webp',
+    cover: '/reading/the-four-agreements/cover.webp',
+    color: '#655e33',
+    textColor: '#f7f3ea',
+    thickness: 0.0507,
+    notes: [],
+  },
 ];
