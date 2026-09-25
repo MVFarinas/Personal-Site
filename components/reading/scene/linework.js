@@ -53,6 +53,16 @@ export function getLineworkMaterials() {
     }),
     line: new LineMaterial({ color: LINE_COLOR, linewidth: LINE_WIDTH }),
     outline: outlineMaterial(),
+    // Dashed "hidden" edges: the drafting convention for things behind a surface.
+    hidden: new LineMaterial({
+      color: LINE_COLOR,
+      linewidth: LINE_WIDTH,
+      dashed: true,
+      dashSize: 0.06,
+      gapSize: 0.045,
+      transparent: true,
+      depthWrite: false,
+    }),
   };
   return materials;
 }
@@ -60,5 +70,6 @@ export function getLineworkMaterials() {
 export function setLineResolution(width, height) {
   if (!materials) return;
   materials.line.resolution.set(width, height);
+  materials.hidden.resolution.set(width, height);
   materials.outline.uniforms.resolution.value.set(width, height);
 }

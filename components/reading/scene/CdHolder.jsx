@@ -1,12 +1,13 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { useThree } from '@react-three/fiber';
+import { useFrame, useThree } from '@react-three/fiber';
 import { BoxGeometry, CylinderGeometry, EdgesGeometry, LatheGeometry, Vector2 } from 'three';
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js';
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js';
-import { HOLDER } from '../constants';
-import { slotAngle } from '../store';
+import { BOOK, HOLDER, RING } from '../constants';
+import { effectiveProgress, slotAngle } from '../store';
+import { bookThickness } from './textures';
 import { getLineworkMaterials, setLineResolution } from './linework';
 
 const TAU = Math.PI * 2;
@@ -16,6 +17,10 @@ const POST_TARGETS = [0.25, 0.75, 1.25, 1.75].map((f) => f * Math.PI);
 // Above the angle between neighbouring side facets (3.75° on discs, 18° on posts) so only real creases
 // (rims, bevels, turned rings, box edges) become strokes.
 const CREASE_DEGREES = 25;
+
+const PLAN_SEGMENTS = 160;
+// The dashed plan is fully drawn from above and gone by the time the lid top leaves view.
+const PLAN_FADE = [0.22, 0.72];
 
 const angularDistance = (a, b) => {
   const d = (((a - b) % TAU) + TAU) % TAU;
@@ -36,17 +41,13 @@ function buildGeometries() {
     baseRadius, baseThickness, lidRadius, lidThickness, hubRadius,
     ridgeWidth, ridgeHeight, ridgeInner, ridgeOuter, postRadius, lidBottom,
   } = HOLDER;
-  const lidBodyH = lidThickness * 0.65;
-  const lidBevelH = lidThickness - lidBodyH;
-  const baseBodyH = baseThickness * 0.75;
-  const baseBevelH = baseThickness - baseBodyH;
   const postScale = postRadius / 0.05;
 
+  // Plain discs: a bevel adds a second rim line hairline-close to the first, which merges at 1x and
+  // stair-steps while spinning.
   const shapes = {
-    lidBody: new CylinderGeometry(lidRadius, lidRadius, lidBodyH, SEGMENTS),
-    lidBevel: new CylinderGeometry(lidRadius - 0.035, lidRadius, lidBevelH, SEGMENTS),
-    baseBody: new CylinderGeometry(baseRadius, baseRadius, baseBodyH, SEGMENTS),
-    baseBevel: new CylinderGeometry(baseRadius - 0.03, baseRadius, baseBevelH, SEGMENTS),
+    lid: new CylinderGeometry(lidRadius, lidRadius, lidThickness, SEGMENTS),
+    base: new CylinderGeometry(baseRadius, baseRadius, baseThickness, SEGMENTS),
     hub: new CylinderGeometry(hubRadius, hubRadius * 1.04, 0.1, 64),
     ridge: new BoxGeometry(ridgeWidth, ridgeHeight, ridgeOuter - ridgeInner),
     post: new LatheGeometry(
@@ -55,7 +56,62 @@ function buildGeometries() {
     ),
   };
   const edges = Object.fromEntries(Object.entries(shapes).map(([key, g]) => [key, creases(g)]));
-  return { shapes, edges, heights: { lidBodyH, lidBevelH, baseBodyH, baseBevelH } };
+  return { shapes, edges };
+}
+
+function pushCircle(out, radius, y) {
+  for (let i = 0; i < PLAN_SEGMENTS; i++) {
+    const a0 = (i / PLAN_SEGMENTS) * TAU;
+    const a1 = ((i + 1) / PLAN_SEGMENTS) * TAU;
+    out.push(Math.sin(a0) * radius, y, Math.cos(a0) * radius, Math.sin(a1) * radius, y, Math.cos(a1) * radius);
+  }
+}
+
+// Plan of the book ring (inner/outer circles and each book's footprint), laid on the lid top so it
+// only shows where the lid hides the books, like hidden lines on a drafting plan.
+function buildPlan(items) {
+  const y = HOLDER.lidBottom + HOLDER.lidThickness + 0.002;
+  const outer = RING.spineRadius;
+  const inner = RING.spineRadius - BOOK.depth;
+  const center = RING.spineRadius - BOOK.depth / 2;
+  const points = [];
+  pushCircle(points, outer, y);
+  pushCircle(points, inner, y);
+  items.forEach((item, i) => {
+    const phi = slotAngle(i, items.length);
+    const c = Math.cos(phi);
+    const s = Math.sin(phi);
+    const t = bookThickness(item) / 2;
+    const d = BOOK.depth / 2;
+    const corner = ([lx, lz]) => [
+      Math.sin(phi) * center + c * lx + s * lz,
+      y,
+      Math.cos(phi) * center - s * lx + c * lz,
+    ];
+    const corners = [[-t, -d], [t, -d], [t, d], [-t, d]].map(corner);
+    for (let k = 0; k < 4; k++) points.push(...corners[k], ...corners[(k + 1) % 4]);
+  });
+  return new LineSegmentsGeometry().setPositions(points);
+}
+
+function HiddenPlan({ items, store, material }) {
+  const lines = useMemo(() => {
+    const segments = new LineSegments2(buildPlan(items), material);
+    segments.computeLineDistances();
+    return segments;
+  }, [items, material]);
+
+  useEffect(() => () => lines.geometry.dispose(), [lines]);
+
+  useFrame(() => {
+    const [start, end] = PLAN_FADE;
+    const p = effectiveProgress(store);
+    const opacity = 1 - Math.min(Math.max((p - start) / (end - start), 0), 1);
+    material.opacity = opacity * opacity;
+    lines.visible = opacity > 0;
+  });
+
+  return <primitive object={lines} />;
 }
 
 // One holder part drawn as a hidden-line drawing: a page-coloured fill that hides what's behind it,
@@ -71,7 +127,7 @@ function InkedPart({ geometry, edges, materials, outline = true, position, rotat
   );
 }
 
-export default function CdHolder({ slotCount }) {
+export default function CdHolder({ slotCount, items, store }) {
   const geometries = useMemo(buildGeometries, []);
   const materials = useMemo(getLineworkMaterials, []);
   const size = useThree((s) => s.size);
@@ -98,15 +154,13 @@ export default function CdHolder({ slotCount }) {
   }, [slotCount]);
 
   const { shapes, edges } = geometries;
-  const { lidBodyH, lidBevelH, baseBodyH, baseBevelH } = geometries.heights;
-  const { lidBottom, baseThickness, ridgeInner, ridgeOuter, ridgeHeight, postRingRadius } = HOLDER;
+  const { lidBottom, lidThickness, baseThickness, ridgeInner, ridgeOuter, ridgeHeight, postRingRadius } = HOLDER;
   const ridgeMid = (ridgeInner + ridgeOuter) / 2;
   const part = (key, props) => <InkedPart geometry={shapes[key]} edges={edges[key]} materials={materials} {...props} />;
 
   return (
     <group>
-      {part('baseBody', { position: [0, -baseThickness + baseBodyH / 2, 0] })}
-      {part('baseBevel', { position: [0, -baseBevelH / 2, 0] })}
+      {part('base', { position: [0, -baseThickness / 2, 0] })}
       {part('hub', { position: [0, 0.05, 0] })}
 
       {ridgeAngles.map((a) => (
@@ -131,8 +185,8 @@ export default function CdHolder({ slotCount }) {
         />
       ))}
 
-      {part('lidBody', { position: [0, lidBottom + lidBodyH / 2, 0] })}
-      {part('lidBevel', { position: [0, lidBottom + lidBodyH + lidBevelH / 2, 0] })}
+      {part('lid', { position: [0, lidBottom + lidThickness / 2, 0] })}
+      {items && store && <HiddenPlan items={items} store={store} material={materials.hidden} />}
     </group>
   );
 }

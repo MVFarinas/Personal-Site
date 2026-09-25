@@ -15,7 +15,7 @@ export const HOLDER = {
   baseRadius: 2.6,
   baseThickness: 0.12,
   ridgeInner: 0.9,
-  ridgeOuter: 2.55,
+  ridgeOuter: 2.5,
   ridgeWidth: 0.03,
   ridgeHeight: 0.08,
   hubRadius: 0.6,
