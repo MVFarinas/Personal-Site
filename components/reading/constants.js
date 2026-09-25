@@ -13,22 +13,21 @@ export const RING = {
 
 export const HOLDER = {
   baseRadius: 2.6,
-  baseThickness: 0.12,
+  baseThickness: 0.07,
   ridgeInner: 0.9,
   ridgeOuter: 2.55,
-  ridgeWidth: 0.03,
-  ridgeHeight: 0.08,
-  hubRadius: 0.6,
-  postRadius: 0.05,
+  ridgeWidth: 0.012,
+  ridgeHeight: 0.06,
+  hubRadius: 0.5,
+  postRadius: 0.018,
   postRingRadius: 2.5,
   postCount: 4,
   lidRadius: 2.7,
-  lidThickness: 0.1,
+  lidThickness: 0.07,
   lidBottom: 1.1,
 };
 
 export const COLORS = {
-  wood: '#6b4226',
   paper: '#f3efe6',
   background: '#f6f5f1',
 };

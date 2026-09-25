@@ -1,60 +1,41 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { BoxGeometry, CylinderGeometry, LatheGeometry, Vector2 } from 'three';
+import { BoxGeometry, CylinderGeometry } from 'three';
 import { HOLDER } from '../constants';
 import { slotAngle } from '../store';
-import { getWoodMaterials } from './wood';
+import { getHolderMaterials } from './holderMaterials';
 
 const TAU = Math.PI * 2;
-const SEGMENTS = 96;
+const SEGMENTS = 128;
 const POST_TARGETS = [0.25, 0.75, 1.25, 1.75].map((f) => f * Math.PI);
+const CAP_HEIGHT = 0.014;
 
 const angularDistance = (a, b) => {
   const d = (((a - b) % TAU) + TAU) % TAU;
   return Math.min(d, TAU - d);
 };
 
-// Turned-post silhouette: [radius at postRadius = 0.05, height fraction of the lid gap].
-const POST_PROFILE = [
-  [0.001, 0], [0.062, 0], [0.062, 0.032], [0.046, 0.055], [0.042, 0.11], [0.056, 0.14],
-  [0.042, 0.17], [0.036, 0.5], [0.042, 0.83], [0.056, 0.86], [0.042, 0.89], [0.046, 0.945],
-  [0.062, 0.968], [0.062, 1], [0.001, 1],
-];
-
 function buildGeometries() {
-  const {
-    baseRadius, baseThickness, lidRadius, lidThickness, hubRadius,
-    ridgeWidth, ridgeHeight, ridgeInner, ridgeOuter, postRadius, lidBottom,
-  } = HOLDER;
-  const lidBodyH = lidThickness * 0.65;
-  const lidBevelH = lidThickness - lidBodyH;
-  const baseBodyH = baseThickness * 0.75;
-  const baseBevelH = baseThickness - baseBodyH;
-  const postScale = postRadius / 0.05;
-
+  const { baseRadius, baseThickness, lidRadius, lidThickness, hubRadius, ridgeWidth, ridgeHeight, ridgeInner, ridgeOuter, postRadius, lidBottom } =
+    HOLDER;
   return {
-    lidBody: new CylinderGeometry(lidRadius, lidRadius, lidBodyH, SEGMENTS),
-    lidBevel: new CylinderGeometry(lidRadius - 0.035, lidRadius, lidBevelH, SEGMENTS),
-    baseBody: new CylinderGeometry(baseRadius, baseRadius, baseBodyH, SEGMENTS),
-    baseBevel: new CylinderGeometry(baseRadius - 0.03, baseRadius, baseBevelH, SEGMENTS),
-    hub: new CylinderGeometry(hubRadius, hubRadius * 1.04, 0.1, 64),
+    lid: new CylinderGeometry(lidRadius, lidRadius, lidThickness, SEGMENTS),
+    base: new CylinderGeometry(baseRadius, baseRadius, baseThickness, SEGMENTS),
+    hub: new CylinderGeometry(hubRadius, hubRadius, 0.03, 64),
     ridge: new BoxGeometry(ridgeWidth, ridgeHeight, ridgeOuter - ridgeInner),
-    post: new LatheGeometry(
-      POST_PROFILE.map(([r, y]) => new Vector2(r * postScale, y * lidBottom)),
-      20,
-    ),
-    heights: { lidBodyH, lidBevelH, baseBodyH, baseBevelH },
+    post: new CylinderGeometry(postRadius, postRadius, lidBottom - CAP_HEIGHT * 2, 24),
+    cap: new CylinderGeometry(postRadius * 1.8, postRadius * 1.8, CAP_HEIGHT, 24),
   };
 }
 
 export default function CdHolder({ slotCount }) {
   const geometries = useMemo(buildGeometries, []);
-  const materials = useMemo(getWoodMaterials, []);
+  const materials = useMemo(getHolderMaterials, []);
 
   useEffect(
     () => () => {
-      Object.values(geometries).forEach((g) => g.dispose?.());
+      Object.values(geometries).forEach((g) => g.dispose());
     },
     [geometries],
   );
@@ -69,46 +50,41 @@ export default function CdHolder({ slotCount }) {
     return { ridgeAngles: ridges, postAngles: [...posts] };
   }, [slotCount]);
 
-  const { lidBodyH, lidBevelH, baseBodyH, baseBevelH } = geometries.heights;
-  const { lidBottom, baseThickness, ridgeInner, ridgeOuter, ridgeHeight, postRingRadius } = HOLDER;
+  const { lidBottom, lidThickness, baseThickness, ridgeInner, ridgeOuter, ridgeHeight, postRingRadius } = HOLDER;
   const ridgeMid = (ridgeInner + ridgeOuter) / 2;
 
-  const lidMaterials = useMemo(
-    () => [materials.lidRim, materials.lidTop, materials.lidUnder],
-    [materials],
-  );
-  const baseMaterials = useMemo(
-    () => [materials.baseRim, materials.baseTop, materials.baseTop],
-    [materials],
-  );
+  // CylinderGeometry groups: side, top cap, bottom cap. Polished glass on the edge, frosted faces.
+  const lidMaterials = useMemo(() => [materials.lidEdge, materials.lidFace, materials.lidFace], [materials]);
+  const baseMaterials = useMemo(() => [materials.baseEdge, materials.baseFace, materials.baseFace], [materials]);
 
   return (
     <group>
-      <mesh geometry={geometries.baseBody} material={baseMaterials} position-y={-baseThickness + baseBodyH / 2} />
-      <mesh geometry={geometries.baseBevel} material={baseMaterials} position-y={-baseBevelH / 2} />
-      <mesh geometry={geometries.hub} material={materials.dark} position-y={0.05} />
+      <mesh geometry={geometries.base} material={baseMaterials} position-y={-baseThickness / 2} />
+      <mesh geometry={geometries.hub} material={materials.satinSteel} position-y={0.015} />
 
       {ridgeAngles.map((a) => (
         <mesh
           key={a}
           geometry={geometries.ridge}
-          material={materials.dark}
+          material={materials.steel}
           position={[Math.sin(a) * ridgeMid, ridgeHeight / 2, Math.cos(a) * ridgeMid]}
           rotation-y={a}
         />
       ))}
 
-      {postAngles.map((a) => (
-        <mesh
-          key={a}
-          geometry={geometries.post}
-          material={materials.dark}
-          position={[Math.sin(a) * postRingRadius, 0, Math.cos(a) * postRingRadius]}
-        />
-      ))}
+      {postAngles.map((a) => {
+        const x = Math.sin(a) * postRingRadius;
+        const z = Math.cos(a) * postRingRadius;
+        return (
+          <group key={a} position={[x, 0, z]}>
+            <mesh geometry={geometries.cap} material={materials.steel} position-y={CAP_HEIGHT / 2} />
+            <mesh geometry={geometries.post} material={materials.steel} position-y={lidBottom / 2} />
+            <mesh geometry={geometries.cap} material={materials.steel} position-y={lidBottom - CAP_HEIGHT / 2} />
+          </group>
+        );
+      })}
 
-      <mesh geometry={geometries.lidBody} material={lidMaterials} position-y={lidBottom + lidBodyH / 2} />
-      <mesh geometry={geometries.lidBevel} material={lidMaterials} position-y={lidBottom + lidBodyH + lidBevelH / 2} />
+      <mesh geometry={geometries.lid} material={lidMaterials} position-y={lidBottom + lidThickness / 2} />
     </group>
   );
 }
