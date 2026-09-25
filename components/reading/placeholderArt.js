@@ -282,6 +282,8 @@ export function drawCover(ctx, item, w, h) {
 export function drawBack(ctx, item, w, h) {
   const s = drawCoverBase(ctx, item, w, h);
   drawHinge(ctx, w, h, false);
+  // Real books get a plain back in their cover colour; the gold frame is placeholder ornament.
+  if (item.cover) return;
   const frameX = w * 0.06;
   const frameW = w * 0.84;
   drawFrame(ctx, frameX, h * 0.05, frameW, h * 0.9, s);
