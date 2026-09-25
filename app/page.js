@@ -10,6 +10,7 @@ const insideLinks = [
   { href: '/experience', label: 'Experience' },
   { href: '/research', label: 'Research' },
   { href: '/projects', label: 'Projects' },
+  { href: '/reading', label: 'Reading' },
   { href: '/contact', label: 'Contact' },
 ];
 
