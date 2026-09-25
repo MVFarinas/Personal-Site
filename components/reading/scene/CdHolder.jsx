@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { BoxGeometry, CylinderGeometry } from 'three';
+import { BoxGeometry, CylinderGeometry, RingGeometry } from 'three';
 import { HOLDER } from '../constants';
 import { slotAngle } from '../store';
 import { getHolderMaterials } from './holderMaterials';
@@ -10,6 +10,7 @@ const TAU = Math.PI * 2;
 const SEGMENTS = 128;
 const POST_TARGETS = [0.25, 0.75, 1.25, 1.75].map((f) => f * Math.PI);
 const CAP_HEIGHT = 0.014;
+const RIM_WIDTH = 0.035;
 
 const angularDistance = (a, b) => {
   const d = (((a - b) % TAU) + TAU) % TAU;
@@ -26,6 +27,7 @@ function buildGeometries() {
     ridge: new BoxGeometry(ridgeWidth, ridgeHeight, ridgeOuter - ridgeInner),
     post: new CylinderGeometry(postRadius, postRadius, lidBottom - CAP_HEIGHT * 2, 24),
     cap: new CylinderGeometry(postRadius * 1.8, postRadius * 1.8, CAP_HEIGHT, 24),
+    rim: new RingGeometry(lidRadius - RIM_WIDTH, lidRadius, SEGMENTS),
   };
 }
 
@@ -54,7 +56,7 @@ export default function CdHolder({ slotCount }) {
   const ridgeMid = (ridgeInner + ridgeOuter) / 2;
 
   // CylinderGeometry groups: side, top cap, bottom cap. Polished glass on the edge, frosted faces.
-  const lidMaterials = useMemo(() => [materials.lidEdge, materials.lidFace, materials.lidFace], [materials]);
+  const lidMaterials = useMemo(() => [materials.lidEdge, materials.lidFace, materials.lidUnder], [materials]);
   const baseMaterials = useMemo(() => [materials.baseEdge, materials.baseFace, materials.baseFace], [materials]);
 
   return (
@@ -66,7 +68,7 @@ export default function CdHolder({ slotCount }) {
         <mesh
           key={a}
           geometry={geometries.ridge}
-          material={materials.steel}
+          material={materials.satinSteel}
           position={[Math.sin(a) * ridgeMid, ridgeHeight / 2, Math.cos(a) * ridgeMid]}
           rotation-y={a}
         />
@@ -85,6 +87,12 @@ export default function CdHolder({ slotCount }) {
       })}
 
       <mesh geometry={geometries.lid} material={lidMaterials} position-y={lidBottom + lidThickness / 2} />
+      <mesh
+        geometry={geometries.rim}
+        material={materials.rim}
+        position-y={lidBottom + lidThickness + 0.001}
+        rotation-x={-Math.PI / 2}
+      />
     </group>
   );
 }

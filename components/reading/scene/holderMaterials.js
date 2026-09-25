@@ -4,61 +4,88 @@ import { CanvasTexture, MeshPhysicalMaterial, MeshStandardMaterial, SRGBColorSpa
 let materials = null;
 let shadowTexture = null;
 
+// Slightly less than full transmission leaves a pale diffuse layer, so the disc reads against the cream page.
 const FROST = {
-  color: '#eef0ef',
+  color: '#e6e9e8',
   metalness: 0,
-  roughness: 0.3,
-  transmission: 1,
+  roughness: 0.45,
+  transmission: 0.9,
   thickness: 0.12,
   ior: 1.5,
   attenuationColor: '#eef3f1',
   attenuationDistance: 6,
-  clearcoat: 0.25,
-  clearcoatRoughness: 0.2,
+  // A glossy coat mirrors the studio's ceiling light as a hot spot when viewed from straight above.
+  clearcoat: 0.1,
+  clearcoatRoughness: 0.6,
   envMapIntensity: 0.22,
 };
 
-// Thick glass edges read as glass because light travels far through them and picks up a cool green tint.
+// A thin polished rim with a cool tint. Kept thin so the fins behind it don't refract into dark smears.
 const POLISHED_EDGE = {
   ...FROST,
+  transmission: 1,
   roughness: 0.04,
-  thickness: 0.5,
+  thickness: 0.07,
   attenuationColor: '#cfe0da',
-  attenuationDistance: 1.1,
+  attenuationDistance: 0.2,
   clearcoat: 1,
   clearcoatRoughness: 0.03,
   envMapIntensity: 1,
 };
 
-export function getHolderMaterials() {
-  if (materials) return materials;
-  materials = {
-    lidFace: new MeshPhysicalMaterial(FROST),
-    lidEdge: new MeshPhysicalMaterial(POLISHED_EDGE),
-    baseFace: new MeshPhysicalMaterial({ ...FROST, roughness: 0.5, envMapIntensity: 0.18 }),
-    baseEdge: new MeshPhysicalMaterial(POLISHED_EDGE),
-    steel: new MeshStandardMaterial({ color: '#dfe2e6', metalness: 1, roughness: 0.18 }),
-    satinSteel: new MeshStandardMaterial({ color: '#aeb2b6', metalness: 1, roughness: 0.5 }),
-  };
-  return materials;
+// Seen from inside the ring, the underside only gets the dim ground light; a faint glow keeps it reading as lit frost.
+const UNDERSIDE = { ...FROST, roughness: 0.55, emissive: '#ffffff', emissiveIntensity: 0.12 };
+
+// Satin rather than mirror steel, so fins and hub read as soft shapes through the frosted lid instead of glints.
+const SATIN_STEEL = { color: '#a9aeb3', metalness: 0.55, roughness: 0.5 };
+
+// Lite mode drops transmission (half the render cost). These are tuned to match the full glass's tones on
+// the cream page rather than just switching transmission off.
+// Opaque-ish surfaces catch the full scene lights, so these sit well below the tones they end up rendering as.
+const LITE = {
+  lidFace: { color: '#b9bdb8', opacity: 0.93 },
+  lidUnder: { color: '#d9e1dc', opacity: 0.93, emissiveIntensity: 0.42 },
+  lidEdge: { color: '#adbab5', opacity: 0.85 },
+  baseFace: { color: '#b3bcb5', opacity: 0.9 },
+  baseEdge: { color: '#adbab5', opacity: 0.85 },
+};
+
+// Decided once, before the first frame, so the look never swaps mid-view. Touch devices get lite;
+// `?glass=full|lite` forces a mode.
+function wantsFullGlass() {
+  const forced = new URLSearchParams(window.location.search).get('glass');
+  if (forced === 'full' || forced === 'lite') return forced === 'full';
+  return !window.matchMedia('(pointer: coarse)').matches;
 }
 
-// Without transmission the glass falls back to plain translucency: no blur behind it, but half the render cost.
-const LITE_OPACITY = { lidFace: 0.55, lidEdge: 0.8, baseFace: 0.7, baseEdge: 0.8 };
-// Attenuation (the green edge tint) only exists with transmission, so the fallback tints edges directly.
-const LITE_EDGE_COLOR = '#c4d8d0';
-
-export function setGlassQuality(full) {
-  const all = getHolderMaterials();
-  for (const [key, opacity] of Object.entries(LITE_OPACITY)) {
-    const material = all[key];
-    material.transmission = full ? 1 : 0;
-    material.transparent = !full;
-    material.opacity = full ? 1 : opacity;
-    material.depthWrite = full;
-    if (key.endsWith('Edge')) material.color.set(full ? POLISHED_EDGE.color : LITE_EDGE_COLOR);
-    material.needsUpdate = true;
+function glass(options, key, full) {
+  const material = new MeshPhysicalMaterial(options);
+  if (!full) {
+    material.transmission = 0;
+    material.transparent = true;
+    material.depthWrite = false;
+    material.color.set(LITE[key].color);
+    material.opacity = LITE[key].opacity;
+    if (LITE[key].emissiveIntensity != null) material.emissiveIntensity = LITE[key].emissiveIntensity;
   }
+  return material;
+}
+
+export function getHolderMaterials() {
+  if (materials) return materials;
+  const full = wantsFullGlass();
+  materials = {
+    lidFace: glass(FROST, 'lidFace', full),
+    lidUnder: glass(UNDERSIDE, 'lidUnder', full),
+    lidEdge: glass(POLISHED_EDGE, 'lidEdge', full),
+    baseFace: glass({ ...FROST, roughness: 0.5, envMapIntensity: 0.18 }, 'baseFace', full),
+    baseEdge: glass(POLISHED_EDGE, 'baseEdge', full),
+    steel: new MeshStandardMaterial({ color: '#dfe2e6', metalness: 1, roughness: 0.18 }),
+    satinSteel: new MeshStandardMaterial(SATIN_STEEL),
+    // A polished bevel line around the lid's top, so the disc keeps a crisp outline over the blurred glass.
+    rim: new MeshStandardMaterial({ color: '#b7c8c1', metalness: 0, roughness: 0.25, envMapIntensity: 0.8 }),
+  };
+  return materials;
 }
 
 // The environment only lights the holder; the books keep the scene's plain lights so their colours stay true.
