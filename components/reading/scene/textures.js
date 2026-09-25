@@ -5,7 +5,6 @@ import {
   MeshStandardMaterial,
   RepeatWrapping,
   SRGBColorSpace,
-  TextureLoader,
 } from 'three';
 import { BOOK, COLORS } from '../constants';
 import { bookThickness } from '../slots';
@@ -41,10 +40,26 @@ function toTexture(canvas) {
   return texture;
 }
 
-function loadImageTexture(url) {
-  const texture = new TextureLoader().load(url);
-  texture.colorSpace = SRGBColorSpace;
-  texture.anisotropy = 8;
+// Real photos: the texture starts as a flat swatch of the book's colour (a bare TextureLoader
+// texture renders black until decoded), then the image is drawn in at 3D-texture size, which keeps
+// GPU memory small; the overlay still shows the full-size file. The canvas size is fixed up front
+// because three can't resize a texture after its first upload.
+const IMAGE_TEX_HEIGHT = 768;
+
+function imageTexture(url, color, width, height) {
+  const canvas = makeCanvas(width, height);
+  const ctx = canvas.getContext('2d');
+  ctx.fillStyle = color;
+  ctx.fillRect(0, 0, width, height);
+  const texture = toTexture(canvas);
+  const img = new Image();
+  img.decoding = 'async';
+  img.onload = () => {
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, width, height);
+    texture.needsUpdate = true;
+  };
+  img.src = url;
   return texture;
 }
 
@@ -69,7 +84,8 @@ export function getSpineTexture(item) {
   let texture = spineTextures.get(item.id);
   if (texture) return texture;
   if (item.spine) {
-    texture = loadImageTexture(item.spine);
+    const width = Math.max(16, Math.round((IMAGE_TEX_HEIGHT * bookThickness(item)) / BOOK.height));
+    texture = imageTexture(item.spine, item.color, width, IMAGE_TEX_HEIGHT);
   } else {
     const width = Math.max(32, Math.round((TEX_HEIGHT * bookThickness(item)) / BOOK.height));
     texture = drawnTexture(width, TEX_HEIGHT, (ctx, w, h) => drawSpine(ctx, item, w, h));
@@ -82,7 +98,7 @@ export function getCoverTexture(item) {
   let texture = coverTextures.get(item.id);
   if (texture) return texture;
   texture = item.cover
-    ? loadImageTexture(item.cover)
+    ? imageTexture(item.cover, item.color, coverWidthFor(IMAGE_TEX_HEIGHT), IMAGE_TEX_HEIGHT)
     : drawnTexture(coverWidthFor(TEX_HEIGHT), TEX_HEIGHT, (ctx, w, h) => drawCover(ctx, item, w, h));
   coverTextures.set(item.id, texture);
   return texture;
