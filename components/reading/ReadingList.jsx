@@ -4,8 +4,8 @@ const SERIF = 'var(--font-cormorant), Georgia, serif';
 
 const STATUS_LABELS = {
   reading: 'Reading',
-  finished: 'Finished',
-  planned: 'Planned',
+  finished: 'Read',
+  planned: 'Plan to read',
 };
 
 // Status is null until Mark sets it; unknown parts are left out rather than shown as blanks.

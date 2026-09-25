@@ -8,9 +8,9 @@ import { placeholderCoverDataURL } from './placeholderArt';
 import { slotItemId } from './slots';
 
 const STATUS_LABELS = {
-  reading: 'Currently reading',
-  finished: 'Finished',
-  planned: 'Planned',
+  reading: 'Reading',
+  finished: 'Read',
+  planned: 'Plan to read',
 };
 
 const SERIF = 'var(--font-cormorant), Georgia, serif';
