@@ -39,9 +39,10 @@ export const CAMERA = {
   progressDamping: 16,
 };
 
-// Negative angular velocity moves the front of the ring (+z, facing the camera) to the left.
+// Negative angular velocity moves the front of the ring (+z, facing the camera) to the left, i.e.
+// clockwise seen from above; auto-spin runs the other way (counter-clockwise).
 export const MOTION = {
-  autoSpeed: -(2 * Math.PI) / 60,
+  autoSpeed: (2 * Math.PI) / 60,
   friction: 7,
   flingFriction: 3,
   wheelGain: 0.02,
