@@ -13,18 +13,27 @@ export const RING = {
 
 export const HOLDER = {
   baseRadius: 2.6,
-  baseThickness: 0.12,
+  baseThickness: 0.06,
   ridgeInner: 0.9,
   ridgeOuter: 2.5,
-  ridgeWidth: 0.03,
   ridgeHeight: 0.08,
   hubRadius: 0.6,
-  postRadius: 0.05,
+  hubHeight: 0.08,
+  postRadius: 0.028,
   postRingRadius: 2.5,
   postCount: 4,
   lidRadius: 2.7,
-  lidThickness: 0.1,
+  lidThickness: 0.04,
   lidBottom: 1.1,
+};
+
+// Floor under the see-through stand: a soft ring of shadow under the books and one faint hairline
+// circle, set wider than the base so it reads as a floor mark rather than a second base rim.
+export const GROUND = {
+  y: -0.064,
+  lineRadius: 3.0,
+  shadowInner: 1.45,
+  shadowOuter: 2.85,
 };
 
 export const COLORS = {

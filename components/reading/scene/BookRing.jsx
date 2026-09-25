@@ -65,7 +65,7 @@ export default function BookRing({ items, store, onSelect, onArrive }) {
 
   return (
     <group ref={groupRef}>
-      <CdHolder slotCount={items.length} items={items} store={store} />
+      <CdHolder slotCount={items.length} />
       {items.map((item, index) => (
         <Book
           key={item.id}

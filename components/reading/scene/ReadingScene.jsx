@@ -4,6 +4,7 @@ import { Canvas } from '@react-three/fiber';
 import { CAMERA } from '../constants';
 import BookRing from './BookRing';
 import CameraRig from './CameraRig';
+import GroundRing from './GroundRing';
 
 export default function ReadingScene({ items, store, onSelect, onArrive, frozen = false }) {
   return (
@@ -19,6 +20,7 @@ export default function ReadingScene({ items, store, onSelect, onArrive, frozen 
       <directionalLight position={[4, 9, 7]} intensity={2.2} />
       <directionalLight position={[-6, 3, -4]} intensity={0.5} />
       <CameraRig store={store} />
+      <GroundRing />
       <BookRing items={items} store={store} onSelect={onSelect} onArrive={onArrive} />
     </Canvas>
   );

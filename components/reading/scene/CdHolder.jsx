@@ -1,147 +1,118 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { BoxGeometry, CylinderGeometry, EdgesGeometry, LatheGeometry, Vector2 } from 'three';
+import { Vector3 } from 'three';
 import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js';
 import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js';
-import { BOOK, HOLDER, RING } from '../constants';
-import { effectiveProgress, slotAngle } from '../store';
-import { bookThickness } from './textures';
+import { HOLDER } from '../constants';
+import { slotAngle } from '../store';
 import { getLineworkMaterials, setLineResolution } from './linework';
 
 const TAU = Math.PI * 2;
-const SEGMENTS = 96;
-const POST_SEGMENTS = 20;
+const RIM_SEGMENTS = 192;
+const HUB_SEGMENTS = 96;
 const POST_TARGETS = [0.25, 0.75, 1.25, 1.75].map((f) => f * Math.PI);
-// Above the angle between neighbouring side facets (3.75° on discs, 18° on posts) so only real creases
-// (rims, bevels, turned rings, box edges) become strokes.
-const CREASE_DEGREES = 25;
-
-const PLAN_SEGMENTS = 160;
-// The dashed plan is fully drawn from above and gone by the time the lid top leaves view.
-const PLAN_FADE = [0.22, 0.72];
 
 const angularDistance = (a, b) => {
   const d = (((a - b) % TAU) + TAU) % TAU;
   return Math.min(d, TAU - d);
 };
 
-// Turned-post silhouette: [radius at postRadius = 0.05, height fraction of the lid gap].
-const POST_PROFILE = [
-  [0.001, 0], [0.062, 0], [0.062, 0.032], [0.046, 0.055], [0.042, 0.11], [0.056, 0.14],
-  [0.042, 0.17], [0.036, 0.5], [0.042, 0.83], [0.056, 0.86], [0.042, 0.89], [0.046, 0.945],
-  [0.062, 0.968], [0.062, 1], [0.001, 1],
-];
-
-const creases = (geometry) => new LineSegmentsGeometry().fromEdgesGeometry(new EdgesGeometry(geometry, CREASE_DEGREES));
-
-function buildGeometries() {
-  const {
-    baseRadius, baseThickness, lidRadius, lidThickness, hubRadius,
-    ridgeWidth, ridgeHeight, ridgeInner, ridgeOuter, postRadius, lidBottom,
-  } = HOLDER;
-  const postScale = postRadius / 0.05;
-
-  // Plain discs: a bevel adds a second rim line hairline-close to the first, which merges at 1x and
-  // stair-steps while spinning.
-  const shapes = {
-    lid: new CylinderGeometry(lidRadius, lidRadius, lidThickness, SEGMENTS),
-    base: new CylinderGeometry(baseRadius, baseRadius, baseThickness, SEGMENTS),
-    hub: new CylinderGeometry(hubRadius, hubRadius * 1.04, 0.1, 64),
-    ridge: new BoxGeometry(ridgeWidth, ridgeHeight, ridgeOuter - ridgeInner),
-    post: new LatheGeometry(
-      POST_PROFILE.map(([r, y]) => new Vector2(r * postScale, y * lidBottom)),
-      POST_SEGMENTS,
-    ),
-  };
-  const edges = Object.fromEntries(Object.entries(shapes).map(([key, g]) => [key, creases(g)]));
-  return { shapes, edges };
-}
-
-function pushCircle(out, radius, y) {
-  for (let i = 0; i < PLAN_SEGMENTS; i++) {
-    const a0 = (i / PLAN_SEGMENTS) * TAU;
-    const a1 = ((i + 1) / PLAN_SEGMENTS) * TAU;
+function pushCircle(out, radius, y, segments) {
+  for (let i = 0; i < segments; i++) {
+    const a0 = (i / segments) * TAU;
+    const a1 = ((i + 1) / segments) * TAU;
     out.push(Math.sin(a0) * radius, y, Math.cos(a0) * radius, Math.sin(a1) * radius, y, Math.cos(a1) * radius);
   }
 }
 
-// Plan of the book ring (inner/outer circles and each book's footprint), laid on the lid top so it
-// only shows where the lid hides the books, like hidden lines on a drafting plan.
-function buildPlan(items) {
-  const y = HOLDER.lidBottom + HOLDER.lidThickness + 0.002;
-  const outer = RING.spineRadius;
-  const inner = RING.spineRadius - BOOK.depth;
-  const center = RING.spineRadius - BOOK.depth / 2;
+// Everything that doesn't depend on the view: the rim circles of the lid, base and hub, and one
+// stroke along the top of each rib.
+function buildRims(ridgeAngles) {
+  const { lidRadius, lidBottom, lidThickness, baseRadius, baseThickness, hubRadius, hubHeight } = HOLDER;
+  const { ridgeInner, ridgeOuter, ridgeHeight } = HOLDER;
   const points = [];
-  pushCircle(points, outer, y);
-  pushCircle(points, inner, y);
-  items.forEach((item, i) => {
-    const phi = slotAngle(i, items.length);
-    const c = Math.cos(phi);
-    const s = Math.sin(phi);
-    const t = bookThickness(item) / 2;
-    const d = BOOK.depth / 2;
-    const corner = ([lx, lz]) => [
-      Math.sin(phi) * center + c * lx + s * lz,
-      y,
-      Math.cos(phi) * center - s * lx + c * lz,
-    ];
-    const corners = [[-t, -d], [t, -d], [t, d], [-t, d]].map(corner);
-    for (let k = 0; k < 4; k++) points.push(...corners[k], ...corners[(k + 1) % 4]);
-  });
+  pushCircle(points, lidRadius, lidBottom, RIM_SEGMENTS);
+  pushCircle(points, lidRadius, lidBottom + lidThickness, RIM_SEGMENTS);
+  pushCircle(points, baseRadius, 0, RIM_SEGMENTS);
+  pushCircle(points, baseRadius, -baseThickness, RIM_SEGMENTS);
+  pushCircle(points, hubRadius, 0, HUB_SEGMENTS);
+  pushCircle(points, hubRadius, hubHeight, HUB_SEGMENTS);
+  for (const a of ridgeAngles) {
+    const s = Math.sin(a);
+    const c = Math.cos(a);
+    points.push(s * ridgeInner, ridgeHeight, c * ridgeInner, s * ridgeOuter, ridgeHeight, c * ridgeOuter);
+  }
   return new LineSegmentsGeometry().setPositions(points);
 }
 
-function HiddenPlan({ items, store, material }) {
-  const lines = useMemo(() => {
-    const segments = new LineSegments2(buildPlan(items), material);
-    segments.computeLineDistances();
-    return segments;
-  }, [items, material]);
+const _camera = new Vector3();
 
-  useEffect(() => () => lines.geometry.dispose(), [lines]);
+// With no fills there's nothing to outline, so each vertical cylinder (lid and base edges, hub, posts)
+// gets its two side silhouettes drawn explicitly. For a camera at horizontal distance D from the axis,
+// they're the verticals at the tangent points, ±acos(r / D) either side of the direction to the camera.
+function Silhouettes({ cylinders, material, groupRef }) {
+  const camera = useThree((s) => s.camera);
+
+  const lines = useMemo(
+    () =>
+      cylinders.map(() => {
+        const segments = new LineSegments2(new LineSegmentsGeometry().setPositions(new Float32Array(12)), material);
+        segments.frustumCulled = false;
+        return segments;
+      }),
+    [cylinders, material],
+  );
+
+  useEffect(() => () => lines.forEach((l) => l.geometry.dispose()), [lines]);
 
   useFrame(() => {
-    const [start, end] = PLAN_FADE;
-    const p = effectiveProgress(store);
-    const opacity = 1 - Math.min(Math.max((p - start) / (end - start), 0), 1);
-    material.opacity = opacity * opacity;
-    lines.visible = opacity > 0;
+    const group = groupRef.current;
+    if (!group) return;
+    _camera.copy(camera.position);
+    group.worldToLocal(_camera);
+    cylinders.forEach(([x, z, r, y0, y1], i) => {
+      const dx = _camera.x - x;
+      const dz = _camera.z - z;
+      const distance = Math.hypot(dx, dz);
+      const line = lines[i];
+      // Camera over the top of the cylinder: no side silhouettes, only the rim circles show.
+      line.visible = distance > r * 1.02;
+      if (!line.visible) return;
+      const toward = Math.atan2(dx, dz);
+      const spread = Math.acos(r / distance);
+      const buffer = line.geometry.attributes.instanceStart.data;
+      const out = buffer.array;
+      for (let k = 0; k < 2; k++) {
+        const a = toward + (k === 0 ? spread : -spread);
+        const px = x + Math.sin(a) * r;
+        const pz = z + Math.cos(a) * r;
+        const o = k * 6;
+        out[o] = px;
+        out[o + 1] = y0;
+        out[o + 2] = pz;
+        out[o + 3] = px;
+        out[o + 4] = y1;
+        out[o + 5] = pz;
+      }
+      buffer.needsUpdate = true;
+    });
   });
 
-  return <primitive object={lines} />;
+  return lines.map((line, i) => <primitive key={i} object={line} />);
 }
 
-// One holder part drawn as a hidden-line drawing: a page-coloured fill that hides what's behind it,
-// crease strokes, and (for curved parts) a silhouette outline.
-function InkedPart({ geometry, edges, materials, outline = true, position, rotation }) {
-  const strokes = useMemo(() => new LineSegments2(edges, materials.line), [edges, materials.line]);
-  return (
-    <group position={position} rotation={rotation}>
-      <mesh geometry={geometry} material={materials.fill} />
-      {outline && <mesh geometry={geometry} material={materials.outline} />}
-      <primitive object={strokes} />
-    </group>
-  );
-}
-
-export default function CdHolder({ slotCount, items, store }) {
-  const geometries = useMemo(buildGeometries, []);
+// The CD stand as a see-through drawing: strokes only, no surfaces, so the books and the far side of
+// the stand stay visible through it. Books still hide the strokes behind them through the depth test.
+export default function CdHolder({ slotCount }) {
+  const groupRef = useRef();
   const materials = useMemo(getLineworkMaterials, []);
   const size = useThree((s) => s.size);
 
   useEffect(() => {
     setLineResolution(size.width, size.height);
   }, [size.width, size.height]);
-
-  useEffect(
-    () => () => {
-      [...Object.values(geometries.shapes), ...Object.values(geometries.edges)].forEach((g) => g.dispose());
-    },
-    [geometries],
-  );
 
   const { ridgeAngles, postAngles } = useMemo(() => {
     const ridges = Array.from({ length: slotCount }, (_, j) => slotAngle(j, slotCount) + Math.PI / slotCount);
@@ -153,40 +124,25 @@ export default function CdHolder({ slotCount, items, store }) {
     return { ridgeAngles: ridges, postAngles: [...posts] };
   }, [slotCount]);
 
-  const { shapes, edges } = geometries;
-  const { lidBottom, lidThickness, baseThickness, ridgeInner, ridgeOuter, ridgeHeight, postRingRadius } = HOLDER;
-  const ridgeMid = (ridgeInner + ridgeOuter) / 2;
-  const part = (key, props) => <InkedPart geometry={shapes[key]} edges={edges[key]} materials={materials} {...props} />;
+  const rims = useMemo(() => new LineSegments2(buildRims(ridgeAngles), materials.line), [ridgeAngles, materials.line]);
+
+  useEffect(() => () => rims.geometry.dispose(), [rims]);
+
+  const cylinders = useMemo(() => {
+    const { lidRadius, lidBottom, lidThickness, baseRadius, baseThickness, hubRadius, hubHeight } = HOLDER;
+    const { postRadius, postRingRadius } = HOLDER;
+    return [
+      [0, 0, lidRadius, lidBottom, lidBottom + lidThickness],
+      [0, 0, baseRadius, -baseThickness, 0],
+      [0, 0, hubRadius, 0, hubHeight],
+      ...postAngles.map((a) => [Math.sin(a) * postRingRadius, Math.cos(a) * postRingRadius, postRadius, 0, lidBottom]),
+    ];
+  }, [postAngles]);
 
   return (
-    <group>
-      {part('base', { position: [0, -baseThickness / 2, 0] })}
-      {part('hub', { position: [0, 0.05, 0] })}
-
-      {ridgeAngles.map((a) => (
-        <InkedPart
-          key={a}
-          geometry={shapes.ridge}
-          edges={edges.ridge}
-          materials={materials}
-          outline={false}
-          position={[Math.sin(a) * ridgeMid, ridgeHeight / 2, Math.cos(a) * ridgeMid]}
-          rotation={[0, a, 0]}
-        />
-      ))}
-
-      {postAngles.map((a) => (
-        <InkedPart
-          key={a}
-          geometry={shapes.post}
-          edges={edges.post}
-          materials={materials}
-          position={[Math.sin(a) * postRingRadius, 0, Math.cos(a) * postRingRadius]}
-        />
-      ))}
-
-      {part('lid', { position: [0, lidBottom + lidThickness / 2, 0] })}
-      {items && store && <HiddenPlan items={items} store={store} material={materials.hidden} />}
+    <group ref={groupRef}>
+      <primitive object={rims} />
+      <Silhouettes cylinders={cylinders} material={materials.line} groupRef={groupRef} />
     </group>
   );
 }
