@@ -2,8 +2,8 @@ import { LineMaterial } from 'three/examples/jsm/lines/LineMaterial.js';
 
 // Black at ~62% over the page colour, kept opaque so overlapping strokes don't darken or need sorting.
 export const LINE_COLOR = '#5d5c59';
-// A lighter ink for marks on the floor, so they sit behind the stand in the drawing's hierarchy.
-export const GROUND_LINE_COLOR = '#c4c1b9';
+// A lighter ink for secondary strokes (the posts), so they sit behind the rims in the drawing's hierarchy.
+export const GROUND_LINE_COLOR = '#9a978f';
 // CSS pixels, so strokes look the same on standard and retina screens.
 export const LINE_WIDTH = 1.1;
 
@@ -13,7 +13,7 @@ export function getLineworkMaterials() {
   if (materials) return materials;
   materials = {
     line: new LineMaterial({ color: LINE_COLOR, linewidth: LINE_WIDTH }),
-    ground: new LineMaterial({ color: GROUND_LINE_COLOR, linewidth: LINE_WIDTH, depthWrite: false }),
+    ground: new LineMaterial({ color: GROUND_LINE_COLOR, linewidth: LINE_WIDTH }),
   };
   return materials;
 }

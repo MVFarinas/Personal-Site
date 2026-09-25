@@ -19,7 +19,6 @@ export const HOLDER = {
   ridgeHeight: 0.08,
   hubRadius: 0.6,
   hubHeight: 0.08,
-  postRadius: 0.028,
   postRingRadius: 2.5,
   postCount: 4,
   lidRadius: 2.7,
@@ -27,11 +26,9 @@ export const HOLDER = {
   lidBottom: 1.1,
 };
 
-// Floor under the see-through stand: a soft ring of shadow under the books and one faint hairline
-// circle, set wider than the base so it reads as a floor mark rather than a second base rim.
+// Floor under the see-through stand: a soft ring of shadow under the books.
 export const GROUND = {
   y: -0.064,
-  lineRadius: 3.0,
   shadowInner: 1.45,
   shadowOuter: 2.85,
 };

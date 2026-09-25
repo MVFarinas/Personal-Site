@@ -130,18 +130,31 @@ export default function CdHolder({ slotCount }) {
 
   const cylinders = useMemo(() => {
     const { lidRadius, lidBottom, lidThickness, baseRadius, baseThickness, hubRadius, hubHeight } = HOLDER;
-    const { postRadius, postRingRadius } = HOLDER;
     return [
       [0, 0, lidRadius, lidBottom, lidBottom + lidThickness],
       [0, 0, baseRadius, -baseThickness, 0],
       [0, 0, hubRadius, 0, hubHeight],
-      ...postAngles.map((a) => [Math.sin(a) * postRingRadius, Math.cos(a) * postRingRadius, postRadius, 0, lidBottom]),
     ];
-  }, [postAngles]);
+  }, []);
+
+  // Posts are thin enough to read as one stroke; a single lighter centerline keeps them from
+  // crowding the books in front of them.
+  const posts = useMemo(() => {
+    const { lidBottom, postRingRadius } = HOLDER;
+    const points = postAngles.flatMap((a) => {
+      const x = Math.sin(a) * postRingRadius;
+      const z = Math.cos(a) * postRingRadius;
+      return [x, 0, z, x, lidBottom, z];
+    });
+    return new LineSegments2(new LineSegmentsGeometry().setPositions(points), materials.ground);
+  }, [postAngles, materials.ground]);
+
+  useEffect(() => () => posts.geometry.dispose(), [posts]);
 
   return (
     <group ref={groupRef}>
       <primitive object={rims} />
+      <primitive object={posts} />
       <Silhouettes cylinders={cylinders} material={materials.line} groupRef={groupRef} />
     </group>
   );

@@ -1,23 +1,8 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { CanvasTexture, SRGBColorSpace } from 'three';
-import { LineSegments2 } from 'three/examples/jsm/lines/LineSegments2.js';
-import { LineSegmentsGeometry } from 'three/examples/jsm/lines/LineSegmentsGeometry.js';
 import { GROUND } from '../constants';
-import { getLineworkMaterials } from './linework';
-
-const SEGMENTS = 192;
-
-function circleGeometry(radius) {
-  const points = [];
-  for (let i = 0; i < SEGMENTS; i++) {
-    const a0 = (i / SEGMENTS) * Math.PI * 2;
-    const a1 = ((i + 1) / SEGMENTS) * Math.PI * 2;
-    points.push(Math.sin(a0) * radius, 0, Math.cos(a0) * radius, Math.sin(a1) * radius, 0, Math.cos(a1) * radius);
-  }
-  return new LineSegmentsGeometry().setPositions(points);
-}
 
 let shadowTexture = null;
 
@@ -48,10 +33,6 @@ function getRingShadowTexture() {
 
 export default function GroundRing() {
   const shadow = useMemo(getRingShadowTexture, []);
-  const line = useMemo(() => new LineSegments2(circleGeometry(GROUND.lineRadius), getLineworkMaterials().ground), []);
-
-  useEffect(() => () => line.geometry.dispose(), [line]);
-
   const size = GROUND.shadowOuter * 2;
   return (
     <group position-y={GROUND.y}>
@@ -59,7 +40,6 @@ export default function GroundRing() {
         <planeGeometry args={[size, size]} />
         <meshBasicMaterial map={shadow} transparent depthWrite={false} />
       </mesh>
-      <primitive object={line} />
     </group>
   );
 }
