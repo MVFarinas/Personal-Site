@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { X, ArrowUpRight } from 'lucide-react';
 import { BOOK } from './constants';
 import { placeholderCoverDataURL } from './placeholderArt';
+import { slotItemId } from './slots';
 
 const STATUS_LABELS = {
   reading: 'Currently reading',
@@ -53,7 +54,7 @@ export default function BookOverlay({ item, phase, store, onClose }) {
     let cancelled = false;
     const img = imgRef.current;
     const show = () => {
-      if (!cancelled && store.selectedId === item.id) store.coverShown = true;
+      if (!cancelled && slotItemId(store.selectedId) === item.id) store.coverShown = true;
     };
     if (img?.decode) img.decode().then(show, show);
     else show();
@@ -187,9 +188,12 @@ export default function BookOverlay({ item, phase, store, onClose }) {
           className="w-full max-w-[360px] border border-black/10 bg-[#fffef9] p-8"
         >
           <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-black/50">
-            <span>{item.kind}</span>
-            <span>·</span>
-            <span>{STATUS_LABELS[item.status] ?? item.status}</span>
+            {[item.kind, STATUS_LABELS[item.status] ?? item.status].filter(Boolean).map((part, i) => (
+              <span key={part} className="flex items-center gap-2">
+                {i > 0 && <span aria-hidden="true">·</span>}
+                <span>{part}</span>
+              </span>
+            ))}
           </div>
           <h2 id={titleId} className="mt-4 text-3xl leading-tight text-black" style={{ fontFamily: SERIF }}>
             {item.title}

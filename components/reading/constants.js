@@ -9,6 +9,8 @@ export const BOOK = {
 
 export const RING = {
   spineRadius: 2.4,
+  // Desired empty space between neighbouring spines; sets how many times a short list repeats.
+  targetGap: 0.37,
 };
 
 // The books float just above the ground; hairline circles and a soft ring of shadow mark the circle.

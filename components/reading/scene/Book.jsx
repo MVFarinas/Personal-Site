@@ -76,7 +76,8 @@ function presentationPose(camera, size, rect, thickness, outPos, outQuat) {
   outQuat.copy(camera.quaternion).multiply(COVER_TO_VIEWER);
 }
 
-export default function Book({ item, index, slotCount, store, onSelect, onArrive }) {
+export default function Book({ slot, slotCount, store, onSelect, onArrive }) {
+  const { item, index, key: slotKey } = slot;
   const animRef = useRef();
   const meshRef = useRef();
   const phase = useRef(null);
@@ -90,7 +91,7 @@ export default function Book({ item, index, slotCount, store, onSelect, onArrive
 
   const thickness = bookThickness(item);
   const geometry = getGeometry(thickness);
-  const materials = useMemo(() => getBookMaterials(item), [item]);
+  const materials = useMemo(() => getBookMaterials(item, slotKey), [item, slotKey]);
 
   const rest = useMemo(() => {
     const phi = slotAngle(index, slotCount);
@@ -104,12 +105,12 @@ export default function Book({ item, index, slotCount, store, onSelect, onArrive
 
   useEffect(
     () => () => {
-      if (store.hoveredId === item.id) {
+      if (store.hoveredId === slotKey) {
         store.hoveredId = null;
         setCursor(false);
       }
     },
-    [store, item.id]
+    [store, slotKey]
   );
 
   useFrame((state, delta) => {
@@ -118,12 +119,12 @@ export default function Book({ item, index, slotCount, store, onSelect, onArrive
     const dt = Math.min(delta, 0.1);
     const pos = targetPos.current;
     const quat = targetQuat.current;
-    const selected = store.selectedId === item.id;
+    const selected = store.selectedId === slotKey;
 
     if (!selected) {
       phase.current = null;
       arrived.current = false;
-      if (store.hoveredId === item.id && !store.selectedId) {
+      if (store.hoveredId === slotKey && !store.selectedId) {
         const { turn, minTurn, maxTurn, lift, pullOut } = INTERACTION.hover;
         pos.set(0, lift, pullOut * BOOK.depth);
         // Turn so the front cover ends up facing the viewer the same way from anywhere on the ring.
@@ -174,7 +175,7 @@ export default function Book({ item, index, slotCount, store, onSelect, onArrive
         anim.quaternion.slerpQuaternions(fromQuat.current, quat, e);
         if (u >= 1 && !arrived.current) {
           arrived.current = true;
-          onArrive?.(item.id);
+          onArrive?.(slotKey);
         }
       }
     }
@@ -205,7 +206,7 @@ export default function Book({ item, index, slotCount, store, onSelect, onArrive
   };
 
   const handleOut = () => {
-    if (store.hoveredId === item.id) {
+    if (store.hoveredId === slotKey) {
       store.hoveredId = null;
       setCursor(false);
     }
@@ -213,9 +214,9 @@ export default function Book({ item, index, slotCount, store, onSelect, onArrive
 
   const handleClick = (e) => {
     if (e.delta > INTERACTION.clickMaxDeltaPx || !isNearFinalView(store) || store.selectedId) return;
-    if (nearestBookId(e, store) !== item.id) return;
+    if (nearestBookId(e, store) !== slotKey) return;
     e.stopPropagation();
-    onSelect?.(item.id);
+    onSelect?.(slotKey);
   };
 
   return (
@@ -227,7 +228,7 @@ export default function Book({ item, index, slotCount, store, onSelect, onArrive
       <mesh
         geometry={geometry}
         visible={false}
-        userData={{ bookId: item.id, phi: rest.phi }}
+        userData={{ bookId: slotKey, phi: rest.phi }}
         onPointerOver={updateHover}
         onPointerMove={updateHover}
         onPointerOut={handleOut}

@@ -1,12 +1,13 @@
 'use client';
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { AnimatePresence, motion, useMotionValueEvent, useScroll, useTransform } from 'framer-motion';
 import { Pause, Play } from 'lucide-react';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { createReadingStore, frontAngleFor } from './store';
+import { buildSlots, nearestSlotFor } from './slots';
 import { useRingInput } from './ringMotion';
 import BookOverlay from './BookOverlay';
 import ReadingList from './ReadingList';
@@ -65,7 +66,7 @@ function DebugScrubber({ store }) {
   );
 }
 
-function CarouselStage({ items, store, stageRef, onSelect, onArrive, sceneReady, debug, frozen }) {
+function CarouselStage({ items, slots, store, stageRef, onSelectSlot, onSelectItem, onArrive, sceneReady, debug, frozen }) {
   const sectionRef = useRef(null);
   const [paused, setPaused] = useState(false);
   const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start start', 'end end'] });
@@ -99,7 +100,7 @@ function CarouselStage({ items, store, stageRef, onSelect, onArrive, sceneReady,
           style={{ touchAction: 'pan-y' }}
         >
           {sceneReady && (
-            <ReadingScene items={items} store={store} onSelect={onSelect} onArrive={onArrive} frozen={frozen} />
+            <ReadingScene slots={slots} store={store} onSelect={onSelectSlot} onArrive={onArrive} frozen={frozen} />
           )}
         </div>
 
@@ -132,7 +133,7 @@ function CarouselStage({ items, store, stageRef, onSelect, onArrive, sceneReady,
 
         {debug && <DebugScrubber store={store} />}
 
-        <ReadingList items={items} onSelect={onSelect} />
+        <ReadingList items={items} onSelect={onSelectItem} />
       </div>
     </section>
   );
@@ -141,12 +142,16 @@ function CarouselStage({ items, store, stageRef, onSelect, onArrive, sceneReady,
 export default function ReadingExperience({ items }) {
   const router = useRouter();
   const searchParams = useSearchParams();
+  const slots = useMemo(() => buildSlots(items), [items]);
   const storeRef = useRef(null);
-  if (!storeRef.current) storeRef.current = createReadingStore(items.length);
+  if (!storeRef.current) storeRef.current = createReadingStore(slots.length);
   const store = storeRef.current;
+  store.slotCount = slots.length;
 
   const stageRef = useRef(null);
   const pushedRef = useRef(false);
+  // The ring copy the visitor clicked; URL changes without a click open the copy nearest the front.
+  const clickedSlotRef = useRef(null);
   const firstRunRef = useRef(true);
   const [webgl, setWebgl] = useState(null);
   const [phase, setPhase] = useState('approach');
@@ -165,9 +170,11 @@ export default function ReadingExperience({ items }) {
       if (firstRunRef.current) {
         window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' });
       }
-      const index = items.findIndex((item) => item.id === selectedId);
-      store.selectedId = selectedId;
-      store.snapTarget = frontAngleFor(index, items.length, store.angle);
+      const clicked = slots.find((slot) => slot.key === clickedSlotRef.current);
+      const slot = clicked?.item.id === selectedId ? clicked : nearestSlotFor(slots, selectedId, store.angle);
+      clickedSlotRef.current = null;
+      store.selectedId = slot.key;
+      store.snapTarget = frontAngleFor(slot.index, slots.length, store.angle);
       store.coverShown = false;
       setPhase(webgl === false ? 'open' : 'approach');
     } else {
@@ -177,7 +184,7 @@ export default function ReadingExperience({ items }) {
       setPhase('approach');
     }
     firstRunRef.current = false;
-  }, [selectedId, webgl, items, store]);
+  }, [selectedId, webgl, slots, store]);
 
   useEffect(() => {
     if (!selectedId) return undefined;
@@ -188,13 +195,23 @@ export default function ReadingExperience({ items }) {
     };
   }, [selectedId]);
 
-  const onSelect = useCallback(
+  const onSelectItem = useCallback(
     (id) => {
-      if (id === store.selectedId) return;
+      if (id === selectedId) return;
       pushedRef.current = true;
       router.push(`/reading?book=${encodeURIComponent(id)}`, { scroll: false });
     },
-    [router, store],
+    [router, selectedId],
+  );
+
+  const onSelectSlot = useCallback(
+    (key) => {
+      const slot = slots.find((s) => s.key === key);
+      if (!slot || key === store.selectedId) return;
+      clickedSlotRef.current = key;
+      onSelectItem(slot.item.id);
+    },
+    [slots, store, onSelectItem],
   );
 
   const onArrive = useCallback(
@@ -218,14 +235,16 @@ export default function ReadingExperience({ items }) {
       {webgl === false ? (
         <div className="min-h-[100svh] pt-24 pb-16">
           <SectionHeader title="Reading" subtitle={SUBTITLE} />
-          <ReadingList items={items} onSelect={onSelect} visible />
+          <ReadingList items={items} onSelect={onSelectItem} visible />
         </div>
       ) : (
         <CarouselStage
           items={items}
+          slots={slots}
           store={store}
           stageRef={stageRef}
-          onSelect={onSelect}
+          onSelectSlot={onSelectSlot}
+          onSelectItem={onSelectItem}
           onArrive={onArrive}
           sceneReady={webgl === true}
           debug={debug}

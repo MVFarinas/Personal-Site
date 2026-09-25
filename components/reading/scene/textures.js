@@ -8,6 +8,7 @@ import {
   TextureLoader,
 } from 'three';
 import { BOOK, COLORS } from '../constants';
+import { bookThickness } from '../slots';
 import {
   TEX_HEIGHT,
   coverWidthFor,
@@ -62,9 +63,7 @@ function drawnTexture(width, height, draw) {
   return texture;
 }
 
-export function bookThickness(item) {
-  return item.thickness ?? BOOK.defaultThickness;
-}
+export { bookThickness };
 
 export function getSpineTexture(item) {
   let texture = spineTextures.get(item.id);
@@ -112,11 +111,11 @@ export function getPageMaterial() {
   return pageMaterial;
 }
 
-// Face order matches BoxGeometry groups: +x, −x, +y, −y, +z, −z. Every material is unique to its book
-// (the page material is a clone sharing one texture) so per-book render state such as depthTest can
-// change without affecting other books.
-export function getBookMaterials(item) {
-  let materials = bookMaterials.get(item.id);
+// Face order matches BoxGeometry groups: +x, −x, +y, −y, +z, −z. Every material array is unique to its
+// ring slot (repeated books get their own copies; textures stay shared per book) so per-slot render
+// state such as depthTest can change without affecting any other book.
+export function getBookMaterials(item, cacheKey = item.id) {
+  let materials = bookMaterials.get(cacheKey);
   if (materials) return materials;
   const page = getPageMaterial().clone();
   materials = [
@@ -127,7 +126,7 @@ export function getBookMaterials(item) {
     new MeshStandardMaterial({ map: getSpineTexture(item), roughness: 0.6, metalness: 0 }),
     page,
   ];
-  bookMaterials.set(item.id, materials);
+  bookMaterials.set(cacheKey, materials);
   return materials;
 }
 

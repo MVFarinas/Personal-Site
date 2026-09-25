@@ -11,7 +11,7 @@ import Book from './Book';
 const COLLIDER_RADIUS = RING.spineRadius + 0.05;
 const CAMERA_REPLAY_EPSILON = 1e-4;
 
-export default function BookRing({ items, store, onSelect, onArrive }) {
+export default function BookRing({ slots, store, onSelect, onArrive }) {
   const groupRef = useRef();
   const lastAngle = useRef(null);
   const lastReplayCamera = useRef(new Vector3(Infinity, Infinity, Infinity));
@@ -64,12 +64,11 @@ export default function BookRing({ items, store, onSelect, onArrive }) {
 
   return (
     <group ref={groupRef}>
-      {items.map((item, index) => (
+      {slots.map((slot) => (
         <Book
-          key={item.id}
-          item={item}
-          index={index}
-          slotCount={items.length}
+          key={slot.key}
+          slot={slot}
+          slotCount={slots.length}
           store={store}
           onSelect={onSelect}
           onArrive={onArrive}

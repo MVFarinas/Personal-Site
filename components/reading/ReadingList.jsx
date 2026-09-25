@@ -8,6 +8,9 @@ const STATUS_LABELS = {
   planned: 'Planned',
 };
 
+// Status is null until Mark sets it; unknown parts are left out rather than shown as blanks.
+const metaParts = (item) => [item.kind, STATUS_LABELS[item.status] ?? item.status].filter(Boolean);
+
 export default function ReadingList({ items, onSelect, visible = false }) {
   if (!visible) {
     return (
@@ -17,7 +20,7 @@ export default function ReadingList({ items, onSelect, visible = false }) {
           {items.map((item) => (
             <li key={item.id}>
               <button type="button" onClick={() => onSelect(item.id)}>
-                {item.title} by {item.author}, {item.kind}, {STATUS_LABELS[item.status] ?? item.status}
+                {[`${item.title} by ${item.author}`, ...metaParts(item)].join(', ')}
               </button>
             </li>
           ))}
@@ -47,9 +50,12 @@ export default function ReadingList({ items, onSelect, visible = false }) {
                 </span>
                 <span className="block text-black/60 text-xs mt-1">{item.author}</span>
                 <span className="flex items-center gap-2 text-[10px] text-black/50 mt-3 uppercase tracking-[0.2em]">
-                  <span>{item.kind}</span>
-                  <span>·</span>
-                  <span>{STATUS_LABELS[item.status] ?? item.status}</span>
+                  {metaParts(item).map((part, i) => (
+                    <span key={part} className="flex items-center gap-2">
+                      {i > 0 && <span aria-hidden="true">·</span>}
+                      <span>{part}</span>
+                    </span>
+                  ))}
                 </span>
               </span>
             </button>
