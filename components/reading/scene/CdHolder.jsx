@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useMemo } from 'react';
-import { BoxGeometry, CylinderGeometry, LatheGeometry, Vector2 } from 'three';
+import { BoxGeometry, CylinderGeometry } from 'three';
 import { HOLDER } from '../constants';
 import { slotAngle } from '../store';
-import { getWoodMaterials } from './wood';
+import { getHolderMaterials } from './plaster';
 
 const TAU = Math.PI * 2;
 const SEGMENTS = 96;
@@ -15,42 +15,33 @@ const angularDistance = (a, b) => {
   return Math.min(d, TAU - d);
 };
 
-// Turned-post silhouette: [radius at postRadius = 0.05, height fraction of the lid gap].
-const POST_PROFILE = [
-  [0.001, 0], [0.062, 0], [0.062, 0.032], [0.046, 0.055], [0.042, 0.11], [0.056, 0.14],
-  [0.042, 0.17], [0.036, 0.5], [0.042, 0.83], [0.056, 0.86], [0.042, 0.89], [0.046, 0.945],
-  [0.062, 0.968], [0.062, 1], [0.001, 1],
-];
-
 function buildGeometries() {
   const {
     baseRadius, baseThickness, lidRadius, lidThickness, hubRadius,
     ridgeWidth, ridgeHeight, ridgeInner, ridgeOuter, postRadius, lidBottom,
   } = HOLDER;
-  const lidBodyH = lidThickness * 0.65;
-  const lidBevelH = lidThickness - lidBodyH;
-  const baseBodyH = baseThickness * 0.75;
-  const baseBevelH = baseThickness - baseBodyH;
-  const postScale = postRadius / 0.05;
+  // A small chamfer on the top edges gives the slabs a crisp, machined edge.
+  const chamfer = 0.01;
+  const lidBodyH = lidThickness - chamfer;
+  const lidBevelH = chamfer;
+  const baseBodyH = baseThickness - chamfer;
+  const baseBevelH = chamfer;
 
   return {
     lidBody: new CylinderGeometry(lidRadius, lidRadius, lidBodyH, SEGMENTS),
-    lidBevel: new CylinderGeometry(lidRadius - 0.035, lidRadius, lidBevelH, SEGMENTS),
+    lidBevel: new CylinderGeometry(lidRadius - chamfer, lidRadius, lidBevelH, SEGMENTS),
     baseBody: new CylinderGeometry(baseRadius, baseRadius, baseBodyH, SEGMENTS),
-    baseBevel: new CylinderGeometry(baseRadius - 0.03, baseRadius, baseBevelH, SEGMENTS),
-    hub: new CylinderGeometry(hubRadius, hubRadius * 1.04, 0.1, 64),
+    baseBevel: new CylinderGeometry(baseRadius - chamfer, baseRadius, baseBevelH, SEGMENTS),
+    hub: new CylinderGeometry(hubRadius, hubRadius, 0.025, 64),
     ridge: new BoxGeometry(ridgeWidth, ridgeHeight, ridgeOuter - ridgeInner),
-    post: new LatheGeometry(
-      POST_PROFILE.map(([r, y]) => new Vector2(r * postScale, y * lidBottom)),
-      20,
-    ),
+    post: new CylinderGeometry(postRadius, postRadius, lidBottom, 16),
     heights: { lidBodyH, lidBevelH, baseBodyH, baseBevelH },
   };
 }
 
 export default function CdHolder({ slotCount }) {
   const geometries = useMemo(buildGeometries, []);
-  const materials = useMemo(getWoodMaterials, []);
+  const materials = useMemo(getHolderMaterials, []);
 
   useEffect(
     () => () => {
@@ -86,13 +77,13 @@ export default function CdHolder({ slotCount }) {
     <group>
       <mesh geometry={geometries.baseBody} material={baseMaterials} position-y={-baseThickness + baseBodyH / 2} />
       <mesh geometry={geometries.baseBevel} material={baseMaterials} position-y={-baseBevelH / 2} />
-      <mesh geometry={geometries.hub} material={materials.dark} position-y={0.05} />
+      <mesh geometry={geometries.hub} material={materials.rib} position-y={0.0125} />
 
       {ridgeAngles.map((a) => (
         <mesh
           key={a}
           geometry={geometries.ridge}
-          material={materials.dark}
+          material={materials.rib}
           position={[Math.sin(a) * ridgeMid, ridgeHeight / 2, Math.cos(a) * ridgeMid]}
           rotation-y={a}
         />
@@ -102,8 +93,8 @@ export default function CdHolder({ slotCount }) {
         <mesh
           key={a}
           geometry={geometries.post}
-          material={materials.dark}
-          position={[Math.sin(a) * postRingRadius, 0, Math.cos(a) * postRingRadius]}
+          material={materials.post}
+          position={[Math.sin(a) * postRingRadius, lidBottom / 2, Math.cos(a) * postRingRadius]}
         />
       ))}
 

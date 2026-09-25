@@ -5,7 +5,7 @@ import { Canvas } from '@react-three/fiber';
 import { CAMERA, HOLDER } from '../constants';
 import BookRing from './BookRing';
 import CameraRig from './CameraRig';
-import { getShadowTexture } from './wood';
+import { getShadowTexture } from './plaster';
 
 function GroundShadow() {
   const texture = useMemo(getShadowTexture, []);
